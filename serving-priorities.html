@@ -22,7 +22,7 @@
   .page-title { font-size: 22px; font-weight: 500; color: #1a1a2e; margin-bottom: 4px; }
   .page-sub { font-size: 13px; color: #666; margin-bottom: 24px; max-width: 560px; }
 
-  .panels { display: grid; grid-template-columns: 320px 1fr; gap: 20px; align-items: start; }
+  .panels { display: grid; grid-template-columns: 300px 1fr; gap: 20px; align-items: start; }
   .panel { background: #fff; border: 0.5px solid #e0e0da; border-radius: 12px; overflow: hidden; }
   .panel-head { padding: 14px 18px; border-bottom: 0.5px solid #e0e0da; display: flex; justify-content: space-between; align-items: center; }
   .panel-title { font-size: 13px; font-weight: 500; color: #1a1a2e; }
@@ -66,41 +66,67 @@
 
   .articles-panel { min-height: 400px; }
   .articles-head { padding: 10px 14px; border-bottom: 0.5px solid #e0e0da; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .search-wrap { flex: 1; min-width: 180px; position: relative; }
-  .search-wrap input { width: 100%; padding: 6px 10px 6px 28px; font-size: 12px; border: 0.5px solid #d0d0c8; border-radius: 6px; background: #fff; font-family: inherit; }
+  .search-wrap { flex: 1; min-width: 200px; position: relative; }
+  .search-wrap input { width: 100%; padding: 7px 10px 7px 30px; font-size: 12px; border: 0.5px solid #d0d0c8; border-radius: 6px; background: #fff; font-family: inherit; }
   .search-wrap input:focus { outline: none; border-color: #534AB7; }
-  .search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); color: #aaa; }
-  .filter-select { padding: 6px 10px; font-size: 12px; border: 0.5px solid #d0d0c8; border-radius: 6px; background: #fff; color: #444; cursor: pointer; font-family: inherit; }
-  .filter-select:focus { outline: none; border-color: #534AB7; }
+  .search-icon { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: #aaa; display: flex; align-items: center; }
+  .filter-btn-wrap { position: relative; }
+  .btn-filter { padding: 7px 12px; font-size: 12px; border: 0.5px solid #d0d0c8; border-radius: 6px; background: #fff; color: #444; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: inherit; font-weight: 500; }
+  .btn-filter:hover { border-color: #534AB7; color: #534AB7; }
+  .btn-filter svg { flex-shrink: 0; }
+
+  .filter-popover { position: absolute; top: calc(100% + 8px); right: 0; background: #fff; border: 0.5px solid #e0e0da; border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,0.12); padding: 16px; min-width: 300px; z-index: 20; }
+  .filter-popover::before { content: ''; position: absolute; top: -6px; right: 16px; width: 12px; height: 12px; background: #fff; border-left: 0.5px solid #e0e0da; border-top: 0.5px solid #e0e0da; transform: rotate(45deg); }
+  .popover-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 0.5px solid #e8e8e4; }
+  .popover-title { font-size: 13px; font-weight: 500; color: #1a1a2e; }
+  .popover-close { background: transparent; border: none; font-size: 18px; color: #888; cursor: pointer; line-height: 1; padding: 0 4px; }
+  .popover-close:hover { color: #1a1a2e; }
+  .field-select { width: 100%; padding: 8px 10px; font-size: 12px; border: 0.5px solid #d0d0c8; border-radius: 6px; background: #fff; color: #444; font-family: inherit; margin-bottom: 10px; }
+  .field-select:focus { outline: none; border-color: #534AB7; }
+  .value-group-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.04em; margin: 8px 0 6px; font-weight: 500; }
+  .value-options { max-height: 220px; overflow-y: auto; margin-bottom: 12px; padding-right: 4px; }
+  .value-option { display: flex; align-items: center; gap: 9px; padding: 6px 6px; font-size: 12px; color: #333; cursor: pointer; border-radius: 6px; user-select: none; }
+  .value-option:hover { background: #fafafa; }
+  .value-option.selected { background: #f7f6ff; }
+  .popover-actions { display: flex; justify-content: flex-end; }
+
+  .chips-row { padding: 10px 14px; display: flex; flex-wrap: wrap; gap: 6px; border-bottom: 0.5px solid #e0e0da; background: #fafafa; }
+  .chip-filter { display: inline-flex; align-items: center; gap: 2px; padding: 3px 4px 3px 10px; background: #fff; border: 0.5px solid #d0d0c8; border-radius: 999px; font-size: 11px; color: #444; }
+  .chip-filter-close { background: transparent; border: none; cursor: pointer; padding: 2px 6px; color: #888; border-radius: 999px; line-height: 1; font-size: 13px; font-family: inherit; }
+  .chip-filter-close:hover { color: #c94b4b; }
 
   .articles-scroll { max-height: 520px; overflow-y: auto; }
   .articles-table { width: 100%; font-size: 12px; border-collapse: collapse; }
-  .articles-table th { text-align: left; font-size: 10px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.04em; padding: 10px 14px; background: #fafafa; border-bottom: 0.5px solid #e0e0da; position: sticky; top: 0; cursor: pointer; user-select: none; }
+  .articles-table th { text-align: left; font-size: 10px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.04em; padding: 10px 12px; background: #fafafa; border-bottom: 0.5px solid #e0e0da; position: sticky; top: 0; cursor: pointer; user-select: none; }
   .articles-table th:hover { color: #534AB7; }
   .articles-table th .sort-arrow { font-size: 9px; margin-left: 3px; color: #c0c0b8; }
   .articles-table th.sorted .sort-arrow { color: #534AB7; }
-  .articles-table td { padding: 9px 14px; border-bottom: 0.5px solid #f0f0ec; vertical-align: middle; color: #333; }
+  .articles-table td { padding: 9px 12px; border-bottom: 0.5px solid #f0f0ec; vertical-align: middle; color: #333; }
   .articles-table tbody tr { cursor: pointer; }
   .articles-table tr:hover td { background: #fafafa; }
   .articles-table tr.selected td { background: #f7f6ff; }
   .col-check { width: 28px; }
-  .col-course { width: 180px; }
-  .col-category { width: 130px; color: #666; }
+  .col-course { width: 160px; }
+  .col-display { width: 120px; color: #666; }
+  .col-group { width: 100px; color: #666; }
   .course-dropdown { width: 100%; padding: 4px 8px; font-size: 11px; border: 0.5px solid #e0e0da; border-radius: 5px; background: #fff; color: #444; cursor: pointer; font-family: inherit; }
   .course-dropdown:focus { outline: none; border-color: #534AB7; }
   .course-dropdown.is-other { color: #999; font-style: italic; }
   input[type="checkbox"] { accent-color: #534AB7; cursor: pointer; }
 
-  .bulk-bar { background: #3C3489; color: #fff; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
-  .bulk-bar select { padding: 4px 8px; font-size: 11px; border-radius: 5px; border: none; cursor: pointer; font-family: inherit; }
-  .bulk-bar-left { display: flex; align-items: center; gap: 10px; }
+  .bulk-bar { padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; transition: background 0.15s, color 0.15s; }
+  .bulk-bar.active { background: #3C3489; color: #fff; }
+  .bulk-bar.muted { background: #fafafa; color: #aaa; border-bottom: 0.5px solid #e8e8e4; }
+  .bulk-bar select { padding: 4px 10px; font-size: 11px; border-radius: 5px; cursor: pointer; font-family: inherit; border: none; }
+  .bulk-bar.muted select { background: #fff; color: #aaa; border: 0.5px solid #e0e0da; cursor: not-allowed; }
+  .bulk-bar-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .bulk-link { color: #fff; background: transparent; border: none; cursor: pointer; font-size: 12px; text-decoration: underline; font-family: inherit; }
 
-  .empty-state { padding: 48px 40px; text-align: left; }
-  .empty-icon { width: 44px; height: 44px; margin: 0 0 16px; background: #EEEDFE; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #534AB7; }
+  .empty-state { padding: 48px 40px; text-align: center; }
+  .empty-icon { width: 44px; height: 44px; margin: 0 auto 14px; background: #EEEDFE; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #534AB7; }
   .empty-title { font-size: 14px; font-weight: 500; color: #1a1a2e; margin-bottom: 6px; }
-  .empty-desc { font-size: 12px; color: #666; max-width: 440px; margin: 0 0 20px; line-height: 1.6; }
-  .empty-actions { display: flex; gap: 8px; justify-content: flex-start; }
+  .empty-desc { font-size: 12px; color: #666; max-width: 420px; margin: 0 auto 22px; line-height: 1.6; text-align: left; }
+  .empty-actions { display: flex; gap: 8px; justify-content: center; }
 
   .confirm-overlay { position: fixed; inset: 0; background: rgba(26,26,46,0.4); display: flex; align-items: center; justify-content: center; z-index: 100; }
   .confirm-box { background: #fff; border-radius: 12px; padding: 20px; max-width: 360px; width: 90%; box-shadow: 0 6px 28px rgba(0,0,0,0.18); }
@@ -167,16 +193,23 @@ const translations = {
     'courses.form.save': 'Lägg till',
     'courses.form.cancel': 'Avbryt',
     'courses.other': 'Övrigt',
-    'courses.otherHint': 'Okopplade artiklar hamnar här',
     'articles.title': 'Artiklar',
     'articles.search': 'Sök artiklar…',
-    'articles.filterAll': 'Alla rätter',
-    'articles.filterUnmapped': 'Bara okopplade',
     'articles.th.name': 'Artikel',
-    'articles.th.category': 'Kategori',
+    'articles.th.displayCategory': 'Visningskategori',
+    'articles.th.productGroup': 'Produktgrupp',
     'articles.th.course': 'Rätt',
     'articles.empty': 'Inga artiklar matchar.',
+    'filter.addBtn': 'Lägg till filter',
+    'filter.title': 'Lägg till filter',
+    'filter.selectField': 'Välj fält',
+    'filter.field.course': 'Rätt',
+    'filter.field.displayCategory': 'Visningskategori',
+    'filter.field.productGroup': 'Produktgrupp',
+    'filter.valuesLabel': 'Värden',
+    'filter.create': 'Skapa',
     'bulk.selected': '{n} valda',
+    'bulk.none': 'Markera artiklar för att koppla',
     'bulk.assignTo': 'Koppla till:',
     'bulk.choose': 'Välj rätt…',
     'bulk.clear': 'Avmarkera',
@@ -220,16 +253,23 @@ const translations = {
     'courses.form.save': 'Add',
     'courses.form.cancel': 'Cancel',
     'courses.other': 'Other',
-    'courses.otherHint': 'Unmapped articles land here',
     'articles.title': 'Articles',
     'articles.search': 'Search articles…',
-    'articles.filterAll': 'All courses',
-    'articles.filterUnmapped': 'Unmapped only',
     'articles.th.name': 'Article',
-    'articles.th.category': 'Category',
+    'articles.th.displayCategory': 'Display category',
+    'articles.th.productGroup': 'Product group',
     'articles.th.course': 'Course',
     'articles.empty': 'No articles match.',
+    'filter.addBtn': 'Add filter',
+    'filter.title': 'Add filter',
+    'filter.selectField': 'Select field',
+    'filter.field.course': 'Course',
+    'filter.field.displayCategory': 'Display category',
+    'filter.field.productGroup': 'Product group',
+    'filter.valuesLabel': 'Values',
+    'filter.create': 'Create',
     'bulk.selected': '{n} selected',
+    'bulk.none': 'Select articles to assign',
     'bulk.assignTo': 'Assign to:',
     'bulk.choose': 'Choose course…',
     'bulk.clear': 'Clear',
@@ -261,10 +301,13 @@ let draggedCourseId = null;
 let addFormOpen = false;
 let addFormValue = '';
 let searchQuery = '';
-let courseFilter = 'all';
 let selected = new Set();
 let sortKey = 'name';
 let sortDir = 'asc';
+let filters = [];
+let filterMenuOpen = false;
+let filterDraftField = '';
+let filterDraftValues = new Set();
 
 function t(key, vars) {
   let s = (translations[lang] && translations[lang][key]) || key;
@@ -282,40 +325,43 @@ function initData() {
       { id: 4, name: 'Drycker' }
     ];
     articles = [
-      { id: 1, name: 'Beef Tartare', category: 'Starters', courseId: 1 },
-      { id: 2, name: 'Scallop Ceviche', category: 'Starters', courseId: 1 },
-      { id: 3, name: 'Beet Salad', category: 'Starters', courseId: 1 },
-      { id: 4, name: 'Tuna Crudo', category: 'Starters', courseId: 1 },
-      { id: 5, name: 'Dover Sole', category: 'Fish', courseId: 2 },
-      { id: 6, name: 'Rack of Lamb', category: 'Meat', courseId: 2 },
-      { id: 7, name: 'Duck Confit', category: 'Meat', courseId: 2 },
-      { id: 8, name: 'Wild Mushroom Risotto', category: 'Vegetarian', courseId: 2 },
-      { id: 9, name: 'Cheese Plate', category: 'Desserts', courseId: 3 },
-      { id: 10, name: 'Chocolate Mousse', category: 'Desserts', courseId: 3 },
-      { id: 11, name: 'Crème Brûlée', category: 'Desserts', courseId: 3 },
-      { id: 12, name: 'Chablis', category: 'Wine', courseId: 4 },
-      { id: 13, name: 'Pripps Blå', category: 'Beer', courseId: 4 },
-      { id: 14, name: 'Espresso', category: 'Hot drinks', courseId: 4 },
-      { id: 15, name: 'House Red', category: 'Wine', courseId: 4 },
-      { id: 16, name: 'Bread Basket', category: 'Sides', courseId: null },
-      { id: 17, name: 'Olive Plate', category: 'Sides', courseId: null }
+      { id: 1, name: 'Beef Tartare', productGroup: 'Mat', displayCategory: 'Starters', courseId: 1 },
+      { id: 2, name: 'Scallop Ceviche', productGroup: 'Mat', displayCategory: 'Starters', courseId: 1 },
+      { id: 3, name: 'Beet Salad', productGroup: 'Mat', displayCategory: 'Starters', courseId: 1 },
+      { id: 4, name: 'Tuna Crudo', productGroup: 'Mat', displayCategory: 'Starters', courseId: 1 },
+      { id: 5, name: 'Dover Sole', productGroup: 'Mat', displayCategory: 'Fish', courseId: 2 },
+      { id: 6, name: 'Rack of Lamb', productGroup: 'Mat', displayCategory: 'Meat', courseId: 2 },
+      { id: 7, name: 'Duck Confit', productGroup: 'Mat', displayCategory: 'Meat', courseId: 2 },
+      { id: 8, name: 'Wild Mushroom Risotto', productGroup: 'Mat', displayCategory: 'Vegetarian', courseId: 2 },
+      { id: 9, name: 'Cheese Plate', productGroup: 'Mat', displayCategory: 'Desserts', courseId: 3 },
+      { id: 10, name: 'Chocolate Mousse', productGroup: 'Mat', displayCategory: 'Desserts', courseId: 3 },
+      { id: 11, name: 'Crème Brûlée', productGroup: 'Mat', displayCategory: 'Desserts', courseId: 3 },
+      { id: 12, name: 'Chablis', productGroup: 'Alkohol', displayCategory: 'Wine', courseId: 4 },
+      { id: 13, name: 'Pripps Blå', productGroup: 'Alkohol', displayCategory: 'Beer', courseId: 4 },
+      { id: 14, name: 'Espresso', productGroup: 'Alkoholfritt', displayCategory: 'Hot drinks', courseId: 4 },
+      { id: 15, name: 'House Red', productGroup: 'Alkohol', displayCategory: 'Wine', courseId: 4 },
+      { id: 16, name: 'Bread Basket', productGroup: 'Mat', displayCategory: 'Sides', courseId: null },
+      { id: 17, name: 'Olive Plate', productGroup: 'Mat', displayCategory: 'Sides', courseId: null }
     ];
   } else {
     courses = [];
     articles = [
-      { id: 1, name: 'Beef Tartare', category: 'Starters', courseId: null },
-      { id: 2, name: 'Scallop Ceviche', category: 'Starters', courseId: null },
-      { id: 3, name: 'Dover Sole', category: 'Fish', courseId: null },
-      { id: 4, name: 'Rack of Lamb', category: 'Meat', courseId: null },
-      { id: 5, name: 'Cheese Plate', category: 'Desserts', courseId: null },
-      { id: 6, name: 'Chablis', category: 'Wine', courseId: null },
-      { id: 7, name: 'Pripps Blå', category: 'Beer', courseId: null },
-      { id: 8, name: 'Bread Basket', category: 'Sides', courseId: null }
+      { id: 1, name: 'Beef Tartare', productGroup: 'Mat', displayCategory: 'Starters', courseId: null },
+      { id: 2, name: 'Scallop Ceviche', productGroup: 'Mat', displayCategory: 'Starters', courseId: null },
+      { id: 3, name: 'Dover Sole', productGroup: 'Mat', displayCategory: 'Fish', courseId: null },
+      { id: 4, name: 'Rack of Lamb', productGroup: 'Mat', displayCategory: 'Meat', courseId: null },
+      { id: 5, name: 'Cheese Plate', productGroup: 'Mat', displayCategory: 'Desserts', courseId: null },
+      { id: 6, name: 'Chablis', productGroup: 'Alkohol', displayCategory: 'Wine', courseId: null },
+      { id: 7, name: 'Pripps Blå', productGroup: 'Alkohol', displayCategory: 'Beer', courseId: null },
+      { id: 8, name: 'Bread Basket', productGroup: 'Mat', displayCategory: 'Sides', courseId: null }
     ];
   }
   selected = new Set();
   searchQuery = '';
-  courseFilter = 'all';
+  filters = [];
+  filterMenuOpen = false;
+  filterDraftField = '';
+  filterDraftValues = new Set();
   addFormOpen = false;
   addFormValue = '';
 }
@@ -325,21 +371,31 @@ function articlesInCourse(courseId) {
   return articles.filter(a => a.courseId === courseId);
 }
 
+function articleMatchesFilter(a, f) {
+  if (f.field === 'course') {
+    return f.values.some(v => (v === 'other' ? a.courseId === null : a.courseId === Number(v)));
+  }
+  if (f.field === 'displayCategory') return f.values.includes(a.displayCategory);
+  if (f.field === 'productGroup') return f.values.includes(a.productGroup);
+  return true;
+}
+
 function visibleArticles() {
   let list = articles.slice();
-  if (courseFilter === 'unmapped') list = list.filter(a => a.courseId === null);
-  else if (courseFilter !== 'all') {
-    const cid = courseFilter === 'other' ? null : Number(courseFilter);
-    list = list.filter(a => a.courseId === cid);
-  }
+  filters.forEach(f => { list = list.filter(a => articleMatchesFilter(a, f)); });
   if (searchQuery.trim()) {
     const q = searchQuery.trim().toLowerCase();
-    list = list.filter(a => a.name.toLowerCase().includes(q) || a.category.toLowerCase().includes(q));
+    list = list.filter(a =>
+      a.name.toLowerCase().includes(q) ||
+      a.displayCategory.toLowerCase().includes(q) ||
+      a.productGroup.toLowerCase().includes(q)
+    );
   }
   list.sort((a, b) => {
     let va, vb;
     if (sortKey === 'name') { va = a.name; vb = b.name; }
-    else if (sortKey === 'category') { va = a.category; vb = b.category; }
+    else if (sortKey === 'displayCategory') { va = a.displayCategory; vb = b.displayCategory; }
+    else if (sortKey === 'productGroup') { va = a.productGroup; vb = b.productGroup; }
     else if (sortKey === 'course') { va = courseNameFor(a.courseId); vb = courseNameFor(b.courseId); }
     const cmp = String(va).localeCompare(String(vb));
     return sortDir === 'asc' ? cmp : -cmp;
@@ -451,13 +507,8 @@ function renderCoursesPanel() {
 }
 
 function renderAddForm() {
-  const templates = [
-    { key: 'course.tpl.appetizers' },
-    { key: 'course.tpl.mains' },
-    { key: 'course.tpl.desserts' },
-    { key: 'course.tpl.drinks' }
-  ];
-  const chips = templates.map(tpl => `<button class="chip" onclick="useTemplate('${tpl.key}')">${t(tpl.key)}</button>`).join('');
+  const templates = ['course.tpl.appetizers','course.tpl.mains','course.tpl.desserts','course.tpl.drinks'];
+  const chips = templates.map(k => `<button class="chip" onclick="useTemplate('${k}')">${t(k)}</button>`).join('');
   const canSave = addFormValue.trim().length > 0;
   return `
     <div class="add-course-form">
@@ -472,54 +523,135 @@ function renderAddForm() {
   `;
 }
 
+function flatChips() {
+  const out = [];
+  filters.forEach(f => f.values.forEach(v => out.push({ field: f.field, value: v, label: filterValueLabel(f.field, v) })));
+  return out;
+}
+
+function filterValueLabel(field, value) {
+  if (field === 'course') {
+    if (value === 'other') return t('courses.other');
+    const c = courses.find(c => c.id === Number(value));
+    return c ? c.name : String(value);
+  }
+  return String(value);
+}
+
+function uniqueFieldValues(field) {
+  if (field === 'course') {
+    const vals = courses.map(c => ({ value: String(c.id), label: c.name }));
+    vals.push({ value: 'other', label: t('courses.other') });
+    return vals;
+  }
+  if (field === 'displayCategory') {
+    const set = new Set(articles.map(a => a.displayCategory));
+    return Array.from(set).sort().map(v => ({ value: v, label: v }));
+  }
+  if (field === 'productGroup') {
+    const set = new Set(articles.map(a => a.productGroup));
+    return Array.from(set).sort().map(v => ({ value: v, label: v }));
+  }
+  return [];
+}
+
+function renderFilterPopover() {
+  if (!filterMenuOpen) return '';
+  const fieldOpts = [
+    { value: '', label: t('filter.selectField') },
+    { value: 'course', label: t('filter.field.course') },
+    { value: 'displayCategory', label: t('filter.field.displayCategory') },
+    { value: 'productGroup', label: t('filter.field.productGroup') }
+  ];
+  const fieldSelectHtml = fieldOpts.map(o =>
+    `<option value="${o.value}" ${filterDraftField === o.value ? 'selected' : ''}>${escapeHtml(o.label)}</option>`
+  ).join('');
+  let valuesBlock = '';
+  if (filterDraftField) {
+    const vals = uniqueFieldValues(filterDraftField);
+    const items = vals.map(v => {
+      const checked = filterDraftValues.has(v.value);
+      return `
+        <label class="value-option ${checked ? 'selected' : ''}">
+          <input type="checkbox" data-val="${escapeHtml(v.value)}" ${checked ? 'checked' : ''}>
+          <span>${escapeHtml(v.label)}</span>
+        </label>
+      `;
+    }).join('');
+    valuesBlock = `
+      <div class="value-group-label">${t('filter.valuesLabel')}</div>
+      <div class="value-options">${items}</div>
+    `;
+  }
+  const canCreate = filterDraftField && filterDraftValues.size > 0;
+  return `
+    <div class="filter-popover">
+      <div class="popover-head">
+        <span class="popover-title">${t('filter.title')}</span>
+        <button class="popover-close" onclick="closeFilterMenu()">×</button>
+      </div>
+      <select id="fieldSelect" class="field-select">${fieldSelectHtml}</select>
+      ${valuesBlock}
+      <div class="popover-actions">
+        <button class="btn-p" onclick="applyFilter()" ${canCreate ? '' : 'disabled'}>${t('filter.create')}</button>
+      </div>
+    </div>
+  `;
+}
+
 function renderArticlesPanel() {
   const list = visibleArticles();
   const selectedCount = list.filter(a => selected.has(a.id)).length;
-  const filterOptions = [
-    `<option value="all">${t('articles.filterAll')}</option>`,
-    `<option value="unmapped">${t('articles.filterUnmapped')}</option>`,
-    ...courses.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`),
-    `<option value="other">${t('courses.other')}</option>`
-  ].map(o => {
-    const val = o.match(/value="([^"]+)"/)[1];
-    if (val === courseFilter) return o.replace('<option', '<option selected');
-    return o;
-  }).join('');
   const bulkOptions = [
     `<option value="">${t('bulk.choose')}</option>`,
     ...courses.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`),
     `<option value="other">${t('courses.other')}</option>`
   ].join('');
   const rows = list.length === 0
-    ? `<tr><td colspan="4" style="text-align:center;color:#888;padding:40px 14px;">${t('articles.empty')}</td></tr>`
+    ? `<tr><td colspan="5" style="text-align:center;color:#888;padding:40px 14px;">${t('articles.empty')}</td></tr>`
     : list.map(a => {
         const checked = selected.has(a.id) ? 'checked' : '';
         const selClass = selected.has(a.id) ? ' class="selected"' : '';
-        const courseDropdown = renderCourseDropdown(a);
         return `
           <tr${selClass} data-row-aid="${a.id}">
             <td class="col-check"><input type="checkbox" data-aid="${a.id}" ${checked}></td>
             <td>${escapeHtml(a.name)}</td>
-            <td class="col-category">${escapeHtml(a.category)}</td>
-            <td class="col-course">${courseDropdown}</td>
+            <td class="col-display">${escapeHtml(a.displayCategory)}</td>
+            <td class="col-group">${escapeHtml(a.productGroup)}</td>
+            <td class="col-course">${renderCourseDropdown(a)}</td>
           </tr>
         `;
       }).join('');
-  const sortArrow = dir => dir === 'asc' ? '↑' : '↓';
   const th = (key, label) => {
     const isSorted = sortKey === key;
-    return `<th class="${isSorted ? 'sorted' : ''}" data-sort="${key}">${label} <span class="sort-arrow">${isSorted ? sortArrow(sortDir) : '↕'}</span></th>`;
+    const arrow = isSorted ? (sortDir === 'asc' ? '↑' : '↓') : '↕';
+    return `<th class="${isSorted ? 'sorted' : ''}" data-sort="${key}">${label} <span class="sort-arrow">${arrow}</span></th>`;
   };
-  const bulk = selected.size > 0 ? `
-    <div class="bulk-bar">
+  const isBulkActive = selected.size > 0;
+  const bulkClass = isBulkActive ? 'active' : 'muted';
+  const bulkLeftText = isBulkActive ? t('bulk.selected', { n: selected.size }) : t('bulk.none');
+  const bulkBar = `
+    <div class="bulk-bar ${bulkClass}">
       <div class="bulk-bar-left">
-        <span>${t('bulk.selected', { n: selected.size })}</span>
+        <span>${bulkLeftText}</span>
         <span>${t('bulk.assignTo')}</span>
-        <select id="bulkAssign" onchange="doBulkAssign(this.value)">${bulkOptions}</select>
+        <select id="bulkAssign" ${isBulkActive ? '' : 'disabled'} onchange="doBulkAssign(this.value)">${bulkOptions}</select>
       </div>
-      <button class="bulk-link" onclick="clearSelection()">${t('bulk.clear')}</button>
+      ${isBulkActive ? `<button class="bulk-link" onclick="clearSelection()">${t('bulk.clear')}</button>` : ''}
+    </div>
+  `;
+  const chips = flatChips();
+  const chipsRow = chips.length > 0 ? `
+    <div class="chips-row">
+      ${chips.map(c => `
+        <span class="chip-filter">
+          ${escapeHtml(c.label)}
+          <button class="chip-filter-close" onclick="removeChip('${c.field}','${escapeHtml(String(c.value))}')">×</button>
+        </span>
+      `).join('')}
     </div>
   ` : '';
+  const filterIcon = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 2h10l-3.7 4.5v4l-2.6-1v-3L1 2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none"/></svg>`;
   return `
     <div class="panel articles-panel">
       <div class="articles-head">
@@ -529,16 +661,21 @@ function renderArticlesPanel() {
           </span>
           <input id="searchInput" type="text" placeholder="${t('articles.search')}" value="${escapeHtml(searchQuery)}">
         </div>
-        <select id="filterSelect" class="filter-select">${filterOptions}</select>
+        <div class="filter-btn-wrap">
+          <button class="btn-filter" onclick="toggleFilterMenu()">${filterIcon} ${t('filter.addBtn')}</button>
+          ${renderFilterPopover()}
+        </div>
       </div>
-      ${bulk}
+      ${chipsRow}
+      ${bulkBar}
       <div class="articles-scroll">
         <table class="articles-table">
           <thead>
             <tr>
               <th class="col-check"><input type="checkbox" id="selectAll" ${list.length > 0 && selectedCount === list.length ? 'checked' : ''}></th>
               ${th('name', t('articles.th.name'))}
-              ${th('category', t('articles.th.category'))}
+              ${th('displayCategory', t('articles.th.displayCategory'))}
+              ${th('productGroup', t('articles.th.productGroup'))}
               ${th('course', t('articles.th.course'))}
             </tr>
           </thead>
@@ -561,11 +698,13 @@ function renderCourseDropdown(a) {
 function attachHandlers() {
   const search = document.getElementById('searchInput');
   if (search) {
-    search.addEventListener('input', e => { searchQuery = e.target.value; const pos = e.target.selectionStart; render(); const s = document.getElementById('searchInput'); if (s) { s.focus(); s.setSelectionRange(pos, pos); } });
-  }
-  const filter = document.getElementById('filterSelect');
-  if (filter) {
-    filter.addEventListener('change', e => { courseFilter = e.target.value; selected = new Set(); render(); });
+    search.addEventListener('input', e => {
+      searchQuery = e.target.value;
+      const pos = e.target.selectionStart;
+      render();
+      const s = document.getElementById('searchInput');
+      if (s) { s.focus(); s.setSelectionRange(pos, pos); }
+    });
   }
   const selectAll = document.getElementById('selectAll');
   if (selectAll) {
@@ -617,11 +756,75 @@ function attachHandlers() {
   });
   const addInput = document.getElementById('addInput');
   if (addInput) {
-    addInput.addEventListener('input', e => { addFormValue = e.target.value; const btn = document.querySelector('.add-course-form .btn-p'); if (btn) btn.disabled = !addFormValue.trim(); });
-    addInput.addEventListener('keydown', e => { if (e.key === 'Enter' && addFormValue.trim()) saveAdd(); else if (e.key === 'Escape') cancelAdd(); });
+    addInput.addEventListener('input', e => {
+      addFormValue = e.target.value;
+      const btn = document.querySelector('.add-course-form .btn-p');
+      if (btn) btn.disabled = !addFormValue.trim();
+    });
+    addInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && addFormValue.trim()) saveAdd();
+      else if (e.key === 'Escape') cancelAdd();
+    });
     addInput.focus();
     addInput.setSelectionRange(addInput.value.length, addInput.value.length);
   }
+  const fieldSelect = document.getElementById('fieldSelect');
+  if (fieldSelect) {
+    fieldSelect.addEventListener('change', e => {
+      filterDraftField = e.target.value;
+      filterDraftValues = new Set();
+      render();
+    });
+  }
+  document.querySelectorAll('.value-option input[type="checkbox"][data-val]').forEach(el => {
+    el.addEventListener('change', e => {
+      const v = e.target.getAttribute('data-val');
+      if (e.target.checked) filterDraftValues.add(v);
+      else filterDraftValues.delete(v);
+      render();
+    });
+  });
+  if (filterMenuOpen) {
+    setTimeout(() => { document.addEventListener('click', handleDocClickForFilter); }, 0);
+  }
+}
+
+function handleDocClickForFilter(e) {
+  if (!filterMenuOpen) { document.removeEventListener('click', handleDocClickForFilter); return; }
+  if (!e.target.closest('.filter-btn-wrap')) {
+    document.removeEventListener('click', handleDocClickForFilter);
+    closeFilterMenu();
+  }
+}
+
+function toggleFilterMenu() {
+  filterMenuOpen = !filterMenuOpen;
+  if (!filterMenuOpen) { filterDraftField = ''; filterDraftValues = new Set(); }
+  render();
+}
+function closeFilterMenu() {
+  filterMenuOpen = false;
+  filterDraftField = '';
+  filterDraftValues = new Set();
+  render();
+}
+function applyFilter() {
+  if (!filterDraftField || filterDraftValues.size === 0) return;
+  const existing = filters.find(f => f.field === filterDraftField);
+  const newValues = Array.from(filterDraftValues);
+  if (existing) {
+    newValues.forEach(v => { if (!existing.values.includes(v)) existing.values.push(v); });
+  } else {
+    filters.push({ field: filterDraftField, values: newValues });
+  }
+  closeFilterMenu();
+}
+function removeChip(field, value) {
+  const f = filters.find(x => x.field === field);
+  if (!f) return;
+  f.values = f.values.filter(v => v !== value);
+  if (f.values.length === 0) filters = filters.filter(x => x !== f);
+  render();
 }
 
 function handleDragStart(e) {
@@ -674,8 +877,7 @@ function useTemplate(key) {
 function saveAdd() {
   const name = addFormValue.trim();
   if (!name) return;
-  const newCourse = { id: nextCourseId++, name };
-  courses.push(newCourse);
+  courses.push({ id: nextCourseId++, name });
   addFormOpen = false;
   addFormValue = '';
   render();
@@ -706,6 +908,10 @@ function confirmDelete(id) {
   const name = c.name;
   articles.forEach(a => { if (a.courseId === id) a.courseId = null; });
   courses = courses.filter(x => x.id !== id);
+  filters.forEach(f => {
+    if (f.field === 'course') f.values = f.values.filter(v => v === 'other' || Number(v) !== id);
+  });
+  filters = filters.filter(f => f.values.length > 0);
   closeConfirm();
   render();
   showToast(t('toast.courseDeleted', { name }));
@@ -719,7 +925,7 @@ function assignArticle(aid, value) {
 }
 
 function doBulkAssign(value) {
-  if (!value) return;
+  if (!value || selected.size === 0) return;
   const targetId = value === 'other' ? null : Number(value);
   const targetName = targetId === null ? t('courses.other') : courses.find(c => c.id === targetId).name;
   let n = 0;
