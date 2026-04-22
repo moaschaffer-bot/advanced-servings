@@ -73,6 +73,7 @@
   .filter-btn-wrap { position: relative; }
   .btn-filter { padding: 7px 12px; font-size: 12px; border: 0.5px solid #d0d0c8; border-radius: 6px; background: #fff; color: #444; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: inherit; font-weight: 500; }
   .btn-filter:hover { border-color: #534AB7; color: #534AB7; }
+  .btn-filter.active { background: #EEEDFE; border-color: #534AB7; color: #3C3489; }
   .btn-filter svg { flex-shrink: 0; }
 
   .filter-popover { position: absolute; top: calc(100% + 8px); right: 0; background: #fff; border: 0.5px solid #e0e0da; border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,0.12); padding: 16px; min-width: 300px; z-index: 20; }
@@ -118,7 +119,6 @@
   .bulk-bar.active { background: #3C3489; color: #fff; }
   .bulk-bar.muted { background: #fafafa; color: #aaa; border-bottom: 0.5px solid #e8e8e4; }
   .bulk-bar select { padding: 4px 10px; font-size: 11px; border-radius: 5px; cursor: pointer; font-family: inherit; border: none; }
-  .bulk-bar.muted select { background: #fff; color: #aaa; border: 0.5px solid #e0e0da; cursor: not-allowed; }
   .bulk-bar-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .bulk-link { color: #fff; background: transparent; border: none; cursor: pointer; font-size: 12px; text-decoration: underline; font-family: inherit; }
 
@@ -192,7 +192,7 @@ const translations = {
     'courses.form.templates': 'Förslag',
     'courses.form.save': 'Lägg till',
     'courses.form.cancel': 'Avbryt',
-    'courses.other': 'Övrigt',
+    'courses.unassigned': 'Okopplade',
     'articles.title': 'Artiklar',
     'articles.search': 'Sök artiklar…',
     'articles.th.name': 'Artikel',
@@ -201,6 +201,7 @@ const translations = {
     'articles.th.course': 'Rätt',
     'articles.empty': 'Inga artiklar matchar.',
     'filter.addBtn': 'Lägg till filter',
+    'filter.unassignedOnly': 'Endast okopplade',
     'filter.title': 'Lägg till filter',
     'filter.selectField': 'Välj fält',
     'filter.field.course': 'Rätt',
@@ -212,19 +213,21 @@ const translations = {
     'bulk.none': 'Markera artiklar för att koppla',
     'bulk.assignTo': 'Koppla till:',
     'bulk.choose': 'Välj rätt…',
+    'bulk.unassign': '— Okopplad —',
     'bulk.clear': 'Avmarkera',
     'empty.title': 'Skapa din första rätt',
     'empty.desc': 'Rätterna styr i vilken ordning serveringarna skickas till köket. De flesta restauranger använder förrätter, varmrätter, desserter och drycker.',
     'empty.useTemplate': 'Använd standardmall',
     'empty.startScratch': 'Börja från tomt',
     'confirm.delete.title': 'Ta bort {name}?',
-    'confirm.delete.desc': 'Artiklarna i rätten flyttas till Övrigt. Åtgärden kan ångras genom att återskapa rätten.',
+    'confirm.delete.desc': 'Artiklarna i rätten flyttas till Okopplade. Åtgärden kan ångras genom att återskapa rätten.',
     'confirm.delete.confirm': 'Ta bort',
     'confirm.delete.cancel': 'Avbryt',
     'toast.templateApplied': 'Standardmall tillagd',
     'toast.courseAdded': 'Rätten "{name}" tillagd',
     'toast.courseDeleted': 'Rätten "{name}" borttagen',
     'toast.assigned': '{n} artiklar kopplade till {name}',
+    'toast.unassigned': '{n} artiklar är nu okopplade',
     'course.tpl.appetizers': 'Förrätter',
     'course.tpl.mains': 'Varmrätter',
     'course.tpl.desserts': 'Desserter',
@@ -252,7 +255,7 @@ const translations = {
     'courses.form.templates': 'Suggestions',
     'courses.form.save': 'Add',
     'courses.form.cancel': 'Cancel',
-    'courses.other': 'Other',
+    'courses.unassigned': 'Unassigned',
     'articles.title': 'Articles',
     'articles.search': 'Search articles…',
     'articles.th.name': 'Article',
@@ -261,6 +264,7 @@ const translations = {
     'articles.th.course': 'Course',
     'articles.empty': 'No articles match.',
     'filter.addBtn': 'Add filter',
+    'filter.unassignedOnly': 'Only unassigned',
     'filter.title': 'Add filter',
     'filter.selectField': 'Select field',
     'filter.field.course': 'Course',
@@ -272,19 +276,21 @@ const translations = {
     'bulk.none': 'Select articles to assign',
     'bulk.assignTo': 'Assign to:',
     'bulk.choose': 'Choose course…',
+    'bulk.unassign': '— Unassign —',
     'bulk.clear': 'Clear',
     'empty.title': 'Create your first course',
     'empty.desc': 'Courses control the order in which servings are sent to the kitchen. Most restaurants use appetizers, main courses, desserts, and drinks.',
     'empty.useTemplate': 'Use standard template',
     'empty.startScratch': 'Start from scratch',
     'confirm.delete.title': 'Delete {name}?',
-    'confirm.delete.desc': 'Articles in this course are moved to Other. You can undo this by recreating the course.',
+    'confirm.delete.desc': 'Articles in this course are moved to Unassigned. You can undo this by recreating the course.',
     'confirm.delete.confirm': 'Delete',
     'confirm.delete.cancel': 'Cancel',
     'toast.templateApplied': 'Standard template added',
     'toast.courseAdded': 'Course "{name}" added',
     'toast.courseDeleted': 'Course "{name}" deleted',
     'toast.assigned': '{n} articles assigned to {name}',
+    'toast.unassigned': '{n} articles unassigned',
     'course.tpl.appetizers': 'Appetizers',
     'course.tpl.mains': 'Main courses',
     'course.tpl.desserts': 'Desserts',
@@ -372,12 +378,15 @@ function articlesInCourse(courseId) {
 }
 
 function articleMatchesFilter(a, f) {
-  if (f.field === 'course') {
-    return f.values.some(v => (v === 'other' ? a.courseId === null : a.courseId === Number(v)));
-  }
+  if (f.field === 'unassigned') return a.courseId === null;
+  if (f.field === 'course') return f.values.some(v => a.courseId === Number(v));
   if (f.field === 'displayCategory') return f.values.includes(a.displayCategory);
   if (f.field === 'productGroup') return f.values.includes(a.productGroup);
   return true;
+}
+
+function isUnassignedFilterActive() {
+  return filters.some(f => f.field === 'unassigned');
 }
 
 function visibleArticles() {
@@ -404,9 +413,9 @@ function visibleArticles() {
 }
 
 function courseNameFor(id) {
-  if (id === null) return t('courses.other');
+  if (id === null) return t('courses.unassigned');
   const c = courses.find(c => c.id === id);
-  return c ? c.name : t('courses.other');
+  return c ? c.name : t('courses.unassigned');
 }
 
 function renderSidebar() {
@@ -480,7 +489,7 @@ function renderCoursesPanel() {
       <span class="course-handle">⋮⋮</span>
       <div class="course-nr">–</div>
       <div class="course-name-wrap">
-        <div class="course-name">${t('courses.other')}</div>
+        <div class="course-name">${t('courses.unassigned')}</div>
         <div class="course-count">${otherText}</div>
       </div>
       <button class="course-del" style="visibility:hidden">×</button>
@@ -525,13 +534,18 @@ function renderAddForm() {
 
 function flatChips() {
   const out = [];
-  filters.forEach(f => f.values.forEach(v => out.push({ field: f.field, value: v, label: filterValueLabel(f.field, v) })));
+  filters.forEach(f => {
+    if (f.field === 'unassigned') {
+      out.push({ field: 'unassigned', value: 'true', label: t('courses.unassigned') });
+    } else {
+      f.values.forEach(v => out.push({ field: f.field, value: v, label: filterValueLabel(f.field, v) }));
+    }
+  });
   return out;
 }
 
 function filterValueLabel(field, value) {
   if (field === 'course') {
-    if (value === 'other') return t('courses.other');
     const c = courses.find(c => c.id === Number(value));
     return c ? c.name : String(value);
   }
@@ -540,9 +554,7 @@ function filterValueLabel(field, value) {
 
 function uniqueFieldValues(field) {
   if (field === 'course') {
-    const vals = courses.map(c => ({ value: String(c.id), label: c.name }));
-    vals.push({ value: 'other', label: t('courses.other') });
-    return vals;
+    return courses.map(c => ({ value: String(c.id), label: c.name }));
   }
   if (field === 'displayCategory') {
     const set = new Set(articles.map(a => a.displayCategory));
@@ -605,7 +617,7 @@ function renderArticlesPanel() {
   const bulkOptions = [
     `<option value="">${t('bulk.choose')}</option>`,
     ...courses.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`),
-    `<option value="other">${t('courses.other')}</option>`
+    `<option value="unassigned">${t('bulk.unassign')}</option>`
   ].join('');
   const rows = list.length === 0
     ? `<tr><td colspan="5" style="text-align:center;color:#888;padding:40px 14px;">${t('articles.empty')}</td></tr>`
@@ -634,8 +646,10 @@ function renderArticlesPanel() {
     <div class="bulk-bar ${bulkClass}">
       <div class="bulk-bar-left">
         <span>${bulkLeftText}</span>
-        <span>${t('bulk.assignTo')}</span>
-        <select id="bulkAssign" ${isBulkActive ? '' : 'disabled'} onchange="doBulkAssign(this.value)">${bulkOptions}</select>
+        ${isBulkActive ? `
+          <span>${t('bulk.assignTo')}</span>
+          <select id="bulkAssign" onchange="doBulkAssign(this.value)">${bulkOptions}</select>
+        ` : ''}
       </div>
       ${isBulkActive ? `<button class="bulk-link" onclick="clearSelection()">${t('bulk.clear')}</button>` : ''}
     </div>
@@ -652,6 +666,7 @@ function renderArticlesPanel() {
     </div>
   ` : '';
   const filterIcon = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 2h10l-3.7 4.5v4l-2.6-1v-3L1 2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none"/></svg>`;
+  const unassignedActive = isUnassignedFilterActive();
   return `
     <div class="panel articles-panel">
       <div class="articles-head">
@@ -661,6 +676,7 @@ function renderArticlesPanel() {
           </span>
           <input id="searchInput" type="text" placeholder="${t('articles.search')}" value="${escapeHtml(searchQuery)}">
         </div>
+        <button class="btn-filter ${unassignedActive ? 'active' : ''}" onclick="toggleUnassignedFilter()">${t('filter.unassignedOnly')}</button>
         <div class="filter-btn-wrap">
           <button class="btn-filter" onclick="toggleFilterMenu()">${filterIcon} ${t('filter.addBtn')}</button>
           ${renderFilterPopover()}
@@ -690,9 +706,9 @@ function renderCourseDropdown(a) {
   const opts = courses.map(c =>
     `<option value="${c.id}" ${a.courseId === c.id ? 'selected' : ''}>${escapeHtml(c.name)}</option>`
   ).join('');
-  const otherOpt = `<option value="other" ${a.courseId === null ? 'selected' : ''}>${t('courses.other')}</option>`;
+  const unassignedOpt = `<option value="unassigned" ${a.courseId === null ? 'selected' : ''}>${t('bulk.unassign')}</option>`;
   const cls = a.courseId === null ? 'course-dropdown is-other' : 'course-dropdown';
-  return `<select class="${cls}" data-aid="${a.id}" onchange="assignArticle(${a.id}, this.value)">${opts}${otherOpt}</select>`;
+  return `<select class="${cls}" data-aid="${a.id}" onchange="assignArticle(${a.id}, this.value)">${opts}${unassignedOpt}</select>`;
 }
 
 function attachHandlers() {
@@ -819,7 +835,18 @@ function applyFilter() {
   }
   closeFilterMenu();
 }
+function toggleUnassignedFilter() {
+  const existing = filters.find(f => f.field === 'unassigned');
+  if (existing) filters = filters.filter(f => f !== existing);
+  else filters.push({ field: 'unassigned', values: ['true'] });
+  render();
+}
 function removeChip(field, value) {
+  if (field === 'unassigned') {
+    filters = filters.filter(f => f.field !== 'unassigned');
+    render();
+    return;
+  }
   const f = filters.find(x => x.field === field);
   if (!f) return;
   f.values = f.values.filter(v => v !== value);
@@ -909,9 +936,9 @@ function confirmDelete(id) {
   articles.forEach(a => { if (a.courseId === id) a.courseId = null; });
   courses = courses.filter(x => x.id !== id);
   filters.forEach(f => {
-    if (f.field === 'course') f.values = f.values.filter(v => v === 'other' || Number(v) !== id);
+    if (f.field === 'course') f.values = f.values.filter(v => Number(v) !== id);
   });
-  filters = filters.filter(f => f.values.length > 0);
+  filters = filters.filter(f => f.values && f.values.length > 0);
   closeConfirm();
   render();
   showToast(t('toast.courseDeleted', { name }));
@@ -920,14 +947,15 @@ function confirmDelete(id) {
 function assignArticle(aid, value) {
   const a = articles.find(x => x.id === aid);
   if (!a) return;
-  a.courseId = value === 'other' ? null : Number(value);
+  a.courseId = value === 'unassigned' ? null : Number(value);
   render();
 }
 
 function doBulkAssign(value) {
   if (!value || selected.size === 0) return;
-  const targetId = value === 'other' ? null : Number(value);
-  const targetName = targetId === null ? t('courses.other') : courses.find(c => c.id === targetId).name;
+  const isUnassign = value === 'unassigned';
+  const targetId = isUnassign ? null : Number(value);
+  const targetName = isUnassign ? null : courses.find(c => c.id === targetId).name;
   let n = 0;
   selected.forEach(aid => {
     const a = articles.find(x => x.id === aid);
@@ -935,7 +963,7 @@ function doBulkAssign(value) {
   });
   selected = new Set();
   render();
-  showToast(t('toast.assigned', { n, name: targetName }));
+  showToast(isUnassign ? t('toast.unassigned', { n }) : t('toast.assigned', { n, name: targetName }));
 }
 
 function clearSelection() { selected = new Set(); render(); }
