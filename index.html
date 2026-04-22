@@ -8,38 +8,38 @@
   .sidebar-item { font-size: 13px; color: rgba(255,255,255,0.5); padding: 8px 16px; display: flex; align-items: center; gap: 8px; }
   .sidebar-item.active { color: #fff; background: rgba(255,255,255,0.1); }
   .sidebar-item svg { width: 14px; height: 14px; flex-shrink: 0; }
-  .main { flex: 1; padding: 28px 32px; overflow: auto; }
-  .page-title { font-size: 22px; font-weight: 500; color: #1a1a2e; margin-bottom: 20px; }
-  .stepper-wrap { background: #fff; border: 0.5px solid #e0e0da; border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
-  .stepper-top { background: #EEEDFE; padding: 14px 20px; display: flex; align-items: center; gap: 10px; }
+  .main { flex: 1; padding: 36px 48px; overflow: auto; max-width: 1040px; }
+  .page-title { font-size: 22px; font-weight: 500; color: #1a1a2e; margin-bottom: 24px; }
+  .stepper-wrap { background: #fff; border: 0.5px solid #e0e0da; border-radius: 12px; overflow: hidden; margin-bottom: 28px; }
+  .stepper-top { background: #EEEDFE; padding: 16px 24px; display: flex; align-items: center; gap: 12px; }
   .stepper-top-title { font-size: 13px; font-weight: 500; color: #3C3489; }
   .stepper-top-sub { font-size: 12px; color: #534AB7; }
   .tabs { display: flex; border-bottom: 0.5px solid #e0e0da; }
-  .tab { flex: 1; padding: 10px 12px; font-size: 12px; color: #aaa; border-bottom: 2px solid transparent; text-align: center; background: #fff; border-right: 0.5px solid #e0e0da; cursor: default; }
+  .tab { flex: 1; padding: 11px 12px; font-size: 12px; color: #aaa; border-bottom: 2px solid transparent; text-align: center; background: #fff; border-right: 0.5px solid #e0e0da; cursor: default; }
   .tab:last-child { border-right: none; }
   .tab.active { color: #534AB7; border-bottom-color: #534AB7; font-weight: 500; }
   .tab.done { color: #1D9E75; }
   .tab-num { display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border-radius: 50%; font-size: 10px; font-weight: 500; margin-right: 5px; background: #eee; color: #888; }
   .tab.active .tab-num { background: #534AB7; color: #fff; }
   .tab.done .tab-num { background: #1D9E75; color: #fff; }
-  .step { padding: 22px 24px; display: none; }
+  .step { padding: 28px 28px; display: none; min-height: 420px; }
   .step.active { display: block; }
   .step-title { font-size: 15px; font-weight: 500; color: #1a1a2e; margin-bottom: 6px; }
-  .step-desc { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 18px; max-width: 520px; }
-  .orient-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .orient-card { border-radius: 8px; padding: 14px; background: #f2f2ee; border: 0.5px solid #e0e0da; }
-  .orient-card-title { font-size: 13px; font-weight: 500; color: #1a1a2e; margin-bottom: 4px; }
-  .orient-card-desc { font-size: 12px; line-height: 1.55; color: #666; }
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+  .step-desc { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 22px; max-width: 460px; }
+  .orient-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .orient-card { border-radius: 8px; padding: 18px; background: #f2f2ee; border: 0.5px solid #e0e0da; }
+  .orient-card-title { font-size: 13px; font-weight: 500; color: #1a1a2e; margin-bottom: 6px; }
+  .orient-card-desc { font-size: 12px; line-height: 1.6; color: #666; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
   .mode-card { border: 0.5px solid #e0e0da; border-radius: 10px; overflow: hidden; background: #fff; }
   .mode-label { font-size: 11px; font-weight: 500; padding: 8px 12px; border-bottom: 0.5px solid #e0e0da; color: #666; background: #fafaf8; }
-  .pro { font-size: 12px; color: #1D9E75; padding: 2px 0; }
+  .pro { font-size: 12px; color: #1D9E75; padding: 4px 0; }
   .pro::before { content: '+ '; font-weight: 500; }
-  .con { font-size: 12px; color: #888; padding: 2px 0; }
+  .con { font-size: 12px; color: #888; padding: 4px 0; }
   .con::before { content: '— '; }
-  .setup-note { background: #FAEEDA; border-radius: 6px; padding: 8px 12px; font-size: 11px; color: #633806; line-height: 1.5; margin-top: 10px; }
-  .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
-  .choice { border: 1.5px solid #e0e0da; border-radius: 10px; padding: 16px; cursor: pointer; transition: border-color 0.12s; }
+  .setup-note { background: #FAEEDA; border-radius: 6px; padding: 9px 12px; font-size: 11px; color: #633806; line-height: 1.5; margin-top: 14px; }
+  .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
+  .choice { border: 1.5px solid #e0e0da; border-radius: 10px; padding: 18px; cursor: pointer; transition: border-color 0.12s; }
   .choice:hover { border-color: #AFA9EC; }
   .choice.selected { border-color: #534AB7; background: #FAFAFE; }
   .choice-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
@@ -59,17 +59,25 @@
   .btn-g { background: transparent; color: #666; border: 0.5px solid #d0d0c8; border-radius: 6px; padding: 7px 14px; font-size: 13px; cursor: pointer; }
   .btn-g:hover { background: #f0f0ec; }
   .step-ind { font-size: 12px; color: #aaa; }
-  .setting-row { background: #fff; border: 0.5px solid #e0e0da; border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .setting-row { background: #fff; border: 0.5px solid #e0e0da; border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
   .setting-row-label { font-size: 13px; font-weight: 500; color: #1a1a2e; }
   .setting-row-val { font-size: 12px; color: #666; margin-top: 2px; }
   .btn-change { font-size: 12px; padding: 5px 12px; border-radius: 6px; border: 0.5px solid #d0d0c8; background: transparent; color: #534AB7; cursor: pointer; font-weight: 500; }
   .btn-change:hover { background: #EEEDFE; }
-  .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 12px; }
+  .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 12px; }
   .lang-toggle { display: inline-flex; border: 0.5px solid #d0d0c8; border-radius: 999px; overflow: hidden; background: #fff; }
   .lang-btn { padding: 4px 12px; background: transparent; border: none; color: #888; cursor: pointer; font-size: 11px; font-weight: 500; font-family: inherit; }
   .lang-btn.active { background: #534AB7; color: #fff; }
   .demo-toggle { font-size: 11px; color: #aaa; cursor: pointer; }
   .demo-toggle span { text-decoration: underline; }
+  .layouts-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .layouts-title { font-size: 13px; font-weight: 500; color: #1a1a2e; }
+  .layouts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .layout-card { background: #fff; border: 0.5px solid #e0e0da; border-radius: 10px; overflow: hidden; }
+  .layout-preview { background: #f0f0ec; height: 56px; display: flex; align-items: center; justify-content: center; }
+  .layout-meta { padding: 10px 12px; }
+  .layout-name { font-size: 13px; font-weight: 500; color: #1a1a2e; }
+  .layout-sub { font-size: 11px; color: #888; margin-top: 2px; }
 
   .cart { padding: 10px; }
   .cart-row { display: flex; justify-content: space-between; font-size: 11px; color: #555; padding: 3px 0; }
@@ -121,30 +129,30 @@
         </div>
 
         <div class="step active" id="s1">
-          <div class="step-title" data-i18n="s1.title">Det finns två sätt att arbeta med serveringar</div>
-          <div class="step-desc" data-i18n="s1.desc">Välj det som passar hur din restaurang jobbar. Du kan byta när du vill.</div>
+          <div class="step-title" data-i18n="s1.title">Två sätt att arbeta med serveringar</div>
+          <div class="step-desc" data-i18n="s1.desc">Välj det som passar din restaurang.</div>
           <div class="orient-grid">
             <div class="orient-card">
               <div class="orient-card-title" data-i18n="s1.preTitle">Fördefinierade serveringar</div>
-              <div class="orient-card-desc" data-i18n="s1.preDesc">Du sätter upp serveringsstrukturen i förväg — t.ex. Förrätt, Varmrätt, Dessert. Systemet sorterar artiklarna automatiskt när personalen slår in dem.</div>
+              <div class="orient-card-desc" data-i18n="s1.preDesc">Sätt upp strukturen i förväg. Systemet sorterar artiklarna automatiskt.</div>
             </div>
             <div class="orient-card">
               <div class="orient-card-title" data-i18n="s1.flexTitle">Flexibla serveringar</div>
-              <div class="orient-card-desc" data-i18n="s1.flexDesc">Personalen skapar serveringarna direkt i kassan och bestämmer vad som hamnar i varje servering. Inga förinställningar krävs.</div>
+              <div class="orient-card-desc" data-i18n="s1.flexDesc">Personalen skapar serveringarna i kassan. Inga förinställningar.</div>
             </div>
           </div>
         </div>
 
         <div class="step" id="s2">
           <div class="step-title" data-i18n="s2.title">Fördefinierade serveringar</div>
-          <div class="step-desc" data-i18n="s2.desc">Artiklarna sorteras automatiskt i rätt servering baserat på typ. Personalen behöver inte skapa serveringarna manuellt.</div>
+          <div class="step-desc" data-i18n="s2.desc">Artiklarna sorteras automatiskt baserat på typ.</div>
           <div class="two-col">
             <div>
-              <div class="pro" data-i18n="s2.pro1">Serveringarna namnges automatiskt — Förrätt, Varmrätt osv.</div>
-              <div class="pro" data-i18n="s2.pro2">Färre klick för personalen i kassan</div>
-              <div class="pro" data-i18n="s2.pro3">Passar restauranger med fast menystruktur</div>
-              <div class="con" data-i18n="s2.con1">Dryck kopplas inte automatiskt till en specifik kurs</div>
-              <div class="setup-note" data-i18n="s2.setupNote">Kräver förarbete: sätt upp serving priorities och koppla artikelkategorier innan funktionen är aktiv i kassan.</div>
+              <div class="pro" data-i18n="s2.pro1">Serveringarna namnges automatiskt</div>
+              <div class="pro" data-i18n="s2.pro2">Färre klick i kassan</div>
+              <div class="pro" data-i18n="s2.pro3">Passar fast menystruktur</div>
+              <div class="con" data-i18n="s2.con1">Dryck kopplas inte till en specifik kurs</div>
+              <div class="setup-note" data-i18n="s2.setupNote">Kräver uppsättning av serving priorities innan det är aktivt.</div>
             </div>
             <div class="mode-card">
               <div class="mode-label" data-i18n="cart.label">Varukorgen i kassan</div>
@@ -168,14 +176,14 @@
 
         <div class="step" id="s3">
           <div class="step-title" data-i18n="s3.title">Flexibla serveringar</div>
-          <div class="step-desc" data-i18n="s3.desc">Personalen skapar serveringarna i kassan och väljer vad som hamnar var. En servering kan innehålla alla typer av artiklar.</div>
+          <div class="step-desc" data-i18n="s3.desc">Personalen skapar serveringarna i kassan.</div>
           <div class="two-col">
             <div>
-              <div class="pro" data-i18n="s3.pro1">Full kontroll — en servering kan blanda rätter och dryck</div>
+              <div class="pro" data-i18n="s3.pro1">Full kontroll över vad som ingår</div>
               <div class="pro" data-i18n="s3.pro2">Hanterar specialönskemål naturligt</div>
-              <div class="pro" data-i18n="s3.pro3">Inget förarbete — kom igång direkt</div>
-              <div class="con" data-i18n="s3.con1">Serveringarna heter Serving 1, 2, 3 — inga automatiska kursnamn</div>
-              <div class="con" data-i18n="s3.con2">Fler aktiva val för personalen i kassan</div>
+              <div class="pro" data-i18n="s3.pro3">Inget förarbete</div>
+              <div class="con" data-i18n="s3.con1">Serveringarna heter Serving 1, 2, 3</div>
+              <div class="con" data-i18n="s3.con2">Fler aktiva val i kassan</div>
             </div>
             <div class="mode-card">
               <div class="mode-label" data-i18n="cart.label">Varukorgen i kassan</div>
@@ -199,15 +207,15 @@
 
         <div class="step" id="s4">
           <div class="step-title" data-i18n="s4.title">Välj ditt arbetssätt</div>
-          <div class="step-desc" data-i18n="s4.desc">Du hittar den här inställningen under Bordshantering om du vill byta senare.</div>
+          <div class="step-desc" data-i18n="s4.desc">Du kan byta senare under Bordshantering.</div>
           <div class="choice-grid">
             <div class="choice" id="cPre" onclick="pick('pre')">
               <div class="choice-top"><div class="rdot"><div class="rinner"></div></div><div class="choice-name" data-i18n="s4.preName">Fördefinierade serveringar</div></div>
-              <div class="choice-desc" data-i18n="s4.preDesc">Systemet skapar serveringarna åt dig. Kräver att du sätter upp serving priorities.</div>
+              <div class="choice-desc" data-i18n="s4.preDesc">Systemet skapar serveringarna. Kräver uppsättning av serving priorities.</div>
             </div>
             <div class="choice" id="cFlex" onclick="pick('flex')">
               <div class="choice-top"><div class="rdot"><div class="rinner"></div></div><div class="choice-name" data-i18n="s4.flexName">Flexibla serveringar</div></div>
-              <div class="choice-desc" data-i18n="s4.flexDesc">Personalen skapar serveringarna i kassan. Inga förinställningar krävs.</div>
+              <div class="choice-desc" data-i18n="s4.flexDesc">Personalen skapar serveringarna i kassan.</div>
             </div>
           </div>
           <div id="nsBox" style="display:none;" class="next-steps">
@@ -236,14 +244,25 @@
       </div>
     </div>
 
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-      <div style="font-size:13px;font-weight:500;color:#1a1a2e;" data-i18n="layouts.title">Dina bordslayouter</div>
-      <button class="btn-p" style="font-size:12px;padding:5px 14px;" data-i18n="layouts.new">+ Ny karta</button>
-    </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
-      <div style="background:#fff;border:0.5px solid #e0e0da;border-radius:10px;overflow:hidden;"><div style="background:#f0f0ec;height:56px;display:flex;align-items:center;justify-content:center;"><svg width="48" height="32" viewBox="0 0 48 32"><rect x="4" y="4" width="18" height="10" rx="2" fill="#d0d0c8"/><rect x="26" y="4" width="18" height="10" rx="2" fill="#d0d0c8"/><rect x="4" y="18" width="18" height="10" rx="2" fill="#d0d0c8"/><rect x="26" y="18" width="18" height="10" rx="2" fill="#d0d0c8"/></svg></div><div style="padding:10px 12px;"><div style="font-size:13px;font-weight:500;color:#1a1a2e;" data-i18n="layouts.restaurant">Restaurant</div><div style="font-size:11px;color:#888;margin-top:2px;" data-i18n="layouts.restaurantMeta">10 bord · 40 sittplatser</div></div></div>
-      <div style="background:#fff;border:0.5px solid #e0e0da;border-radius:10px;overflow:hidden;"><div style="background:#f0f0ec;height:56px;display:flex;align-items:center;justify-content:center;"><svg width="48" height="32" viewBox="0 0 48 32"><rect x="4" y="4" width="40" height="24" rx="2" fill="#d0d0c8"/></svg></div><div style="padding:10px 12px;"><div style="font-size:13px;font-weight:500;color:#1a1a2e;" data-i18n="layouts.patio">Patio</div><div style="font-size:11px;color:#888;margin-top:2px;" data-i18n="layouts.patioMeta">8 bord · 32 sittplatser</div></div></div>
-      <div style="background:#fff;border:0.5px solid #e0e0da;border-radius:10px;overflow:hidden;"><div style="background:#f0f0ec;height:56px;display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="10" fill="#d0d0c8"/></svg></div><div style="padding:10px 12px;"><div style="font-size:13px;font-weight:500;color:#1a1a2e;" data-i18n="layouts.bar">Bar area</div><div style="font-size:11px;color:#888;margin-top:2px;" data-i18n="layouts.barMeta">Barområde</div></div></div>
+    <div id="layoutsSection">
+      <div class="layouts-head">
+        <div class="layouts-title" data-i18n="layouts.title">Dina bordslayouter</div>
+        <button class="btn-p" style="font-size:12px;padding:5px 14px;" data-i18n="layouts.new">+ Ny karta</button>
+      </div>
+      <div class="layouts-grid">
+        <div class="layout-card">
+          <div class="layout-preview"><svg width="48" height="32" viewBox="0 0 48 32"><rect x="4" y="4" width="18" height="10" rx="2" fill="#d0d0c8"/><rect x="26" y="4" width="18" height="10" rx="2" fill="#d0d0c8"/><rect x="4" y="18" width="18" height="10" rx="2" fill="#d0d0c8"/><rect x="26" y="18" width="18" height="10" rx="2" fill="#d0d0c8"/></svg></div>
+          <div class="layout-meta"><div class="layout-name" data-i18n="layouts.restaurant">Restaurant</div><div class="layout-sub" data-i18n="layouts.restaurantMeta">10 bord · 40 sittplatser</div></div>
+        </div>
+        <div class="layout-card">
+          <div class="layout-preview"><svg width="48" height="32" viewBox="0 0 48 32"><rect x="4" y="4" width="40" height="24" rx="2" fill="#d0d0c8"/></svg></div>
+          <div class="layout-meta"><div class="layout-name" data-i18n="layouts.patio">Patio</div><div class="layout-sub" data-i18n="layouts.patioMeta">8 bord · 32 sittplatser</div></div>
+        </div>
+        <div class="layout-card">
+          <div class="layout-preview"><svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="10" fill="#d0d0c8"/></svg></div>
+          <div class="layout-meta"><div class="layout-name" data-i18n="layouts.bar">Bar area</div><div class="layout-sub" data-i18n="layouts.barMeta">Barområde</div></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -266,37 +285,37 @@ const translations = {
     'tab.2': 'Fördefinierade',
     'tab.3': 'Flexibla',
     'tab.4': 'Välj',
-    's1.title': 'Det finns två sätt att arbeta med serveringar',
-    's1.desc': 'Välj det som passar hur din restaurang jobbar. Du kan byta när du vill.',
+    's1.title': 'Två sätt att arbeta med serveringar',
+    's1.desc': 'Välj det som passar din restaurang.',
     's1.preTitle': 'Fördefinierade serveringar',
-    's1.preDesc': 'Du sätter upp serveringsstrukturen i förväg — t.ex. Förrätt, Varmrätt, Dessert. Systemet sorterar artiklarna automatiskt när personalen slår in dem.',
+    's1.preDesc': 'Sätt upp strukturen i förväg. Systemet sorterar artiklarna automatiskt.',
     's1.flexTitle': 'Flexibla serveringar',
-    's1.flexDesc': 'Personalen skapar serveringarna direkt i kassan och bestämmer vad som hamnar i varje servering. Inga förinställningar krävs.',
+    's1.flexDesc': 'Personalen skapar serveringarna i kassan. Inga förinställningar.',
     's2.title': 'Fördefinierade serveringar',
-    's2.desc': 'Artiklarna sorteras automatiskt i rätt servering baserat på typ. Personalen behöver inte skapa serveringarna manuellt.',
-    's2.pro1': 'Serveringarna namnges automatiskt — Förrätt, Varmrätt osv.',
-    's2.pro2': 'Färre klick för personalen i kassan',
-    's2.pro3': 'Passar restauranger med fast menystruktur',
-    's2.con1': 'Dryck kopplas inte automatiskt till en specifik kurs',
-    's2.setupNote': 'Kräver förarbete: sätt upp serving priorities och koppla artikelkategorier innan funktionen är aktiv i kassan.',
+    's2.desc': 'Artiklarna sorteras automatiskt baserat på typ.',
+    's2.pro1': 'Serveringarna namnges automatiskt',
+    's2.pro2': 'Färre klick i kassan',
+    's2.pro3': 'Passar fast menystruktur',
+    's2.con1': 'Dryck kopplas inte till en specifik kurs',
+    's2.setupNote': 'Kräver uppsättning av serving priorities innan det är aktivt.',
     's2.course1': 'Förrätt',
     's2.course2': 'Varmrätt',
     's2.course3': 'Dryck',
     's2.fireBtn': 'Fire Varmrätt',
     's3.title': 'Flexibla serveringar',
-    's3.desc': 'Personalen skapar serveringarna i kassan och väljer vad som hamnar var. En servering kan innehålla alla typer av artiklar.',
-    's3.pro1': 'Full kontroll — en servering kan blanda rätter och dryck',
+    's3.desc': 'Personalen skapar serveringarna i kassan.',
+    's3.pro1': 'Full kontroll över vad som ingår',
     's3.pro2': 'Hanterar specialönskemål naturligt',
-    's3.pro3': 'Inget förarbete — kom igång direkt',
-    's3.con1': 'Serveringarna heter Serving 1, 2, 3 — inga automatiska kursnamn',
-    's3.con2': 'Fler aktiva val för personalen i kassan',
+    's3.pro3': 'Inget förarbete',
+    's3.con1': 'Serveringarna heter Serving 1, 2, 3',
+    's3.con2': 'Fler aktiva val i kassan',
     's3.empty': 'Tom — lägg till artiklar',
     's4.title': 'Välj ditt arbetssätt',
-    's4.desc': 'Du hittar den här inställningen under Bordshantering om du vill byta senare.',
+    's4.desc': 'Du kan byta senare under Bordshantering.',
     's4.preName': 'Fördefinierade serveringar',
-    's4.preDesc': 'Systemet skapar serveringarna åt dig. Kräver att du sätter upp serving priorities.',
+    's4.preDesc': 'Systemet skapar serveringarna. Kräver uppsättning av serving priorities.',
     's4.flexName': 'Flexibla serveringar',
-    's4.flexDesc': 'Personalen skapar serveringarna i kassan. Inga förinställningar krävs.',
+    's4.flexDesc': 'Personalen skapar serveringarna i kassan.',
     's4.nextStepsTitle': 'Nästa steg för att komma igång',
     's4.ns1': 'Gå till Serving priorities under Bordshantering',
     's4.ns2': 'Skapa dina kurser, t.ex. Förrätt, Varmrätt, Dessert',
@@ -339,37 +358,37 @@ const translations = {
     'tab.2': 'Predefined',
     'tab.3': 'Flexible',
     'tab.4': 'Choose',
-    's1.title': 'There are two ways to work with servings',
-    's1.desc': 'Pick the one that fits how your restaurant works. You can switch anytime.',
+    's1.title': 'Two ways to work with servings',
+    's1.desc': 'Pick the one that fits your restaurant.',
     's1.preTitle': 'Predefined servings',
-    's1.preDesc': 'You set up the serving structure in advance — e.g. Starter, Main, Dessert. The system sorts items automatically as staff rings them up.',
+    's1.preDesc': 'Set the structure upfront. System auto-sorts items.',
     's1.flexTitle': 'Flexible servings',
-    's1.flexDesc': 'Staff creates servings directly at the POS and decides what goes in each serving. No presets required.',
+    's1.flexDesc': 'Staff creates servings at the POS. No presets.',
     's2.title': 'Predefined servings',
-    's2.desc': "Items are sorted automatically into the right serving based on type. Staff doesn't need to create servings manually.",
-    's2.pro1': 'Servings are named automatically — Starter, Main, etc.',
-    's2.pro2': 'Fewer clicks for staff at the POS',
-    's2.pro3': 'Suits restaurants with a fixed menu structure',
-    's2.con1': "Drinks aren't automatically tied to a specific course",
-    's2.setupNote': "Requires setup: configure serving priorities and link item categories before it's active at the POS.",
+    's2.desc': 'Items auto-sort based on type.',
+    's2.pro1': 'Auto-named servings',
+    's2.pro2': 'Fewer clicks at the POS',
+    's2.pro3': 'Suits a fixed menu structure',
+    's2.con1': "Drinks aren't tied to a course",
+    's2.setupNote': "Requires serving priorities to be configured before it's active.",
     's2.course1': 'Starter',
     's2.course2': 'Main',
     's2.course3': 'Drinks',
     's2.fireBtn': 'Fire Main',
     's3.title': 'Flexible servings',
-    's3.desc': 'Staff creates servings at the POS and chooses what goes where. A serving can contain any type of item.',
-    's3.pro1': 'Full control — a serving can mix dishes and drinks',
+    's3.desc': 'Staff creates servings at the POS.',
+    's3.pro1': 'Full control over contents',
     's3.pro2': 'Handles special requests naturally',
-    's3.pro3': 'No setup — get started immediately',
-    's3.con1': 'Servings are named Serving 1, 2, 3 — no automatic course names',
-    's3.con2': 'More active choices for staff at the POS',
+    's3.pro3': 'No setup',
+    's3.con1': 'Servings are named Serving 1, 2, 3',
+    's3.con2': 'More active choices at the POS',
     's3.empty': 'Empty — add items',
     's4.title': 'Choose your way of working',
-    's4.desc': "You'll find this setting under Table management if you want to switch later.",
+    's4.desc': 'You can switch later under Table management.',
     's4.preName': 'Predefined servings',
-    's4.preDesc': 'The system creates servings for you. Requires you to set up serving priorities.',
+    's4.preDesc': 'The system creates servings. Requires serving priorities to be configured.',
     's4.flexName': 'Flexible servings',
-    's4.flexDesc': 'Staff creates servings at the POS. No presets required.',
+    's4.flexDesc': 'Staff creates servings at the POS.',
     's4.nextStepsTitle': 'Next steps to get started',
     's4.ns1': 'Go to Serving priorities under Table management',
     's4.ns2': 'Create your courses, e.g. Starter, Main, Dessert',
@@ -420,6 +439,9 @@ function setLang(l) {
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.getAttribute('data-lang') === l));
   applyTranslations();
 }
+function applyModeVisibility() {
+  document.getElementById('layoutsSection').style.display = isNew ? 'none' : 'block';
+}
 function go(d) {
   if (d === 1 && cur === 4) { completeStepper(); return; }
   const n = cur + d;
@@ -462,8 +484,10 @@ function reopenStepper() {
 function toggleMode() {
   isNew = !isNew;
   document.getElementById('modeLabel').textContent = t(isNew ? 'demo.new' : 'demo.existing');
+  applyModeVisibility();
   if (isNew) { reopenStepper(); } else { document.getElementById('stepperSection').style.display = 'none'; document.getElementById('settingSection').style.display = 'block'; }
 }
 
 applyTranslations();
+applyModeVisibility();
 </script>
