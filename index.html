@@ -1,0 +1,286 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .bo { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f7f7f5; min-height: 560px; display: flex; }
+  .sidebar { width: 192px; background: #1a1a2e; flex-shrink: 0; padding: 16px 0; }
+  .sidebar-logo { color: #fff; font-size: 13px; font-weight: 500; padding: 0 16px 20px; opacity: 0.9; }
+  .sidebar-item { font-size: 13px; color: rgba(255,255,255,0.5); padding: 8px 16px; display: flex; align-items: center; gap: 8px; }
+  .sidebar-item.active { color: #fff; background: rgba(255,255,255,0.1); }
+  .sidebar-item svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .main { flex: 1; padding: 28px 32px; overflow: auto; }
+  .page-title { font-size: 22px; font-weight: 500; color: #1a1a2e; margin-bottom: 20px; }
+  .stepper-wrap { background: #fff; border: 0.5px solid #e0e0da; border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
+  .stepper-top { background: #EEEDFE; padding: 14px 20px; display: flex; align-items: center; gap: 10px; }
+  .stepper-top-title { font-size: 13px; font-weight: 500; color: #3C3489; }
+  .stepper-top-sub { font-size: 12px; color: #534AB7; }
+  .tabs { display: flex; border-bottom: 0.5px solid #e0e0da; }
+  .tab { flex: 1; padding: 10px 12px; font-size: 12px; color: #aaa; border-bottom: 2px solid transparent; text-align: center; background: #fff; border-right: 0.5px solid #e0e0da; cursor: default; }
+  .tab:last-child { border-right: none; }
+  .tab.active { color: #534AB7; border-bottom-color: #534AB7; font-weight: 500; }
+  .tab.done { color: #1D9E75; }
+  .tab-num { display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border-radius: 50%; font-size: 10px; font-weight: 500; margin-right: 5px; background: #eee; color: #888; }
+  .tab.active .tab-num { background: #534AB7; color: #fff; }
+  .tab.done .tab-num { background: #1D9E75; color: #fff; }
+  .step { padding: 22px 24px; display: none; }
+  .step.active { display: block; }
+  .step-title { font-size: 15px; font-weight: 500; color: #1a1a2e; margin-bottom: 6px; }
+  .step-desc { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 18px; max-width: 520px; }
+  .orient-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .orient-card { border-radius: 8px; padding: 14px; background: #f2f2ee; border: 0.5px solid #e0e0da; }
+  .orient-card-title { font-size: 13px; font-weight: 500; color: #1a1a2e; margin-bottom: 4px; }
+  .orient-card-desc { font-size: 12px; line-height: 1.55; color: #666; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+  .mode-card { border: 0.5px solid #e0e0da; border-radius: 10px; overflow: hidden; background: #fff; }
+  .mode-label { font-size: 11px; font-weight: 500; padding: 8px 12px; border-bottom: 0.5px solid #e0e0da; color: #666; background: #fafaf8; }
+  .pro { font-size: 12px; color: #1D9E75; padding: 2px 0; }
+  .pro::before { content: '+ '; font-weight: 500; }
+  .con { font-size: 12px; color: #888; padding: 2px 0; }
+  .con::before { content: '— '; }
+  .setup-note { background: #FAEEDA; border-radius: 6px; padding: 8px 12px; font-size: 11px; color: #633806; line-height: 1.5; margin-top: 10px; }
+  .choice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  .choice { border: 1.5px solid #e0e0da; border-radius: 10px; padding: 16px; cursor: pointer; transition: border-color 0.12s; }
+  .choice:hover { border-color: #AFA9EC; }
+  .choice.selected { border-color: #534AB7; background: #FAFAFE; }
+  .choice-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .rdot { width: 15px; height: 15px; border-radius: 50%; border: 1.5px solid #ccc; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .choice.selected .rdot { border-color: #534AB7; }
+  .rinner { width: 7px; height: 7px; border-radius: 50%; background: #534AB7; display: none; }
+  .choice.selected .rinner { display: block; }
+  .choice-name { font-size: 13px; font-weight: 500; color: #1a1a2e; }
+  .choice-desc { font-size: 12px; color: #666; line-height: 1.55; }
+  .next-steps { background: #EEEDFE; border-radius: 8px; padding: 14px 16px; }
+  .next-steps-title { font-size: 12px; font-weight: 500; color: #3C3489; margin-bottom: 8px; }
+  .ns-item { font-size: 12px; color: #534AB7; padding: 3px 0; display: flex; gap: 6px; }
+  .ns-item::before { content: '→'; flex-shrink: 0; }
+  .footer { display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; border-top: 0.5px solid #e0e0da; background: #fafafa; }
+  .btn-p { background: #534AB7; color: #fff; border: none; border-radius: 6px; padding: 7px 18px; font-size: 13px; font-weight: 500; cursor: pointer; }
+  .btn-p:hover { background: #3C3489; }
+  .btn-g { background: transparent; color: #666; border: 0.5px solid #d0d0c8; border-radius: 6px; padding: 7px 14px; font-size: 13px; cursor: pointer; }
+  .btn-g:hover { background: #f0f0ec; }
+  .step-ind { font-size: 12px; color: #aaa; }
+  .setting-row { background: #fff; border: 0.5px solid #e0e0da; border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .setting-row-label { font-size: 13px; font-weight: 500; color: #1a1a2e; }
+  .setting-row-val { font-size: 12px; color: #666; margin-top: 2px; }
+  .btn-change { font-size: 12px; padding: 5px 12px; border-radius: 6px; border: 0.5px solid #d0d0c8; background: transparent; color: #534AB7; cursor: pointer; font-weight: 500; }
+  .btn-change:hover { background: #EEEDFE; }
+  .demo-toggle { font-size: 11px; color: #aaa; text-align: right; margin-bottom: 8px; cursor: pointer; }
+  .demo-toggle span { text-decoration: underline; }
+
+  .cart { padding: 10px; }
+  .cart-row { display: flex; justify-content: space-between; font-size: 11px; color: #555; padding: 3px 0; }
+  .cart-price { color: #1a1a2e; font-weight: 500; }
+  .serving-header { font-size: 11px; font-weight: 500; border-radius: 5px; padding: 5px 8px; margin-bottom: 4px; margin-top: 6px; display: flex; justify-content: space-between; align-items: center; }
+  .serving-header:first-child { margin-top: 0; }
+  .sh-pre { background: #EEEDFE; color: #3C3489; }
+  .sh-flex { background: #f0f0ec; color: #444; }
+  .sh-badge { font-size: 10px; font-weight: 400; opacity: 0.7; }
+  .cart-divider { border: none; border-top: 0.5px solid #e8e8e4; margin: 6px 0; }
+  .fire-btn { background: #534AB7; color: #fff; border: none; border-radius: 6px; font-size: 11px; font-weight: 500; padding: 6px 10px; width: 100%; margin-top: 8px; cursor: default; }
+  .cart-total { display: flex; justify-content: space-between; font-size: 12px; font-weight: 500; color: #1a1a2e; padding: 6px 0 2px; border-top: 0.5px solid #e0e0da; margin-top: 4px; }
+</style>
+
+<div class="bo">
+  <div class="sidebar">
+    <div class="sidebar-logo">OPEN BackOffice</div>
+    <div class="sidebar-item"><svg viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" fill="rgba(255,255,255,0.4)"/><rect x="8" y="1" width="5" height="5" rx="1" fill="rgba(255,255,255,0.4)"/><rect x="1" y="8" width="5" height="5" rx="1" fill="rgba(255,255,255,0.4)"/><rect x="8" y="8" width="5" height="5" rx="1" fill="rgba(255,255,255,0.4)"/></svg>Överblick</div>
+    <div class="sidebar-item"><svg viewBox="0 0 14 14" fill="none"><path d="M2 3.5h10M2 7h10M2 10.5h6" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg>Artiklar</div>
+    <div class="sidebar-item active"><svg viewBox="0 0 14 14" fill="none"><rect x="1" y="5" width="12" height="8" rx="1.5" stroke="#fff" stroke-width="1.3"/><path d="M4 5V3.5a3 3 0 016 0V5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg>Bordshantering</div>
+    <div class="sidebar-item"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="2" stroke="rgba(255,255,255,0.4)" stroke-width="1.3"/><path d="M7 1v2M7 11v2M1 7h2M11 7h2" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg>Inställningar</div>
+  </div>
+
+  <div class="main">
+    <div class="page-title">Bordshantering</div>
+    <div class="demo-toggle" onclick="toggleMode()">Visa som: <span id="modeLabel">ny kund</span> — byt</div>
+
+    <div id="stepperSection">
+      <div class="stepper-wrap">
+        <div class="stepper-top">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#534AB7" stroke-width="1.3"/><path d="M9 5v4.5l2.5 2.5" stroke="#534AB7" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <div>
+            <div class="stepper-top-title">Välj hur du vill arbeta med serveringar</div>
+            <div class="stepper-top-sub">Tar ungefär 2 minuter · du kan byta inriktning när du vill</div>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <div class="tab active" id="t1"><span class="tab-num">1</span>Två sätt att jobba</div>
+          <div class="tab" id="t2"><span class="tab-num">2</span>Fördefinierade</div>
+          <div class="tab" id="t3"><span class="tab-num">3</span>Flexibla</div>
+          <div class="tab" id="t4"><span class="tab-num">4</span>Välj</div>
+        </div>
+
+        <div class="step active" id="s1">
+          <div class="step-title">Det finns två sätt att arbeta med serveringar</div>
+          <div class="step-desc">Välj det som passar hur din restaurang jobbar. Du kan byta när du vill.</div>
+          <div class="orient-grid">
+            <div class="orient-card">
+              <div class="orient-card-title">Fördefinierade serveringar</div>
+              <div class="orient-card-desc">Du sätter upp serveringsstrukturen i förväg — t.ex. Förrätt, Varmrätt, Dessert. Systemet sorterar artiklarna automatiskt när personalen slår in dem.</div>
+            </div>
+            <div class="orient-card">
+              <div class="orient-card-title">Flexibla serveringar</div>
+              <div class="orient-card-desc">Personalen skapar serveringarna direkt i kassan och bestämmer vad som hamnar i varje servering. Inga förinställningar krävs.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step" id="s2">
+          <div class="step-title">Fördefinierade serveringar</div>
+          <div class="step-desc">Artiklarna sorteras automatiskt i rätt servering baserat på typ. Personalen behöver inte skapa serveringarna manuellt.</div>
+          <div class="two-col">
+            <div>
+              <div class="pro">Serveringarna namnges automatiskt — Förrätt, Varmrätt osv.</div>
+              <div class="pro">Färre klick för personalen i kassan</div>
+              <div class="pro">Passar restauranger med fast menystruktur</div>
+              <div class="con">Dryck kopplas inte automatiskt till en specifik kurs</div>
+              <div class="setup-note">Kräver förarbete: sätt upp serving priorities och koppla artikelkategorier innan funktionen är aktiv i kassan.</div>
+            </div>
+            <div class="mode-card">
+              <div class="mode-label">Varukorgen i kassan</div>
+              <div class="cart">
+                <div class="serving-header sh-pre">Förrätt <span class="sh-badge">Fired 10m ago</span></div>
+                <div class="cart-row"><span>Beef Tartare</span><span class="cart-price">185</span></div>
+                <div class="cart-row"><span>Scallop Ceviche</span><span class="cart-price">195</span></div>
+                <hr class="cart-divider">
+                <div class="serving-header sh-pre">Varmrätt <span class="sh-badge">Väntar</span></div>
+                <div class="cart-row"><span>Dover Sole</span><span class="cart-price">395</span></div>
+                <div class="cart-row"><span>Rack of Lamb</span><span class="cart-price">385</span></div>
+                <hr class="cart-divider">
+                <div class="serving-header sh-pre">Dryck <span class="sh-badge">Fired 10m ago</span></div>
+                <div class="cart-row"><span>Chablis</span><span class="cart-price">129</span></div>
+                <div class="cart-total"><span>Totalt</span><span>1 289 kr</span></div>
+                <button class="fire-btn">Fire Varmrätt</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step" id="s3">
+          <div class="step-title">Flexibla serveringar</div>
+          <div class="step-desc">Personalen skapar serveringarna i kassan och väljer vad som hamnar var. En servering kan innehålla alla typer av artiklar.</div>
+          <div class="two-col">
+            <div>
+              <div class="pro">Full kontroll — en servering kan blanda rätter och dryck</div>
+              <div class="pro">Hanterar specialönskemål naturligt</div>
+              <div class="pro">Inget förarbete — kom igång direkt</div>
+              <div class="con">Serveringarna heter Serving 1, 2, 3 — inga automatiska kursnamn</div>
+              <div class="con">Fler aktiva val för personalen i kassan</div>
+            </div>
+            <div class="mode-card">
+              <div class="mode-label">Varukorgen i kassan</div>
+              <div class="cart">
+                <div class="serving-header sh-flex">Serving 1 <span class="sh-badge">Fired 45m ago</span></div>
+                <div class="cart-row"><span>Pripps blå</span><span class="cart-price">64</span></div>
+                <div class="cart-row"><span>Miller</span><span class="cart-price">58</span></div>
+                <hr class="cart-divider">
+                <div class="serving-header sh-flex">Serving 2 <span class="sh-badge">Fired 25m ago</span></div>
+                <div class="cart-row"><span>Capricciosa</span><span class="cart-price">115</span></div>
+                <div class="cart-row"><span>Margherita</span><span class="cart-price">115</span></div>
+                <hr class="cart-divider">
+                <div class="serving-header sh-flex">Serving 3 <span class="sh-badge">Väntar</span></div>
+                <div class="cart-row" style="color:#aaa;font-style:italic;"><span>Tom — lägg till artiklar</span></div>
+                <div class="cart-total"><span>Totalt</span><span>352 kr</span></div>
+                <button class="fire-btn">Fire serving 3</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step" id="s4">
+          <div class="step-title">Välj ditt arbetssätt</div>
+          <div class="step-desc">Du hittar den här inställningen under Bordshantering om du vill byta senare.</div>
+          <div class="choice-grid">
+            <div class="choice" id="cPre" onclick="pick('pre')">
+              <div class="choice-top"><div class="rdot"><div class="rinner"></div></div><div class="choice-name">Fördefinierade serveringar</div></div>
+              <div class="choice-desc">Systemet skapar serveringarna åt dig. Kräver att du sätter upp serving priorities.</div>
+            </div>
+            <div class="choice" id="cFlex" onclick="pick('flex')">
+              <div class="choice-top"><div class="rdot"><div class="rinner"></div></div><div class="choice-name">Flexibla serveringar</div></div>
+              <div class="choice-desc">Personalen skapar serveringarna i kassan. Inga förinställningar krävs.</div>
+            </div>
+          </div>
+          <div id="nsBox" style="display:none;" class="next-steps">
+            <div class="next-steps-title">Nästa steg för att komma igång</div>
+            <div class="ns-item">Gå till Serving priorities under Bordshantering</div>
+            <div class="ns-item">Skapa dina kurser, t.ex. Förrätt, Varmrätt, Dessert</div>
+            <div class="ns-item">Koppla dina artikelkategorier till respektive kurs</div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <button class="btn-g" id="bBack" onclick="go(-1)" style="visibility:hidden;">Tillbaka</button>
+          <span class="step-ind" id="sInd">Steg 1 av 4</span>
+          <button class="btn-p" id="bNext" onclick="go(1)">Nästa</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="settingSection" style="display:none;">
+      <div class="setting-row">
+        <div>
+          <div class="setting-row-label">Serveringssätt</div>
+          <div class="setting-row-val">Flexibla serveringar (aktivt)</div>
+        </div>
+        <button class="btn-change" onclick="reopenStepper()">Ändra</button>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <div style="font-size:13px;font-weight:500;color:#1a1a2e;">Dina bordslayouter</div>
+      <button class="btn-p" style="font-size:12px;padding:5px 14px;">+ Ny karta</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+      <div style="background:#fff;border:0.5px solid #e0e0da;border-radius:10px;overflow:hidden;"><div style="background:#f0f0ec;height:56px;display:flex;align-items:center;justify-content:center;"><svg width="48" height="32" viewBox="0 0 48 32"><rect x="4" y="4" width="18" height="10" rx="2" fill="#d0d0c8"/><rect x="26" y="4" width="18" height="10" rx="2" fill="#d0d0c8"/><rect x="4" y="18" width="18" height="10" rx="2" fill="#d0d0c8"/><rect x="26" y="18" width="18" height="10" rx="2" fill="#d0d0c8"/></svg></div><div style="padding:10px 12px;"><div style="font-size:13px;font-weight:500;color:#1a1a2e;">Restaurant</div><div style="font-size:11px;color:#888;margin-top:2px;">10 bord · 40 sittplatser</div></div></div>
+      <div style="background:#fff;border:0.5px solid #e0e0da;border-radius:10px;overflow:hidden;"><div style="background:#f0f0ec;height:56px;display:flex;align-items:center;justify-content:center;"><svg width="48" height="32" viewBox="0 0 48 32"><rect x="4" y="4" width="40" height="24" rx="2" fill="#d0d0c8"/></svg></div><div style="padding:10px 12px;"><div style="font-size:13px;font-weight:500;color:#1a1a2e;">Patio</div><div style="font-size:11px;color:#888;margin-top:2px;">8 bord · 32 sittplatser</div></div></div>
+      <div style="background:#fff;border:0.5px solid #e0e0da;border-radius:10px;overflow:hidden;"><div style="background:#f0f0ec;height:56px;display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="10" fill="#d0d0c8"/></svg></div><div style="padding:10px 12px;"><div style="font-size:13px;font-weight:500;color:#1a1a2e;">Bar area</div><div style="font-size:11px;color:#888;margin-top:2px;">Barområde</div></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let cur = 1, isNew = true;
+function go(d) {
+  if (d === 1 && cur === 4) { completeStepper(); return; }
+  const n = cur + d;
+  if (n < 1 || n > 4) return;
+  document.getElementById('s'+cur).classList.remove('active');
+  document.getElementById('t'+cur).classList.remove('active');
+  if (d > 0) document.getElementById('t'+cur).classList.add('done');
+  cur = n;
+  document.getElementById('s'+cur).classList.add('active');
+  document.getElementById('t'+cur).classList.add('active');
+  document.getElementById('t'+cur).classList.remove('done');
+  document.getElementById('bBack').style.visibility = cur > 1 ? 'visible' : 'hidden';
+  document.getElementById('sInd').textContent = 'Steg ' + cur + ' av 4';
+  document.getElementById('bNext').textContent = cur === 4 ? 'Spara val' : 'Nästa';
+}
+function pick(v) {
+  document.getElementById('cPre').classList.toggle('selected', v==='pre');
+  document.getElementById('cFlex').classList.toggle('selected', v==='flex');
+  document.getElementById('nsBox').style.display = v==='pre' ? 'block' : 'none';
+}
+function completeStepper() {
+  document.getElementById('stepperSection').style.display = 'none';
+  document.getElementById('settingSection').style.display = 'block';
+}
+function reopenStepper() {
+  cur = 1;
+  ['t1','t2','t3','t4'].forEach(id => document.getElementById(id).classList.remove('active','done'));
+  document.getElementById('t1').classList.add('active');
+  ['s1','s2','s3','s4'].forEach(id => document.getElementById(id).classList.remove('active'));
+  document.getElementById('s1').classList.add('active');
+  document.getElementById('bBack').style.visibility = 'hidden';
+  document.getElementById('sInd').textContent = 'Steg 1 av 4';
+  document.getElementById('bNext').textContent = 'Nästa';
+  document.getElementById('cPre').classList.remove('selected');
+  document.getElementById('cFlex').classList.remove('selected');
+  document.getElementById('nsBox').style.display = 'none';
+  document.getElementById('stepperSection').style.display = 'block';
+  document.getElementById('settingSection').style.display = 'none';
+}
+function toggleMode() {
+  isNew = !isNew;
+  document.getElementById('modeLabel').textContent = isNew ? 'ny kund' : 'befintlig kund';
+  if (isNew) { reopenStepper(); } else { document.getElementById('stepperSection').style.display = 'none'; document.getElementById('settingSection').style.display = 'block'; }
+}
+</script>
