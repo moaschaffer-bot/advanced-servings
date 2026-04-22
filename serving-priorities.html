@@ -80,6 +80,7 @@
   .articles-table th .sort-arrow { font-size: 9px; margin-left: 3px; color: #c0c0b8; }
   .articles-table th.sorted .sort-arrow { color: #534AB7; }
   .articles-table td { padding: 9px 14px; border-bottom: 0.5px solid #f0f0ec; vertical-align: middle; color: #333; }
+  .articles-table tbody tr { cursor: pointer; }
   .articles-table tr:hover td { background: #fafafa; }
   .articles-table tr.selected td { background: #f7f6ff; }
   .col-check { width: 28px; }
@@ -95,11 +96,11 @@
   .bulk-bar-left { display: flex; align-items: center; gap: 10px; }
   .bulk-link { color: #fff; background: transparent; border: none; cursor: pointer; font-size: 12px; text-decoration: underline; font-family: inherit; }
 
-  .empty-state { padding: 60px 30px; text-align: center; }
-  .empty-icon { width: 44px; height: 44px; margin: 0 auto 14px; background: #EEEDFE; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #534AB7; }
-  .empty-title { font-size: 14px; font-weight: 500; color: #1a1a2e; margin-bottom: 4px; }
-  .empty-desc { font-size: 12px; color: #666; max-width: 320px; margin: 0 auto 20px; line-height: 1.55; }
-  .empty-actions { display: flex; gap: 8px; justify-content: center; }
+  .empty-state { padding: 48px 40px; text-align: left; }
+  .empty-icon { width: 44px; height: 44px; margin: 0 0 16px; background: #EEEDFE; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #534AB7; }
+  .empty-title { font-size: 14px; font-weight: 500; color: #1a1a2e; margin-bottom: 6px; }
+  .empty-desc { font-size: 12px; color: #666; max-width: 440px; margin: 0 0 20px; line-height: 1.6; }
+  .empty-actions { display: flex; gap: 8px; justify-content: flex-start; }
 
   .confirm-overlay { position: fixed; inset: 0; background: rgba(26,26,46,0.4); display: flex; align-items: center; justify-content: center; z-index: 100; }
   .confirm-box { background: #fff; border-radius: 12px; padding: 20px; max-width: 360px; width: 90%; box-shadow: 0 6px 28px rgba(0,0,0,0.18); }
@@ -390,8 +391,8 @@ function renderEmptyState() {
         <div class="empty-title">${t('empty.title')}</div>
         <div class="empty-desc">${t('empty.desc')}</div>
         <div class="empty-actions">
-          <button class="btn-p" onclick="applyStandardTemplate()">${t('empty.useTemplate')}</button>
           <button class="btn-g" onclick="startFromScratch()">${t('empty.startScratch')}</button>
+          <button class="btn-p" onclick="applyStandardTemplate()">${t('empty.useTemplate')}</button>
         </div>
       </div>
     </div>
@@ -496,7 +497,7 @@ function renderArticlesPanel() {
         const selClass = selected.has(a.id) ? ' class="selected"' : '';
         const courseDropdown = renderCourseDropdown(a);
         return `
-          <tr${selClass}>
+          <tr${selClass} data-row-aid="${a.id}">
             <td class="col-check"><input type="checkbox" data-aid="${a.id}" ${checked}></td>
             <td>${escapeHtml(a.name)}</td>
             <td class="col-category">${escapeHtml(a.category)}</td>
@@ -580,6 +581,15 @@ function attachHandlers() {
       const id = Number(e.target.getAttribute('data-aid'));
       if (e.target.checked) selected.add(id);
       else selected.delete(id);
+      render();
+    });
+  });
+  document.querySelectorAll('tr[data-row-aid]').forEach(row => {
+    row.addEventListener('click', e => {
+      if (e.target.closest('select') || e.target.closest('input')) return;
+      const id = Number(row.getAttribute('data-row-aid'));
+      if (selected.has(id)) selected.delete(id);
+      else selected.add(id);
       render();
     });
   });
