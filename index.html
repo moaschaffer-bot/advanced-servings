@@ -7,7 +7,8 @@
   .kicker { font-size: 12px; color: #888; margin-bottom: 6px; }
   h1 { font-size: 24px; font-weight: 500; color: #1a1a2e; margin-bottom: 6px; }
   .sub { font-size: 13px; color: #666; margin-bottom: 32px; }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  @media (max-width: 820px) { .grid { grid-template-columns: 1fr 1fr; } }
   a.card, .card { display: block; background: #fff; border: 0.5px solid #e0e0da; border-radius: 12px; padding: 20px; text-decoration: none; color: inherit; transition: border-color 0.12s; }
   a.card:hover { border-color: #AFA9EC; }
   .card-title { font-size: 14px; font-weight: 500; color: #1a1a2e; margin-bottom: 6px; }
@@ -29,6 +30,10 @@
     <a class="card" href="serving-priorities.html">
       <div class="card-title">Serving priorities</div>
       <div class="card-desc">Create courses and map articles to them.</div>
+    </a>
+    <a class="card" href="https://fine-dine-servings.lovable.app" target="_blank" rel="noopener">
+      <div class="card-title">Pre defined servings in the POS</div>
+      <div class="card-desc">External prototype on Lovable.</div>
     </a>
   </div>
 </div>
