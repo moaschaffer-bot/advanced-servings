@@ -174,7 +174,7 @@
     </div>
 
     <div class="page-title" data-i18n="page.title">Serving priorities</div>
-    <div class="page-sub" data-i18n="page.sub">Ordna rätterna i serveringsordning. Märk en rätt som "tillåt om-eldning" om personalen ska kunna lägga till artiklar efter att den eldats.</div>
+    <div class="page-sub" data-i18n="page.sub">Ordna rätterna i serveringsordning. Märk en rätt som öppen om personalen behöver lägga till mer efter elden.</div>
 
     <div id="content"></div>
   </div>
@@ -197,26 +197,25 @@ const translations = {
     'demo.populated': 'befintlig kund',
     'demo.empty': 'ny kund',
     'page.title': 'Serving priorities',
-    'page.sub': 'Ordna rätterna i serveringsordning. Märk en rätt som "tillåt om-eldning" om personalen ska kunna lägga till artiklar efter att den eldats.',
+    'page.sub': 'Ordna rätterna i serveringsordning. Märk en rätt som öppen om personalen behöver lägga till mer efter elden.',
     'panel.title': 'Rätter',
     'section.regular': 'Standard',
-    'section.refire': 'Tillåter om-eldning',
+    'section.refire': 'Öppna',
     'section.unassigned': 'Okopplade',
-    'refire.info': 'En rätt med om-eldning kan ta emot fler artiklar efter att den eldats — utan korrigering. Drycker är typexemplet, men du kan markera vilka rätter som helst.',
-    'regular.empty': 'Inga standardrätter än',
-    'refire.empty': 'Inga rätter med om-eldning än',
-    'badge.refire': 'Om-elda',
+    'refire.info': 'Som drycker — fler artiklar kan läggas till efter elden.',
+    'regular.empty': 'Inga rätter än',
+    'refire.empty': 'Inga öppna rätter än',
+    'badge.refire': 'Öppen',
     'courses.count': '{n} totalt',
     'courses.articleCount': '{n} artiklar',
     'courses.articleCount.one': '1 artikel',
-    'addBtn.regular': '+ Lägg till standardrätt',
-    'addBtn.refire': '+ Lägg till rätt med om-eldning',
+    'addBtn.regular': '+ Lägg till rätt',
+    'addBtn.refire': '+ Lägg till öppen rätt',
     'courses.form.placeholder': 'Namnge rätten',
     'courses.form.type': 'Typ',
     'courses.form.type.regular': 'Standard',
-    'courses.form.type.refire': 'Tillåt om-eldning',
-    'courses.form.type.help.regular': 'Personalen behöver göra korrigering om de lägger till artiklar efter att rätten eldats.',
-    'courses.form.type.help.refire': 'Personalen kan lägga till artiklar och elda om utan korrigering.',
+    'courses.form.type.refire': 'Öppen',
+    'courses.form.type.help.refire': 'Förblir öppen för fler artiklar efter elden.',
     'courses.form.templates': 'Förslag',
     'courses.form.save': 'Lägg till',
     'courses.form.cancel': 'Avbryt',
@@ -238,7 +237,7 @@ const translations = {
     'filter.valuesLabel': 'Värden',
     'filter.create': 'Skapa',
     'optgroup.regular': 'Standard',
-    'optgroup.refire': 'Tillåter om-eldning',
+    'optgroup.refire': 'Öppna',
     'bulk.selected': '{n} valda',
     'bulk.none': 'Markera artiklar för att koppla',
     'bulk.assignTo': 'Koppla till:',
@@ -246,7 +245,7 @@ const translations = {
     'bulk.unassign': '— Okopplad —',
     'bulk.clear': 'Avmarkera',
     'empty.title': 'Skapa dina rätter',
-    'empty.desc': 'Standardrätter (förrätter, varmrätter, desserter) följer den ordning de serveras. Märk en rätt som "tillåt om-eldning" så kan personalen lägga till mer efter att rätten eldats — drycker är typexemplet, men du bestämmer.',
+    'empty.desc': 'Standardrätter följer serveringsordningen. Öppna rätter förblir öppna efter elden — drycker är typexemplet.',
     'empty.useTemplate': 'Använd standardmall',
     'empty.startScratch': 'Börja från tomt',
     'confirm.delete.title': 'Ta bort {name}?',
@@ -275,26 +274,25 @@ const translations = {
     'demo.populated': 'existing customer',
     'demo.empty': 'new customer',
     'page.title': 'Serving priorities',
-    'page.sub': 'Order the courses by serving sequence. Mark a course as "allow re-fire" if staff should be able to add items after it has been fired.',
+    'page.sub': 'Order courses by serving sequence. Mark a course Open if staff need to add items after firing.',
     'panel.title': 'Courses',
     'section.regular': 'Standard',
-    'section.refire': 'Allows re-fire',
+    'section.refire': 'Open',
     'section.unassigned': 'Unassigned',
-    'refire.info': 'A course that allows re-fire can accept more items after it has been fired — no correction needed. Drinks is the typical example, but you can mark any course this way.',
-    'regular.empty': 'No standard courses yet',
-    'refire.empty': 'No re-fire courses yet',
-    'badge.refire': 'Re-fire',
+    'refire.info': 'Like drinks — more items can be added after firing.',
+    'regular.empty': 'No courses yet',
+    'refire.empty': 'No open courses yet',
+    'badge.refire': 'Open',
     'courses.count': '{n} total',
     'courses.articleCount': '{n} articles',
     'courses.articleCount.one': '1 article',
-    'addBtn.regular': '+ Add standard course',
-    'addBtn.refire': '+ Add re-fire course',
+    'addBtn.regular': '+ Add course',
+    'addBtn.refire': '+ Add open course',
     'courses.form.placeholder': 'Name the course',
     'courses.form.type': 'Type',
     'courses.form.type.regular': 'Standard',
-    'courses.form.type.refire': 'Allow re-fire',
-    'courses.form.type.help.regular': 'Staff has to apply a correction if items are added after the course has been fired.',
-    'courses.form.type.help.refire': 'Staff can keep adding items and re-fire without a correction.',
+    'courses.form.type.refire': 'Open',
+    'courses.form.type.help.refire': 'Stays open for more items after firing.',
     'courses.form.templates': 'Suggestions',
     'courses.form.save': 'Add',
     'courses.form.cancel': 'Cancel',
@@ -316,7 +314,7 @@ const translations = {
     'filter.valuesLabel': 'Values',
     'filter.create': 'Create',
     'optgroup.regular': 'Standard',
-    'optgroup.refire': 'Allows re-fire',
+    'optgroup.refire': 'Open',
     'bulk.selected': '{n} selected',
     'bulk.none': 'Select articles to assign',
     'bulk.assignTo': 'Assign to:',
@@ -324,7 +322,7 @@ const translations = {
     'bulk.unassign': '— Unassign —',
     'bulk.clear': 'Clear',
     'empty.title': 'Create your courses',
-    'empty.desc': 'Standard courses (appetizers, mains, desserts) follow the order they are served. Mark any course as "allow re-fire" and staff can add more after firing — drinks is the typical example, but you decide.',
+    'empty.desc': 'Standard courses follow serving order. Open courses stay editable after firing — drinks is the typical example.',
     'empty.useTemplate': 'Use standard template',
     'empty.startScratch': 'Start from scratch',
     'confirm.delete.title': 'Delete {name}?',
@@ -625,7 +623,7 @@ function renderAddForm() {
     : ['course.tpl.appetizers','course.tpl.mains','course.tpl.desserts'];
   const chips = templates.map(k => `<button class="chip" onclick="useTemplate('${k}')">${t(k)}</button>`).join('');
   const canSave = addFormValue.trim().length > 0;
-  const helpKey = isRefire ? 'courses.form.type.help.refire' : 'courses.form.type.help.regular';
+  const helpHtml = isRefire ? `<div class="type-help">${t('courses.form.type.help.refire')}</div>` : '';
   return `
     <div class="add-course-form">
       <div class="form-label">${t('courses.form.type')}</div>
@@ -633,7 +631,7 @@ function renderAddForm() {
         <button class="type-btn ${addFormType === 'regular' ? 'active' : ''}" onclick="setAddFormType('regular')">${t('courses.form.type.regular')}</button>
         <button class="type-btn ${addFormType === 'allowReFire' ? 'active' : ''}" onclick="setAddFormType('allowReFire')">${t('courses.form.type.refire')}</button>
       </div>
-      <div class="type-help">${t(helpKey)}</div>
+      ${helpHtml}
 
       <div class="form-label" style="margin-top:14px;">${t('courses.form.placeholder')}</div>
       <input id="addInput" type="text" placeholder="${t('courses.form.placeholder')}" value="${escapeHtml(addFormValue)}" autofocus />
