@@ -20,7 +20,7 @@
   .demo-toggle { font-size: 11px; color: #aaa; cursor: pointer; }
   .demo-toggle span { text-decoration: underline; }
   .page-title { font-size: 22px; font-weight: 500; color: #1a1a2e; margin-bottom: 4px; }
-  .page-sub { font-size: 13px; color: #666; margin-bottom: 24px; max-width: 560px; }
+  .page-sub { font-size: 13px; color: #666; margin-bottom: 24px; max-width: 600px; }
 
   .panels { display: grid; grid-template-columns: 320px 1fr; gap: 20px; align-items: start; }
   .panel { background: #fff; border: 0.5px solid #e0e0da; border-radius: 12px; overflow: hidden; }
@@ -32,10 +32,9 @@
   .section-head + .section-head { border-top: 0.5px solid #f0f0ec; padding-top: 12px; margin-top: 4px; }
   .section-title { font-size: 10px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; }
   .section-info { font-size: 11px; color: #888; line-height: 1.5; padding: 0 18px 8px; max-width: 280px; }
-  .section-info-tag { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 999px; background: #FFF4E5; color: #8a5a18; font-weight: 500; margin-bottom: 6px; }
 
   .courses-list { padding: 4px 6px; }
-  .courses-list.empty-list { padding: 6px 6px 4px; color: #aaa; font-size: 12px; font-style: italic; }
+  .courses-list.empty-list { padding: 8px 14px; color: #aaa; font-size: 12px; font-style: italic; }
   .course-row { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; transition: background 0.12s; border: 1px solid transparent; }
   .course-row.draggable { cursor: move; }
   .course-row:hover.draggable { background: #f7f7f5; }
@@ -43,13 +42,18 @@
   .course-row.drop-before { border-top-color: #534AB7; }
   .course-row.drop-after { border-bottom-color: #534AB7; }
   .course-handle { color: #ccc; font-size: 14px; width: 12px; flex-shrink: 0; text-align: center; line-height: 1; }
-  .course-row.unassigned-row .course-handle, .course-row.drinks-row .course-handle { visibility: hidden; }
+  .course-row.unassigned-row .course-handle { visibility: hidden; }
   .course-nr { font-size: 11px; font-weight: 500; color: #534AB7; background: #EEEDFE; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .course-nr.refire { background: #FAEEDA; color: #b07410; }
   .course-row.unassigned-row .course-nr { background: #f0f0ec; color: #999; }
-  .course-row.drinks-row .course-nr { background: #FAEEDA; color: #b07410; }
   .course-name-wrap { flex: 1; min-width: 0; }
   .course-name { font-size: 13px; font-weight: 500; color: #1a1a2e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .course-count { font-size: 11px; color: #888; margin-top: 1px; }
+  .course-name.editable { cursor: text; padding: 1px 4px; margin: -1px -4px; border-radius: 4px; }
+  .course-name.editable:hover { background: #f0f0ec; }
+  .course-name-input { width: 100%; padding: 2px 6px; font-size: 13px; font-weight: 500; border: 0.5px solid #534AB7; border-radius: 4px; background: #fff; color: #1a1a2e; font-family: inherit; }
+  .course-name-input:focus { outline: none; box-shadow: 0 0 0 2px rgba(83,74,183,0.15); }
+  .course-count { font-size: 11px; color: #888; margin-top: 1px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .badge-refire { display: inline-block; font-size: 9px; padding: 1px 6px; background: #FAEEDA; color: #8a5a18; border-radius: 999px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
   .course-del { background: transparent; border: none; color: #ccc; cursor: pointer; padding: 4px; font-size: 14px; line-height: 1; border-radius: 4px; }
   .course-del:hover { color: #c94b4b; background: #fdf0f0; }
   .course-row.unassigned-row .course-del { visibility: hidden; }
@@ -60,11 +64,15 @@
   .add-course-form { padding: 10px 12px; background: #fafafa; border-top: 0.5px solid #e0e0da; border-bottom: 0.5px solid #e0e0da; margin: 4px 0; }
   .add-course-form input { width: 100%; padding: 7px 10px; font-size: 13px; border: 0.5px solid #d0d0c8; border-radius: 6px; background: #fff; font-family: inherit; }
   .add-course-form input:focus { outline: none; border-color: #534AB7; }
-  .template-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.04em; margin: 10px 0 4px; }
+  .form-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.04em; margin: 8px 0 4px; font-weight: 500; }
+  .type-toggle { display: inline-flex; border: 0.5px solid #d0d0c8; border-radius: 6px; overflow: hidden; background: #fff; }
+  .type-btn { padding: 5px 10px; background: transparent; border: none; color: #888; cursor: pointer; font-size: 11px; font-weight: 500; font-family: inherit; }
+  .type-btn.active { background: #534AB7; color: #fff; }
+  .type-help { font-size: 11px; color: #888; line-height: 1.5; margin-top: 6px; }
   .template-chips { display: flex; flex-wrap: wrap; gap: 4px; }
   .chip { padding: 3px 10px; border-radius: 999px; background: #f0f0ec; color: #534AB7; font-size: 11px; cursor: pointer; border: none; font-family: inherit; }
   .chip:hover { background: #EEEDFE; }
-  .add-actions { display: flex; gap: 6px; margin-top: 10px; justify-content: flex-end; }
+  .add-actions { display: flex; gap: 6px; margin-top: 12px; justify-content: flex-end; }
   .btn-p { background: #534AB7; color: #fff; border: none; border-radius: 6px; padding: 6px 14px; font-size: 12px; font-weight: 500; cursor: pointer; font-family: inherit; }
   .btn-p:hover { background: #3C3489; }
   .btn-p:disabled { background: #c0bdd6; cursor: not-allowed; }
@@ -132,7 +140,7 @@
   .empty-state { padding: 48px 40px; text-align: center; }
   .empty-icon { width: 44px; height: 44px; margin: 0 auto 14px; background: #EEEDFE; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #534AB7; }
   .empty-title { font-size: 14px; font-weight: 500; color: #1a1a2e; margin-bottom: 6px; }
-  .empty-desc { font-size: 12px; color: #666; max-width: 440px; margin: 0 auto 22px; line-height: 1.6; text-align: left; }
+  .empty-desc { font-size: 12px; color: #666; max-width: 480px; margin: 0 auto 22px; line-height: 1.6; text-align: left; }
   .empty-actions { display: flex; gap: 8px; justify-content: center; }
 
   .confirm-overlay { position: fixed; inset: 0; background: rgba(26,26,46,0.4); display: flex; align-items: center; justify-content: center; z-index: 100; }
@@ -166,7 +174,7 @@
     </div>
 
     <div class="page-title" data-i18n="page.title">Serving priorities</div>
-    <div class="page-sub" data-i18n="page.sub">Ordna maträtterna i serveringsordning, hantera drycker separat och koppla varje artikel till en rätt.</div>
+    <div class="page-sub" data-i18n="page.sub">Ordna rätterna i serveringsordning. Märk en rätt som "tillåt om-eldning" om personalen ska kunna lägga till artiklar efter att den eldats.</div>
 
     <div id="content"></div>
   </div>
@@ -189,21 +197,26 @@ const translations = {
     'demo.populated': 'befintlig kund',
     'demo.empty': 'ny kund',
     'page.title': 'Serving priorities',
-    'page.sub': 'Ordna maträtterna i serveringsordning, hantera drycker separat och koppla varje artikel till en rätt.',
-    'panel.title': 'Rätter & drycker',
-    'section.food': 'Maträtter',
-    'section.drinks': 'Drycker',
+    'page.sub': 'Ordna rätterna i serveringsordning. Märk en rätt som "tillåt om-eldning" om personalen ska kunna lägga till artiklar efter att den eldats.',
+    'panel.title': 'Rätter',
+    'section.regular': 'Standard',
+    'section.refire': 'Tillåter om-eldning',
     'section.unassigned': 'Okopplade',
-    'drinks.info': 'Drycker hanteras löpande i kassan. Personalen kan lägga till artiklar efter att dryckesserveringen eldats — utan korrigering.',
-    'drinks.tag': 'Hanteras separat i kassan',
-    'food.empty': 'Inga maträtter än',
+    'refire.info': 'En rätt med om-eldning kan ta emot fler artiklar efter att den eldats — utan korrigering. Drycker är typexemplet, men du kan markera vilka rätter som helst.',
+    'regular.empty': 'Inga standardrätter än',
+    'refire.empty': 'Inga rätter med om-eldning än',
+    'badge.refire': 'Om-elda',
     'courses.count': '{n} totalt',
     'courses.articleCount': '{n} artiklar',
     'courses.articleCount.one': '1 artikel',
-    'addBtn.food': '+ Lägg till maträtt',
-    'addBtn.drinks': '+ Lägg till drycker',
-    'courses.form.placeholder.food': 'Namnge maträtten',
-    'courses.form.placeholder.drinks': 'Namnge dryckesserveringen',
+    'addBtn.regular': '+ Lägg till standardrätt',
+    'addBtn.refire': '+ Lägg till rätt med om-eldning',
+    'courses.form.placeholder': 'Namnge rätten',
+    'courses.form.type': 'Typ',
+    'courses.form.type.regular': 'Standard',
+    'courses.form.type.refire': 'Tillåt om-eldning',
+    'courses.form.type.help.regular': 'Personalen behöver göra korrigering om de lägger till artiklar efter att rätten eldats.',
+    'courses.form.type.help.refire': 'Personalen kan lägga till artiklar och elda om utan korrigering.',
     'courses.form.templates': 'Förslag',
     'courses.form.save': 'Lägg till',
     'courses.form.cancel': 'Avbryt',
@@ -224,8 +237,8 @@ const translations = {
     'filter.field.productGroup': 'Produktgrupp',
     'filter.valuesLabel': 'Värden',
     'filter.create': 'Skapa',
-    'optgroup.food': 'Maträtter',
-    'optgroup.drinks': 'Drycker',
+    'optgroup.regular': 'Standard',
+    'optgroup.refire': 'Tillåter om-eldning',
     'bulk.selected': '{n} valda',
     'bulk.none': 'Markera artiklar för att koppla',
     'bulk.assignTo': 'Koppla till:',
@@ -233,7 +246,7 @@ const translations = {
     'bulk.unassign': '— Okopplad —',
     'bulk.clear': 'Avmarkera',
     'empty.title': 'Skapa dina rätter',
-    'empty.desc': 'Mall för maträtter (förrätter, varmrätter, desserter) följer den ordning de serveras. Drycker hanteras separat eftersom personalen kan lägga till mer dryck efter elden utan korrigering.',
+    'empty.desc': 'Standardrätter (förrätter, varmrätter, desserter) följer den ordning de serveras. Märk en rätt som "tillåt om-eldning" så kan personalen lägga till mer efter att rätten eldats — drycker är typexemplet, men du bestämmer.',
     'empty.useTemplate': 'Använd standardmall',
     'empty.startScratch': 'Börja från tomt',
     'confirm.delete.title': 'Ta bort {name}?',
@@ -242,7 +255,6 @@ const translations = {
     'confirm.delete.cancel': 'Avbryt',
     'toast.templateApplied': 'Standardmall tillagd',
     'toast.courseAdded': 'Rätten "{name}" tillagd',
-    'toast.drinksAdded': 'Drycker "{name}" tillagd',
     'toast.courseDeleted': 'Rätten "{name}" borttagen',
     'toast.assigned': '{n} artiklar kopplade till {name}',
     'toast.unassigned': '{n} artiklar är nu okopplade',
@@ -263,21 +275,26 @@ const translations = {
     'demo.populated': 'existing customer',
     'demo.empty': 'new customer',
     'page.title': 'Serving priorities',
-    'page.sub': 'Order food courses by serving sequence, handle drinks separately, and map each article to a course.',
-    'panel.title': 'Courses & drinks',
-    'section.food': 'Food courses',
-    'section.drinks': 'Drinks',
+    'page.sub': 'Order the courses by serving sequence. Mark a course as "allow re-fire" if staff should be able to add items after it has been fired.',
+    'panel.title': 'Courses',
+    'section.regular': 'Standard',
+    'section.refire': 'Allows re-fire',
     'section.unassigned': 'Unassigned',
-    'drinks.info': 'Drinks are handled continuously at the POS. Staff can add items after the drinks serving has been fired — no correction needed.',
-    'drinks.tag': 'Handled separately at the POS',
-    'food.empty': 'No food courses yet',
+    'refire.info': 'A course that allows re-fire can accept more items after it has been fired — no correction needed. Drinks is the typical example, but you can mark any course this way.',
+    'regular.empty': 'No standard courses yet',
+    'refire.empty': 'No re-fire courses yet',
+    'badge.refire': 'Re-fire',
     'courses.count': '{n} total',
     'courses.articleCount': '{n} articles',
     'courses.articleCount.one': '1 article',
-    'addBtn.food': '+ Add food course',
-    'addBtn.drinks': '+ Add drinks',
-    'courses.form.placeholder.food': 'Name the food course',
-    'courses.form.placeholder.drinks': 'Name the drinks serving',
+    'addBtn.regular': '+ Add standard course',
+    'addBtn.refire': '+ Add re-fire course',
+    'courses.form.placeholder': 'Name the course',
+    'courses.form.type': 'Type',
+    'courses.form.type.regular': 'Standard',
+    'courses.form.type.refire': 'Allow re-fire',
+    'courses.form.type.help.regular': 'Staff has to apply a correction if items are added after the course has been fired.',
+    'courses.form.type.help.refire': 'Staff can keep adding items and re-fire without a correction.',
     'courses.form.templates': 'Suggestions',
     'courses.form.save': 'Add',
     'courses.form.cancel': 'Cancel',
@@ -298,8 +315,8 @@ const translations = {
     'filter.field.productGroup': 'Product group',
     'filter.valuesLabel': 'Values',
     'filter.create': 'Create',
-    'optgroup.food': 'Food courses',
-    'optgroup.drinks': 'Drinks',
+    'optgroup.regular': 'Standard',
+    'optgroup.refire': 'Allows re-fire',
     'bulk.selected': '{n} selected',
     'bulk.none': 'Select articles to assign',
     'bulk.assignTo': 'Assign to:',
@@ -307,7 +324,7 @@ const translations = {
     'bulk.unassign': '— Unassign —',
     'bulk.clear': 'Clear',
     'empty.title': 'Create your courses',
-    'empty.desc': 'The food course template (appetizers, mains, desserts) follows the order they are served. Drinks are handled separately because staff can keep adding drinks after firing without a correction.',
+    'empty.desc': 'Standard courses (appetizers, mains, desserts) follow the order they are served. Mark any course as "allow re-fire" and staff can add more after firing — drinks is the typical example, but you decide.',
     'empty.useTemplate': 'Use standard template',
     'empty.startScratch': 'Start from scratch',
     'confirm.delete.title': 'Delete {name}?',
@@ -316,7 +333,6 @@ const translations = {
     'confirm.delete.cancel': 'Cancel',
     'toast.templateApplied': 'Standard template added',
     'toast.courseAdded': 'Course "{name}" added',
-    'toast.drinksAdded': 'Drinks "{name}" added',
     'toast.courseDeleted': 'Course "{name}" deleted',
     'toast.assigned': '{n} articles assigned to {name}',
     'toast.unassigned': '{n} articles unassigned',
@@ -333,8 +349,11 @@ let nextCourseId = 100;
 let courses = [];
 let articles = [];
 let draggedCourseId = null;
-let addFormOpen = null; // null | 'food' | 'drinks'
+let addFormOpen = false;
+let addFormType = 'regular'; // 'regular' | 'allowReFire'
 let addFormValue = '';
+let editingCourseId = null;
+let editingValue = '';
 let searchQuery = '';
 let selected = new Set();
 let sortKey = 'name';
@@ -354,10 +373,10 @@ function initData() {
   nextCourseId = 100;
   if (isPopulated) {
     courses = [
-      { id: 1, name: 'Förrätter', type: 'food' },
-      { id: 2, name: 'Varmrätter', type: 'food' },
-      { id: 3, name: 'Desserter', type: 'food' },
-      { id: 4, name: 'Drycker', type: 'drinks' }
+      { id: 1, name: 'Förrätter', type: 'regular' },
+      { id: 2, name: 'Varmrätter', type: 'regular' },
+      { id: 3, name: 'Desserter', type: 'regular' },
+      { id: 4, name: 'Drycker', type: 'allowReFire' }
     ];
     articles = [
       { id: 1, name: 'Beef Tartare', productGroup: 'Mat', displayCategory: 'Starters', courseId: 1 },
@@ -397,12 +416,13 @@ function initData() {
   filterMenuOpen = false;
   filterDraftField = '';
   filterDraftValues = new Set();
-  addFormOpen = null;
+  addFormOpen = false;
   addFormValue = '';
+  addFormType = 'regular';
 }
 
-function foodCourses() { return courses.filter(c => c.type === 'food'); }
-function drinksCourses() { return courses.filter(c => c.type === 'drinks'); }
+function regularCourses() { return courses.filter(c => c.type === 'regular'); }
+function refireCourses() { return courses.filter(c => c.type === 'allowReFire'); }
 
 function articlesInCourse(courseId) {
   if (courseId === null) return articles.filter(a => a.courseId === null);
@@ -462,6 +482,8 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 }
 
+const REFIRE_ICON = `<svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M2 7a5 5 0 019.5-2M12 7a5 5 0 01-9.5 2M11.5 1.5v3.5h-3.5M2.5 12.5v-3.5h3.5" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
 function render() {
   renderSidebar();
   const root = document.getElementById('content');
@@ -496,15 +518,25 @@ function renderEmptyState() {
   `;
 }
 
-function renderFoodCourseRow(c, i) {
+function renderCourseNameContent(c) {
+  if (editingCourseId === c.id) {
+    return `<input class="course-name-input" data-edit-cid="${c.id}" type="text" value="${escapeHtml(editingValue)}" autofocus>`;
+  }
+  return `<div class="course-name editable" data-edit-cid="${c.id}">${escapeHtml(c.name)}</div>`;
+}
+
+function renderRegularRow(c, i) {
   const count = articlesInCourse(c.id).length;
   const countText = count === 1 ? t('courses.articleCount.one') : t('courses.articleCount', { n: count });
+  const isEditing = editingCourseId === c.id;
+  const dragAttr = isEditing ? '' : 'draggable="true"';
+  const dragClass = isEditing ? '' : 'draggable';
   return `
-    <div class="course-row draggable" draggable="true" data-cid="${c.id}">
+    <div class="course-row ${dragClass}" ${dragAttr} data-cid="${c.id}">
       <span class="course-handle">⋮⋮</span>
       <div class="course-nr">${i + 1}</div>
       <div class="course-name-wrap">
-        <div class="course-name">${escapeHtml(c.name)}</div>
+        ${renderCourseNameContent(c)}
         <div class="course-count">${countText}</div>
       </div>
       <button class="course-del" data-cid="${c.id}" title="${t('confirm.delete.confirm')}">×</button>
@@ -512,17 +544,15 @@ function renderFoodCourseRow(c, i) {
   `;
 }
 
-function renderDrinksCourseRow(c) {
+function renderRefireRow(c) {
   const count = articlesInCourse(c.id).length;
   const countText = count === 1 ? t('courses.articleCount.one') : t('courses.articleCount', { n: count });
   return `
-    <div class="course-row drinks-row" data-cid="${c.id}">
+    <div class="course-row" data-cid="${c.id}">
       <span class="course-handle">⋮⋮</span>
-      <div class="course-nr">
-        <svg width="11" height="11" viewBox="0 0 14 14" fill="none"><path d="M3.5 1.5h7l-.7 4.5a3 3 0 11-5.6 0L3.5 1.5zm3.5 7v3.5m-2 1h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
+      <div class="course-nr refire">${REFIRE_ICON}</div>
       <div class="course-name-wrap">
-        <div class="course-name">${escapeHtml(c.name)}</div>
+        ${renderCourseNameContent(c)}
         <div class="course-count">${countText}</div>
       </div>
       <button class="course-del" data-cid="${c.id}" title="${t('confirm.delete.confirm')}">×</button>
@@ -547,20 +577,23 @@ function renderUnassignedRow() {
 }
 
 function renderCoursesPanel() {
-  const food = foodCourses();
-  const drinks = drinksCourses();
-  const drinkRow = drinks.length > 0 ? drinks.map(renderDrinksCourseRow).join('') : '';
-  const foodRows = food.length > 0
-    ? food.map((c, i) => renderFoodCourseRow(c, i)).join('')
-    : `<div class="courses-list empty-list">${t('food.empty')}</div>`;
-  const foodAdd = addFormOpen === 'food'
-    ? renderAddForm('food')
-    : `<div class="add-course-row"><button class="add-course-btn" onclick="openAddForm('food')">${t('addBtn.food')}</button></div>`;
-  const drinksAddCta = drinks.length === 0
-    ? (addFormOpen === 'drinks'
-        ? renderAddForm('drinks')
-        : `<div class="add-course-row"><button class="add-course-btn" onclick="openAddForm('drinks')">${t('addBtn.drinks')}</button></div>`)
-    : '';
+  const reg = regularCourses();
+  const ref = refireCourses();
+
+  const regBlock = reg.length > 0
+    ? reg.map((c, i) => renderRegularRow(c, i)).join('')
+    : `<div class="courses-list empty-list">${t('regular.empty')}</div>`;
+  const refBlock = ref.length > 0
+    ? ref.map(renderRefireRow).join('')
+    : `<div class="courses-list empty-list">${t('refire.empty')}</div>`;
+
+  const regAdd = (addFormOpen && addFormType === 'regular')
+    ? renderAddForm()
+    : `<div class="add-course-row"><button class="add-course-btn" onclick="openAddForm('regular')">${t('addBtn.regular')}</button></div>`;
+  const refAdd = (addFormOpen && addFormType === 'allowReFire')
+    ? renderAddForm()
+    : `<div class="add-course-row"><button class="add-course-btn" onclick="openAddForm('allowReFire')">${t('addBtn.refire')}</button></div>`;
+
   return `
     <div class="panel">
       <div class="panel-head">
@@ -568,15 +601,16 @@ function renderCoursesPanel() {
         <div class="panel-count">${t('courses.count', { n: courses.length })}</div>
       </div>
 
-      <div class="section-head"><span class="section-title">${t('section.food')}</span></div>
-      <div class="courses-list">${food.length > 0 ? foodRows : ''}</div>
-      ${food.length === 0 ? `<div class="courses-list empty-list">${t('food.empty')}</div>` : ''}
-      ${foodAdd}
+      <div class="section-head"><span class="section-title">${t('section.regular')}</span></div>
+      <div class="courses-list">${reg.length > 0 ? regBlock : ''}</div>
+      ${reg.length === 0 ? regBlock : ''}
+      ${regAdd}
 
-      <div class="section-head"><span class="section-title">${t('section.drinks')}</span></div>
-      <div class="section-info">${t('drinks.info')}</div>
-      <div class="courses-list">${drinkRow}</div>
-      ${drinksAddCta}
+      <div class="section-head"><span class="section-title">${t('section.refire')}</span></div>
+      <div class="section-info">${t('refire.info')}</div>
+      <div class="courses-list">${ref.length > 0 ? refBlock : ''}</div>
+      ${ref.length === 0 ? refBlock : ''}
+      ${refAdd}
 
       <div class="section-head"><span class="section-title">${t('section.unassigned')}</span></div>
       <div class="courses-list">${renderUnassignedRow()}</div>
@@ -584,25 +618,32 @@ function renderCoursesPanel() {
   `;
 }
 
-function renderAddForm(kind) {
-  const placeholder = kind === 'drinks' ? t('courses.form.placeholder.drinks') : t('courses.form.placeholder.food');
-  let chipsBlock = '';
-  if (kind === 'food') {
-    const templates = ['course.tpl.appetizers','course.tpl.mains','course.tpl.desserts'];
-    const chips = templates.map(k => `<button class="chip" onclick="useTemplate('${k}')">${t(k)}</button>`).join('');
-    chipsBlock = `
-      <div class="template-label">${t('courses.form.templates')}</div>
-      <div class="template-chips">${chips}</div>
-    `;
-  }
+function renderAddForm() {
+  const isRefire = addFormType === 'allowReFire';
+  const templates = isRefire
+    ? ['course.tpl.drinks']
+    : ['course.tpl.appetizers','course.tpl.mains','course.tpl.desserts'];
+  const chips = templates.map(k => `<button class="chip" onclick="useTemplate('${k}')">${t(k)}</button>`).join('');
   const canSave = addFormValue.trim().length > 0;
+  const helpKey = isRefire ? 'courses.form.type.help.refire' : 'courses.form.type.help.regular';
   return `
     <div class="add-course-form">
-      <input id="addInput" type="text" placeholder="${placeholder}" value="${escapeHtml(addFormValue)}" autofocus />
-      ${chipsBlock}
+      <div class="form-label">${t('courses.form.type')}</div>
+      <div class="type-toggle">
+        <button class="type-btn ${addFormType === 'regular' ? 'active' : ''}" onclick="setAddFormType('regular')">${t('courses.form.type.regular')}</button>
+        <button class="type-btn ${addFormType === 'allowReFire' ? 'active' : ''}" onclick="setAddFormType('allowReFire')">${t('courses.form.type.refire')}</button>
+      </div>
+      <div class="type-help">${t(helpKey)}</div>
+
+      <div class="form-label" style="margin-top:14px;">${t('courses.form.placeholder')}</div>
+      <input id="addInput" type="text" placeholder="${t('courses.form.placeholder')}" value="${escapeHtml(addFormValue)}" autofocus />
+
+      <div class="form-label" style="margin-top:10px;">${t('courses.form.templates')}</div>
+      <div class="template-chips">${chips}</div>
+
       <div class="add-actions">
         <button class="btn-g" onclick="cancelAdd()">${t('courses.form.cancel')}</button>
-        <button class="btn-p" onclick="saveAdd('${kind}')" ${canSave ? '' : 'disabled'}>${t('courses.form.save')}</button>
+        <button class="btn-p" onclick="saveAdd()" ${canSave ? '' : 'disabled'}>${t('courses.form.save')}</button>
       </div>
     </div>
   `;
@@ -630,9 +671,9 @@ function filterValueLabel(field, value) {
 
 function uniqueFieldValues(field) {
   if (field === 'course') {
-    const food = foodCourses().map(c => ({ value: String(c.id), label: c.name, group: 'food' }));
-    const drinks = drinksCourses().map(c => ({ value: String(c.id), label: c.name, group: 'drinks' }));
-    return [...food, ...drinks];
+    const reg = regularCourses().map(c => ({ value: String(c.id), label: c.name, group: 'regular' }));
+    const ref = refireCourses().map(c => ({ value: String(c.id), label: c.name, group: 'allowReFire' }));
+    return [...reg, ...ref];
   }
   if (field === 'displayCategory') {
     const set = new Set(articles.map(a => a.displayCategory));
@@ -660,8 +701,8 @@ function renderFilterPopover() {
   if (filterDraftField) {
     const vals = uniqueFieldValues(filterDraftField);
     if (filterDraftField === 'course') {
-      const food = vals.filter(v => v.group === 'food');
-      const drinks = vals.filter(v => v.group === 'drinks');
+      const reg = vals.filter(v => v.group === 'regular');
+      const ref = vals.filter(v => v.group === 'allowReFire');
       const renderItems = arr => arr.map(v => {
         const checked = filterDraftValues.has(v.value);
         return `
@@ -672,8 +713,8 @@ function renderFilterPopover() {
         `;
       }).join('');
       valuesBlock = `
-        ${food.length > 0 ? `<div class="value-group-label">${t('optgroup.food')}</div><div class="value-options">${renderItems(food)}</div>` : ''}
-        ${drinks.length > 0 ? `<div class="value-group-label">${t('optgroup.drinks')}</div><div class="value-options">${renderItems(drinks)}</div>` : ''}
+        ${reg.length > 0 ? `<div class="value-group-label">${t('optgroup.regular')}</div><div class="value-options">${renderItems(reg)}</div>` : ''}
+        ${ref.length > 0 ? `<div class="value-group-label">${t('optgroup.refire')}</div><div class="value-options">${renderItems(ref)}</div>` : ''}
       `;
     } else {
       const items = vals.map(v => {
@@ -707,17 +748,17 @@ function renderFilterPopover() {
 function renderArticlesPanel() {
   const list = visibleArticles();
   const selectedCount = list.filter(a => selected.has(a.id)).length;
-  const food = foodCourses();
-  const drinks = drinksCourses();
+  const reg = regularCourses();
+  const ref = refireCourses();
   let bulkOptions = `<option value="">${t('bulk.choose')}</option>`;
-  if (food.length > 0) {
-    bulkOptions += `<optgroup label="${escapeHtml(t('optgroup.food'))}">`;
-    food.forEach(c => { bulkOptions += `<option value="${c.id}">${escapeHtml(c.name)}</option>`; });
+  if (reg.length > 0) {
+    bulkOptions += `<optgroup label="${escapeHtml(t('optgroup.regular'))}">`;
+    reg.forEach(c => { bulkOptions += `<option value="${c.id}">${escapeHtml(c.name)}</option>`; });
     bulkOptions += `</optgroup>`;
   }
-  if (drinks.length > 0) {
-    bulkOptions += `<optgroup label="${escapeHtml(t('optgroup.drinks'))}">`;
-    drinks.forEach(c => { bulkOptions += `<option value="${c.id}">${escapeHtml(c.name)}</option>`; });
+  if (ref.length > 0) {
+    bulkOptions += `<optgroup label="${escapeHtml(t('optgroup.refire'))}">`;
+    ref.forEach(c => { bulkOptions += `<option value="${c.id}">${escapeHtml(c.name)}</option>`; });
     bulkOptions += `</optgroup>`;
   }
   bulkOptions += `<option value="unassigned">${t('bulk.unassign')}</option>`;
@@ -805,17 +846,17 @@ function renderArticlesPanel() {
 }
 
 function renderCourseDropdown(a) {
-  const food = foodCourses();
-  const drinks = drinksCourses();
+  const reg = regularCourses();
+  const ref = refireCourses();
   let opts = '';
-  if (food.length > 0) {
-    opts += `<optgroup label="${escapeHtml(t('optgroup.food'))}">`;
-    food.forEach(c => { opts += `<option value="${c.id}" ${a.courseId === c.id ? 'selected' : ''}>${escapeHtml(c.name)}</option>`; });
+  if (reg.length > 0) {
+    opts += `<optgroup label="${escapeHtml(t('optgroup.regular'))}">`;
+    reg.forEach(c => { opts += `<option value="${c.id}" ${a.courseId === c.id ? 'selected' : ''}>${escapeHtml(c.name)}</option>`; });
     opts += `</optgroup>`;
   }
-  if (drinks.length > 0) {
-    opts += `<optgroup label="${escapeHtml(t('optgroup.drinks'))}">`;
-    drinks.forEach(c => { opts += `<option value="${c.id}" ${a.courseId === c.id ? 'selected' : ''}>${escapeHtml(c.name)}</option>`; });
+  if (ref.length > 0) {
+    opts += `<optgroup label="${escapeHtml(t('optgroup.refire'))}">`;
+    ref.forEach(c => { opts += `<option value="${c.id}" ${a.courseId === c.id ? 'selected' : ''}>${escapeHtml(c.name)}</option>`; });
     opts += `</optgroup>`;
   }
   const unassignedOpt = `<option value="unassigned" ${a.courseId === null ? 'selected' : ''}>${t('bulk.unassign')}</option>`;
@@ -875,6 +916,25 @@ function attachHandlers() {
       askDeleteCourse(id);
     });
   });
+  document.querySelectorAll('.course-name.editable[data-edit-cid]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.stopPropagation();
+      const id = Number(el.getAttribute('data-edit-cid'));
+      startEditingCourse(id);
+    });
+  });
+  const editInput = document.querySelector('.course-name-input[data-edit-cid]');
+  if (editInput) {
+    editInput.addEventListener('input', e => { editingValue = e.target.value; });
+    editInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); saveCourseEdit(); }
+      else if (e.key === 'Escape') { e.preventDefault(); cancelCourseEdit(); }
+    });
+    editInput.addEventListener('blur', () => { if (editingCourseId !== null) saveCourseEdit(); });
+    editInput.addEventListener('click', e => e.stopPropagation());
+    editInput.focus();
+    editInput.select();
+  }
   document.querySelectorAll('.course-row.draggable').forEach(el => {
     el.addEventListener('dragstart', handleDragStart);
     el.addEventListener('dragend', handleDragEnd);
@@ -890,7 +950,7 @@ function attachHandlers() {
       if (btn) btn.disabled = !addFormValue.trim();
     });
     addInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && addFormValue.trim()) saveAdd(addFormOpen);
+      if (e.key === 'Enter' && addFormValue.trim()) saveAdd();
       else if (e.key === 'Escape') cancelAdd();
     });
     addInput.focus();
@@ -983,6 +1043,8 @@ function handleDragOver(e) {
   const row = e.currentTarget;
   const targetId = Number(row.getAttribute('data-cid'));
   if (targetId === draggedCourseId) return;
+  const target = courses.find(c => c.id === targetId);
+  if (!target || target.type !== 'regular') return;
   const rect = row.getBoundingClientRect();
   const before = e.clientY < rect.top + rect.height / 2;
   row.classList.toggle('drop-before', before);
@@ -999,7 +1061,7 @@ function handleDrop(e) {
   if (targetId === draggedCourseId) return;
   const dragged = courses.find(c => c.id === draggedCourseId);
   const target = courses.find(c => c.id === targetId);
-  if (!dragged || !target || dragged.type !== 'food' || target.type !== 'food') return;
+  if (!dragged || !target || dragged.type !== 'regular' || target.type !== 'regular') return;
   const rect = row.getBoundingClientRect();
   const before = e.clientY < rect.top + rect.height / 2;
   const fromIdx = courses.findIndex(c => c.id === draggedCourseId);
@@ -1009,23 +1071,55 @@ function handleDrop(e) {
   render();
 }
 
-function openAddForm(kind) { addFormOpen = kind; addFormValue = kind === 'drinks' ? t('course.tpl.drinks') : ''; render(); }
-function cancelAdd() { addFormOpen = null; addFormValue = ''; render(); }
+function startEditingCourse(id) {
+  const c = courses.find(x => x.id === id);
+  if (!c) return;
+  editingCourseId = id;
+  editingValue = c.name;
+  render();
+}
+function saveCourseEdit() {
+  if (editingCourseId === null) return;
+  const c = courses.find(x => x.id === editingCourseId);
+  if (c) {
+    const newName = editingValue.trim();
+    if (newName.length > 0) c.name = newName;
+  }
+  editingCourseId = null;
+  editingValue = '';
+  render();
+}
+function cancelCourseEdit() {
+  editingCourseId = null;
+  editingValue = '';
+  render();
+}
+
+function openAddForm(type) {
+  addFormOpen = true;
+  addFormType = type;
+  addFormValue = '';
+  render();
+}
+function setAddFormType(type) {
+  addFormType = type;
+  render();
+  setTimeout(() => { const i = document.getElementById('addInput'); if (i) i.focus(); }, 0);
+}
+function cancelAdd() { addFormOpen = false; addFormValue = ''; render(); }
 function useTemplate(key) {
   addFormValue = t(key);
   render();
   setTimeout(() => { const i = document.getElementById('addInput'); if (i) i.focus(); }, 0);
 }
-function saveAdd(kind) {
+function saveAdd() {
   const name = addFormValue.trim();
   if (!name) return;
-  if (kind === 'drinks' && drinksCourses().length > 0) { cancelAdd(); return; }
-  const newCourse = { id: nextCourseId++, name, type: kind };
-  courses.push(newCourse);
-  addFormOpen = null;
+  courses.push({ id: nextCourseId++, name, type: addFormType });
+  addFormOpen = false;
   addFormValue = '';
   render();
-  showToast(kind === 'drinks' ? t('toast.drinksAdded', { name }) : t('toast.courseAdded', { name }));
+  showToast(t('toast.courseAdded', { name }));
 }
 
 function askDeleteCourse(id) {
@@ -1087,16 +1181,17 @@ function clearSelection() { selected = new Set(); render(); }
 
 function applyStandardTemplate() {
   courses = [
-    { id: nextCourseId++, name: t('course.tpl.appetizers'), type: 'food' },
-    { id: nextCourseId++, name: t('course.tpl.mains'), type: 'food' },
-    { id: nextCourseId++, name: t('course.tpl.desserts'), type: 'food' },
-    { id: nextCourseId++, name: t('course.tpl.drinks'), type: 'drinks' }
+    { id: nextCourseId++, name: t('course.tpl.appetizers'), type: 'regular' },
+    { id: nextCourseId++, name: t('course.tpl.mains'), type: 'regular' },
+    { id: nextCourseId++, name: t('course.tpl.desserts'), type: 'regular' },
+    { id: nextCourseId++, name: t('course.tpl.drinks'), type: 'allowReFire' }
   ];
   render();
   showToast(t('toast.templateApplied'));
 }
 function startFromScratch() {
-  addFormOpen = 'food';
+  addFormOpen = true;
+  addFormType = 'regular';
   addFormValue = '';
   render();
 }
