@@ -464,16 +464,9 @@ function isCourseFilterActive(courseId) {
 function toggleCourseFilter(courseId) {
   const cid = String(courseId);
   const existing = filters.find(f => f.field === 'course');
-  if (existing) {
-    if (existing.values.includes(cid)) {
-      existing.values = existing.values.filter(v => v !== cid);
-      if (existing.values.length === 0) filters = filters.filter(f => f.field !== 'course');
-    } else {
-      existing.values.push(cid);
-    }
-  } else {
-    filters.push({ field: 'course', values: [cid] });
-  }
+  const alreadyOnlyThis = existing && existing.values.length === 1 && existing.values[0] === cid;
+  filters = filters.filter(f => f.field !== 'course');
+  if (!alreadyOnlyThis) filters.push({ field: 'course', values: [cid] });
   render();
 }
 
