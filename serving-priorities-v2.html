@@ -23,6 +23,7 @@
   .page-sub { font-size: 13px; color: #666; margin-bottom: 24px; max-width: 600px; }
 
   .panels { display: grid; grid-template-columns: 320px 1fr; gap: 20px; align-items: start; }
+  .courses-column { display: flex; flex-direction: column; gap: 14px; }
   .panel { background: #fff; border: 0.5px solid #e0e0da; border-radius: 12px; overflow: hidden; }
   .panel-head { padding: 14px 18px; border-bottom: 0.5px solid #e0e0da; display: flex; justify-content: space-between; align-items: center; }
   .panel-title { font-size: 13px; font-weight: 500; color: #1a1a2e; }
@@ -603,12 +604,10 @@ function renderCoursesPanel() {
   const reg = regularCourses();
   const ref = refireCourses();
 
-  const regBlock = reg.length > 0
-    ? reg.map((c, i) => renderRegularRow(c, i)).join('')
-    : `<div class="courses-list empty-list">${t('regular.empty')}</div>`;
-  const refBlock = ref.length > 0
-    ? ref.map(renderRefireRow).join('')
-    : `<div class="courses-list empty-list">${t('refire.empty')}</div>`;
+  const regRows = reg.length > 0 ? reg.map((c, i) => renderRegularRow(c, i)).join('') : '';
+  const regEmpty = reg.length === 0 ? `<div class="courses-list empty-list">${t('regular.empty')}</div>` : '';
+  const refRows = ref.length > 0 ? ref.map(renderRefireRow).join('') : '';
+  const refEmpty = ref.length === 0 ? `<div class="courses-list empty-list">${t('refire.empty')}</div>` : '';
 
   const regAdd = (addFormOpen && addFormType === 'regular')
     ? renderAddForm()
@@ -618,26 +617,37 @@ function renderCoursesPanel() {
     : `<div class="add-course-row"><button class="add-course-btn" onclick="openAddForm('allowReFire')">${t('addBtn.refire')}</button></div>`;
 
   return `
-    <div class="panel">
-      <div class="panel-head">
-        <div class="panel-title">${t('panel.title')}</div>
-        <div class="panel-count">${t('courses.count', { n: courses.length })}</div>
+    <div class="courses-column">
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">${t('section.regular')}</div>
+            <div class="panel-subtitle">${t('regular.info')}</div>
+          </div>
+        </div>
+        ${reg.length > 0 ? `<div class="courses-list">${regRows}</div>` : regEmpty}
+        ${regAdd}
       </div>
 
-      <div class="section-head"><span class="section-title">${t('section.regular')}</span></div>
-      <div class="section-info">${t('regular.info')}</div>
-      <div class="courses-list">${reg.length > 0 ? regBlock : ''}</div>
-      ${reg.length === 0 ? regBlock : ''}
-      ${regAdd}
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">${t('section.refire')}</div>
+            <div class="panel-subtitle">${t('refire.info')}</div>
+          </div>
+        </div>
+        ${ref.length > 0 ? `<div class="courses-list">${refRows}</div>` : refEmpty}
+        ${refAdd}
+      </div>
 
-      <div class="section-head"><span class="section-title">${t('section.refire')}</span></div>
-      <div class="section-info">${t('refire.info')}</div>
-      <div class="courses-list">${ref.length > 0 ? refBlock : ''}</div>
-      ${ref.length === 0 ? refBlock : ''}
-      ${refAdd}
-
-      <div class="section-head"><span class="section-title">${t('section.unassigned')}</span></div>
-      <div class="courses-list">${renderUnassignedRow()}</div>
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">${t('section.unassigned')}</div>
+          </div>
+        </div>
+        <div class="courses-list">${renderUnassignedRow()}</div>
+      </div>
     </div>
   `;
 }
