@@ -206,6 +206,7 @@ const translations = {
     'section.regular': 'Standard',
     'section.refire': 'Öppna',
     'section.unassigned': 'Okopplade',
+    'regular.info': 'För rätter som skickas till köket. Att lägga till artiklar efter elden skapar en korrigering så kökspersonalen ser ändringen.',
     'refire.info': 'För rätter du fyller på under kvällens gång. Drycker är typexemplet — servitören kan enkelt ta emot fler dryckesbeställningar från sällskapet.',
     'regular.empty': 'Inga rätter än',
     'refire.empty': 'Inga öppna rätter än',
@@ -284,6 +285,7 @@ const translations = {
     'section.regular': 'Standard',
     'section.refire': 'Open',
     'section.unassigned': 'Unassigned',
+    'regular.info': 'For courses fired to the kitchen. Adding items after firing creates a correction so kitchen staff see the change.',
     'refire.info': 'For courses you keep adding to throughout the evening. Drinks is the typical case — waiters can easily take more drink orders from the party.',
     'regular.empty': 'No courses yet',
     'refire.empty': 'No open courses yet',
@@ -613,6 +615,7 @@ function renderCoursesPanel() {
       </div>
 
       <div class="section-head"><span class="section-title">${t('section.regular')}</span></div>
+      <div class="section-info">${t('regular.info')}</div>
       <div class="courses-list">${reg.length > 0 ? regBlock : ''}</div>
       ${reg.length === 0 ? regBlock : ''}
       ${regAdd}
