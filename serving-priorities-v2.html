@@ -52,10 +52,15 @@
   .course-name.editable:hover { background: #f0f0ec; }
   .course-name-input { width: 100%; padding: 2px 6px; font-size: 13px; font-weight: 500; border: 0.5px solid #534AB7; border-radius: 4px; background: #fff; color: #1a1a2e; font-family: inherit; }
   .course-name-input:focus { outline: none; box-shadow: 0 0 0 2px rgba(83,74,183,0.15); }
-  .type-pill { padding: 3px 9px; border: 0.5px solid #d0d0c8; border-radius: 999px; background: transparent; color: #aaa; cursor: pointer; font-size: 10px; font-weight: 500; font-family: inherit; text-transform: uppercase; letter-spacing: 0.04em; transition: all 0.12s; }
-  .type-pill:hover { border-color: #b07410; color: #b07410; }
-  .type-pill.on { background: #FAEEDA; border-color: #FAEEDA; color: #8a5a18; }
-  .type-pill.on:hover { background: #f5e1bf; border-color: #f5e1bf; }
+  .type-switch { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; padding: 4px 6px; border-radius: 6px; user-select: none; background: transparent; border: none; font-family: inherit; }
+  .type-switch:hover { background: #f7f7f5; }
+  .type-switch-track { width: 22px; height: 12px; border-radius: 999px; background: #d0d0d0; position: relative; transition: background 0.15s; flex-shrink: 0; }
+  .type-switch-thumb { width: 8px; height: 8px; border-radius: 50%; background: #fff; position: absolute; top: 2px; left: 2px; transition: left 0.15s; box-shadow: 0 1px 2px rgba(0,0,0,0.18); }
+  .type-switch.on .type-switch-track { background: #b07410; }
+  .type-switch.on .type-switch-thumb { left: 12px; }
+  .type-switch-label { font-size: 10px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.04em; }
+  .type-switch.on .type-switch-label { color: #8a5a18; }
+  .panel-subtitle { font-size: 11px; color: #888; margin-top: 3px; font-weight: 400; }
   .course-count { font-size: 11px; color: #888; margin-top: 1px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
   .badge-refire { display: inline-block; font-size: 9px; padding: 1px 6px; background: #FAEEDA; color: #8a5a18; border-radius: 999px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
   .course-del { background: transparent; border: none; color: #ccc; cursor: pointer; padding: 4px; font-size: 14px; line-height: 1; border-radius: 4px; }
@@ -227,6 +232,7 @@ const translations = {
     'courses.form.cancel': 'Avbryt',
     'courses.unassigned': 'Okopplade',
     'articles.title': 'Artiklar',
+    'articles.subtitle': 'Koppla varje artikel till en rätt.',
     'articles.search': 'Sök artiklar…',
     'articles.th.name': 'Artikel',
     'articles.th.displayCategory': 'Visningskategori',
@@ -306,6 +312,7 @@ const translations = {
     'courses.form.cancel': 'Cancel',
     'courses.unassigned': 'Unassigned',
     'articles.title': 'Articles',
+    'articles.subtitle': 'Map each article to a course.',
     'articles.search': 'Search articles…',
     'articles.th.name': 'Article',
     'articles.th.displayCategory': 'Display category',
@@ -533,7 +540,10 @@ function renderCourseNameContent(c) {
 
 function renderTypePill(c) {
   const isOpen = c.type === 'allowReFire';
-  return `<button class="type-pill ${isOpen ? 'on' : ''}" data-toggle-cid="${c.id}" title="${t('typePill.title')}">${t('badge.refire')}</button>`;
+  return `<button class="type-switch ${isOpen ? 'on' : ''}" data-toggle-cid="${c.id}" title="${t('typePill.title')}">
+    <span class="type-switch-track"><span class="type-switch-thumb"></span></span>
+    <span class="type-switch-label">${t('badge.refire')}</span>
+  </button>`;
 }
 
 function renderRegularRow(c, i) {
@@ -815,6 +825,12 @@ function renderArticlesPanel() {
   const unassignedActive = isUnassignedFilterActive();
   return `
     <div class="panel articles-panel">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">${t('articles.title')}</div>
+          <div class="panel-subtitle">${t('articles.subtitle')}</div>
+        </div>
+      </div>
       <div class="articles-head">
         <div class="search-wrap">
           <span class="search-icon">
@@ -926,7 +942,7 @@ function attachHandlers() {
       startEditingCourse(id);
     });
   });
-  document.querySelectorAll('.type-pill[data-toggle-cid]').forEach(el => {
+  document.querySelectorAll('.type-switch[data-toggle-cid]').forEach(el => {
     el.addEventListener('click', e => {
       e.stopPropagation();
       const id = Number(el.getAttribute('data-toggle-cid'));
