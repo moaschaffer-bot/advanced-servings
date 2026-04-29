@@ -213,7 +213,7 @@ const translations = {
     'section.refire': 'Öppna',
     'section.unassigned': 'Okopplade',
     'regular.info': 'För rätter som skickas till köket. Att lägga till artiklar efter bongning skapar en korrigering så kökspersonalen ser ändringen.',
-    'refire.info': 'För rätter du fyller på under kvällens gång. Drycker är typexemplet — servitören kan enkelt ta emot fler dryckesbeställningar från sällskapet.',
+    'refire.info': 'För rätter du fyller på under kvällens gång. Drycker är typexemplet — servitören kan enkelt ta emot fler dryckesbeställningar från sällskapet. Bongas före väntande standardrätter.',
     'regular.empty': 'Inga rätter än',
     'refire.empty': 'Inga öppna rätter än',
     'badge.refire': 'Öppen',
@@ -293,7 +293,7 @@ const translations = {
     'section.refire': 'Open',
     'section.unassigned': 'Unassigned',
     'regular.info': 'For courses fired to the kitchen. Adding items after firing creates a correction so kitchen staff see the change.',
-    'refire.info': 'For courses you keep adding to throughout the evening. Drinks is the typical case — waiters can easily take more drink orders from the party.',
+    'refire.info': 'For courses you keep adding to throughout the evening. Drinks is the typical case — waiters can easily take more drink orders from the party. Fires ahead of pending standard courses.',
     'regular.empty': 'No courses yet',
     'refire.empty': 'No open courses yet',
     'badge.refire': 'Open',
@@ -567,13 +567,16 @@ function renderRegularRow(c, i) {
   `;
 }
 
-function renderRefireRow(c) {
+function renderRefireRow(c, i) {
   const count = articlesInCourse(c.id).length;
   const countText = count === 1 ? t('courses.articleCount.one') : t('courses.articleCount', { n: count });
+  const isEditing = editingCourseId === c.id;
+  const dragAttr = isEditing ? '' : 'draggable="true"';
+  const dragClass = isEditing ? '' : 'draggable';
   return `
-    <div class="course-row" data-cid="${c.id}">
+    <div class="course-row ${dragClass}" ${dragAttr} data-cid="${c.id}">
       <span class="course-handle">⋮⋮</span>
-      <div class="course-nr refire">${REFIRE_ICON}</div>
+      <div class="course-nr refire">${i + 1}</div>
       <div class="course-name-wrap">
         ${renderCourseNameContent(c)}
         <div class="course-count">${countText}</div>
@@ -606,7 +609,7 @@ function renderCoursesPanel() {
 
   const regRows = reg.length > 0 ? reg.map((c, i) => renderRegularRow(c, i)).join('') : '';
   const regEmpty = reg.length === 0 ? `<div class="courses-list empty-list">${t('regular.empty')}</div>` : '';
-  const refRows = ref.length > 0 ? ref.map(renderRefireRow).join('') : '';
+  const refRows = ref.length > 0 ? ref.map((c, i) => renderRefireRow(c, i)).join('') : '';
   const refEmpty = ref.length === 0 ? `<div class="courses-list empty-list">${t('refire.empty')}</div>` : '';
 
   const regAdd = (addFormOpen && addFormType === 'regular')
@@ -621,23 +624,23 @@ function renderCoursesPanel() {
       <div class="panel">
         <div class="panel-head">
           <div>
-            <div class="panel-title">${t('section.regular')}</div>
-            <div class="panel-subtitle">${t('regular.info')}</div>
-          </div>
-        </div>
-        ${reg.length > 0 ? `<div class="courses-list">${regRows}</div>` : regEmpty}
-        ${regAdd}
-      </div>
-
-      <div class="panel">
-        <div class="panel-head">
-          <div>
             <div class="panel-title">${t('section.refire')}</div>
             <div class="panel-subtitle">${t('refire.info')}</div>
           </div>
         </div>
         ${ref.length > 0 ? `<div class="courses-list">${refRows}</div>` : refEmpty}
         ${refAdd}
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">${t('section.regular')}</div>
+            <div class="panel-subtitle">${t('regular.info')}</div>
+          </div>
+        </div>
+        ${reg.length > 0 ? `<div class="courses-list">${regRows}</div>` : regEmpty}
+        ${regAdd}
       </div>
 
       <div class="panel">
@@ -1080,7 +1083,8 @@ function handleDragOver(e) {
   const targetId = Number(row.getAttribute('data-cid'));
   if (targetId === draggedCourseId) return;
   const target = courses.find(c => c.id === targetId);
-  if (!target || target.type !== 'regular') return;
+  const dragged = courses.find(c => c.id === draggedCourseId);
+  if (!target || !dragged || target.type !== dragged.type) return;
   const rect = row.getBoundingClientRect();
   const before = e.clientY < rect.top + rect.height / 2;
   row.classList.toggle('drop-before', before);
@@ -1097,7 +1101,7 @@ function handleDrop(e) {
   if (targetId === draggedCourseId) return;
   const dragged = courses.find(c => c.id === draggedCourseId);
   const target = courses.find(c => c.id === targetId);
-  if (!dragged || !target || dragged.type !== 'regular' || target.type !== 'regular') return;
+  if (!dragged || !target || dragged.type !== target.type) return;
   const rect = row.getBoundingClientRect();
   const before = e.clientY < rect.top + rect.height / 2;
   const fromIdx = courses.findIndex(c => c.id === draggedCourseId);
