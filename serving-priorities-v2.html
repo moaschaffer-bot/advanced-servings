@@ -36,9 +36,10 @@
 
   .courses-list { padding: 4px 6px; }
   .courses-list.empty-list { padding: 8px 14px; color: #aaa; font-size: 12px; font-style: italic; }
-  .course-row { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; transition: background 0.12s; border: 1px solid transparent; }
-  .course-row.draggable { cursor: move; }
-  .course-row:hover.draggable { background: #f7f7f5; }
+  .course-row { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; transition: background 0.12s; border: 1px solid transparent; cursor: pointer; }
+  .course-row:hover { background: #f7f7f5; }
+  .course-row.is-filter-active { background: #EEEDFE; }
+  .course-row.is-filter-active:hover { background: #dcd9fa; }
   .course-row.dragging { opacity: 0.4; }
   .course-row.drop-before { border-top-color: #534AB7; }
   .course-row.drop-after { border-bottom-color: #534AB7; }
@@ -212,8 +213,8 @@ const translations = {
     'section.regular': 'Standard',
     'section.refire': 'Öppna',
     'section.unassigned': 'Okopplade',
-    'regular.info': 'För rätter som skickas till köket. Att lägga till artiklar efter bongning skapar en korrigering så kökspersonalen ser ändringen.',
-    'refire.info': 'För rätter du fyller på under kvällens gång. Drycker är typexemplet — servitören kan enkelt ta emot fler dryckesbeställningar från sällskapet. Bongas före väntande standardrätter.',
+    'regular.info': 'Bongas i tur och ordning — sena tillägg kräver korrigering.',
+    'refire.info': 'Bongas före standardrätter — drycker är typexemplet.',
     'regular.empty': 'Inga rätter än',
     'refire.empty': 'Inga öppna rätter än',
     'badge.refire': 'Öppen',
@@ -292,8 +293,8 @@ const translations = {
     'section.regular': 'Standard',
     'section.refire': 'Open',
     'section.unassigned': 'Unassigned',
-    'regular.info': 'For courses fired to the kitchen. Adding items after firing creates a correction so kitchen staff see the change.',
-    'refire.info': 'For courses you keep adding to throughout the evening. Drinks is the typical case — waiters can easily take more drink orders from the party. Fires ahead of pending standard courses.',
+    'regular.info': 'Fired in serving order — late items need a correction.',
+    'refire.info': 'Fires ahead of standard — drinks is the typical case.',
     'regular.empty': 'No courses yet',
     'refire.empty': 'No open courses yet',
     'badge.refire': 'Open',
@@ -455,6 +456,27 @@ function isUnassignedFilterActive() {
   return filters.some(f => f.field === 'unassigned');
 }
 
+function isCourseFilterActive(courseId) {
+  const f = filters.find(x => x.field === 'course');
+  return !!(f && f.values.includes(String(courseId)));
+}
+
+function toggleCourseFilter(courseId) {
+  const cid = String(courseId);
+  const existing = filters.find(f => f.field === 'course');
+  if (existing) {
+    if (existing.values.includes(cid)) {
+      existing.values = existing.values.filter(v => v !== cid);
+      if (existing.values.length === 0) filters = filters.filter(f => f.field !== 'course');
+    } else {
+      existing.values.push(cid);
+    }
+  } else {
+    filters.push({ field: 'course', values: [cid] });
+  }
+  render();
+}
+
 function visibleArticles() {
   let list = articles.slice();
   filters.forEach(f => { list = list.filter(a => articleMatchesFilter(a, f)); });
@@ -553,8 +575,9 @@ function renderRegularRow(c, i) {
   const isEditing = editingCourseId === c.id;
   const dragAttr = isEditing ? '' : 'draggable="true"';
   const dragClass = isEditing ? '' : 'draggable';
+  const activeClass = isCourseFilterActive(c.id) ? 'is-filter-active' : '';
   return `
-    <div class="course-row ${dragClass}" ${dragAttr} data-cid="${c.id}">
+    <div class="course-row ${dragClass} ${activeClass}" ${dragAttr} data-cid="${c.id}" data-filter-cid="${c.id}">
       <span class="course-handle">⋮⋮</span>
       <div class="course-nr">${i + 1}</div>
       <div class="course-name-wrap">
@@ -573,8 +596,9 @@ function renderRefireRow(c, i) {
   const isEditing = editingCourseId === c.id;
   const dragAttr = isEditing ? '' : 'draggable="true"';
   const dragClass = isEditing ? '' : 'draggable';
+  const activeClass = isCourseFilterActive(c.id) ? 'is-filter-active' : '';
   return `
-    <div class="course-row ${dragClass}" ${dragAttr} data-cid="${c.id}">
+    <div class="course-row ${dragClass} ${activeClass}" ${dragAttr} data-cid="${c.id}" data-filter-cid="${c.id}">
       <span class="course-handle">⋮⋮</span>
       <div class="course-nr refire">${i + 1}</div>
       <div class="course-name-wrap">
@@ -590,8 +614,9 @@ function renderRefireRow(c, i) {
 function renderUnassignedRow() {
   const otherCount = articlesInCourse(null).length;
   const otherText = otherCount === 1 ? t('courses.articleCount.one') : t('courses.articleCount', { n: otherCount });
+  const activeClass = isUnassignedFilterActive() ? 'is-filter-active' : '';
   return `
-    <div class="course-row unassigned-row">
+    <div class="course-row unassigned-row ${activeClass}" data-filter-unassigned="1">
       <span class="course-handle">⋮⋮</span>
       <div class="course-nr">–</div>
       <div class="course-name-wrap">
@@ -960,6 +985,19 @@ function attachHandlers() {
       e.stopPropagation();
       const id = Number(el.getAttribute('data-toggle-cid'));
       toggleCourseType(id);
+    });
+  });
+  document.querySelectorAll('.course-row[data-filter-cid]').forEach(row => {
+    row.addEventListener('click', e => {
+      if (e.target.closest('button') || e.target.closest('input') || e.target.closest('.course-name.editable')) return;
+      const id = Number(row.getAttribute('data-filter-cid'));
+      toggleCourseFilter(id);
+    });
+  });
+  document.querySelectorAll('.course-row[data-filter-unassigned]').forEach(row => {
+    row.addEventListener('click', e => {
+      if (e.target.closest('button') || e.target.closest('input')) return;
+      toggleUnassignedFilter();
     });
   });
   const editInput = document.querySelector('.course-name-input[data-edit-cid]');
