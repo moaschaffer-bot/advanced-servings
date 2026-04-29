@@ -52,6 +52,10 @@
   .course-name.editable:hover { background: #f0f0ec; }
   .course-name-input { width: 100%; padding: 2px 6px; font-size: 13px; font-weight: 500; border: 0.5px solid #534AB7; border-radius: 4px; background: #fff; color: #1a1a2e; font-family: inherit; }
   .course-name-input:focus { outline: none; box-shadow: 0 0 0 2px rgba(83,74,183,0.15); }
+  .type-pill { padding: 3px 9px; border: 0.5px solid #d0d0c8; border-radius: 999px; background: transparent; color: #aaa; cursor: pointer; font-size: 10px; font-weight: 500; font-family: inherit; text-transform: uppercase; letter-spacing: 0.04em; transition: all 0.12s; }
+  .type-pill:hover { border-color: #b07410; color: #b07410; }
+  .type-pill.on { background: #FAEEDA; border-color: #FAEEDA; color: #8a5a18; }
+  .type-pill.on:hover { background: #f5e1bf; border-color: #f5e1bf; }
   .course-count { font-size: 11px; color: #888; margin-top: 1px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
   .badge-refire { display: inline-block; font-size: 9px; padding: 1px 6px; background: #FAEEDA; color: #8a5a18; border-radius: 999px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
   .course-del { background: transparent; border: none; color: #ccc; cursor: pointer; padding: 4px; font-size: 14px; line-height: 1; border-radius: 4px; }
@@ -206,6 +210,7 @@ const translations = {
     'regular.empty': 'Inga rätter än',
     'refire.empty': 'Inga öppna rätter än',
     'badge.refire': 'Öppen',
+    'typePill.title': 'Klicka för att växla mellan standard och öppen',
     'courses.count': '{n} totalt',
     'courses.articleCount': '{n} artiklar',
     'courses.articleCount.one': '1 artikel',
@@ -283,6 +288,7 @@ const translations = {
     'regular.empty': 'No courses yet',
     'refire.empty': 'No open courses yet',
     'badge.refire': 'Open',
+    'typePill.title': 'Click to toggle between standard and open',
     'courses.count': '{n} total',
     'courses.articleCount': '{n} articles',
     'courses.articleCount.one': '1 article',
@@ -523,6 +529,11 @@ function renderCourseNameContent(c) {
   return `<div class="course-name editable" data-edit-cid="${c.id}">${escapeHtml(c.name)}</div>`;
 }
 
+function renderTypePill(c) {
+  const isOpen = c.type === 'allowReFire';
+  return `<button class="type-pill ${isOpen ? 'on' : ''}" data-toggle-cid="${c.id}" title="${t('typePill.title')}">${t('badge.refire')}</button>`;
+}
+
 function renderRegularRow(c, i) {
   const count = articlesInCourse(c.id).length;
   const countText = count === 1 ? t('courses.articleCount.one') : t('courses.articleCount', { n: count });
@@ -537,6 +548,7 @@ function renderRegularRow(c, i) {
         ${renderCourseNameContent(c)}
         <div class="course-count">${countText}</div>
       </div>
+      ${renderTypePill(c)}
       <button class="course-del" data-cid="${c.id}" title="${t('confirm.delete.confirm')}">×</button>
     </div>
   `;
@@ -553,6 +565,7 @@ function renderRefireRow(c) {
         ${renderCourseNameContent(c)}
         <div class="course-count">${countText}</div>
       </div>
+      ${renderTypePill(c)}
       <button class="course-del" data-cid="${c.id}" title="${t('confirm.delete.confirm')}">×</button>
     </div>
   `;
@@ -623,22 +636,11 @@ function renderAddForm() {
     : ['course.tpl.appetizers','course.tpl.mains','course.tpl.desserts'];
   const chips = templates.map(k => `<button class="chip" onclick="useTemplate('${k}')">${t(k)}</button>`).join('');
   const canSave = addFormValue.trim().length > 0;
-  const helpHtml = isRefire ? `<div class="type-help">${t('courses.form.type.help.refire')}</div>` : '';
   return `
     <div class="add-course-form">
-      <div class="form-label">${t('courses.form.type')}</div>
-      <div class="type-toggle">
-        <button class="type-btn ${addFormType === 'regular' ? 'active' : ''}" onclick="setAddFormType('regular')">${t('courses.form.type.regular')}</button>
-        <button class="type-btn ${addFormType === 'allowReFire' ? 'active' : ''}" onclick="setAddFormType('allowReFire')">${t('courses.form.type.refire')}</button>
-      </div>
-      ${helpHtml}
-
-      <div class="form-label" style="margin-top:14px;">${t('courses.form.placeholder')}</div>
       <input id="addInput" type="text" placeholder="${t('courses.form.placeholder')}" value="${escapeHtml(addFormValue)}" autofocus />
-
       <div class="form-label" style="margin-top:10px;">${t('courses.form.templates')}</div>
       <div class="template-chips">${chips}</div>
-
       <div class="add-actions">
         <button class="btn-g" onclick="cancelAdd()">${t('courses.form.cancel')}</button>
         <button class="btn-p" onclick="saveAdd()" ${canSave ? '' : 'disabled'}>${t('courses.form.save')}</button>
@@ -921,6 +923,13 @@ function attachHandlers() {
       startEditingCourse(id);
     });
   });
+  document.querySelectorAll('.type-pill[data-toggle-cid]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.stopPropagation();
+      const id = Number(el.getAttribute('data-toggle-cid'));
+      toggleCourseType(id);
+    });
+  });
   const editInput = document.querySelector('.course-name-input[data-edit-cid]');
   if (editInput) {
     editInput.addEventListener('input', e => { editingValue = e.target.value; });
@@ -1066,6 +1075,13 @@ function handleDrop(e) {
   const moved = courses.splice(fromIdx, 1)[0];
   const toIdx = courses.findIndex(c => c.id === targetId);
   courses.splice(before ? toIdx : toIdx + 1, 0, moved);
+  render();
+}
+
+function toggleCourseType(id) {
+  const c = courses.find(x => x.id === id);
+  if (!c) return;
+  c.type = c.type === 'allowReFire' ? 'regular' : 'allowReFire';
   render();
 }
 
