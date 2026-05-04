@@ -1,10 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="680" height="383" viewBox="0 0 680 383" role="img" aria-label="Serving priorities cart preview, dark theme">
   <title>Serving priorities cart preview (dark)</title>
-  <desc>Cart with pre-defined courses — Drinks (open) on top in amber, then Starter and Main in lavender.</desc>
+  <desc>Cart with predefined courses — Drinks (open) on top, then Appetizer, Main Course, Dessert.</desc>
   <defs>
     <clipPath id="screen-clip-pr-dark">
       <rect x="60" y="40" width="560" height="303" rx="16"/>
     </clipPath>
+    <style>
+      .cart-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+    </style>
   </defs>
 
   <rect x="60" y="40" width="560" height="303" rx="16" fill="#16181F"/>
@@ -53,42 +56,57 @@
 
     <!-- Cart panel -->
     <rect x="490" y="40" width="130" height="303" fill="#16181F"/>
-    <rect x="502" y="56" width="28" height="7" rx="2" fill="#A8ACB8"/>
+    <text class="cart-text" x="502" y="62" font-size="10" font-weight="500" fill="#FFFFFF">Cart</text>
 
     <!-- Drinks (open, amber) -->
-    <rect x="500" y="78" width="110" height="12" rx="3" fill="#3D2D14"/>
-    <circle cx="506" cy="84" r="2" fill="#E0A85A"/>
-    <rect x="512" y="82" width="28" height="4" rx="1.5" fill="#E0A85A"/>
-    <rect x="582" y="82" width="22" height="4" rx="1.5" fill="#E0A85A"/>
-    <rect x="502" y="96" width="50" height="4" rx="1.5" fill="#3A3D48"/>
-    <rect x="586" y="96" width="20" height="4" rx="1.5" fill="#3A3D48"/>
-    <rect x="502" y="106" width="44" height="4" rx="1.5" fill="#3A3D48"/>
-    <rect x="586" y="106" width="20" height="4" rx="1.5" fill="#3A3D48"/>
+    <rect x="500" y="70" width="110" height="13" rx="3" fill="#3D2D14"/>
+    <circle cx="506" cy="76.5" r="2" fill="#E0A85A"/>
+    <text class="cart-text" x="512" y="79" font-size="8" font-weight="500" fill="#E0A85A">Drinks</text>
+    <text class="cart-text" x="606" y="79" font-size="7" fill="#C28A45" text-anchor="end">Fired</text>
+    <text class="cart-text" x="502" y="94" font-size="7.5" fill="#B0B3BD">Amarone V.</text>
+    <text class="cart-text" x="608" y="94" font-size="7.5" font-weight="500" fill="#FFFFFF" text-anchor="end">225</text>
+    <text class="cart-text" x="502" y="105" font-size="7.5" fill="#B0B3BD">Barolo Riserva</text>
+    <text class="cart-text" x="608" y="105" font-size="7.5" font-weight="500" fill="#FFFFFF" text-anchor="end">195</text>
 
-    <!-- Starter (lavender) -->
-    <rect x="500" y="120" width="110" height="12" rx="3" fill="#2E2640"/>
-    <rect x="506" y="124" width="32" height="4" rx="1.5" fill="#B9AEF5"/>
-    <rect x="582" y="124" width="22" height="4" rx="1.5" fill="#B9AEF5"/>
-    <rect x="502" y="138" width="58" height="4" rx="1.5" fill="#3A3D48"/>
-    <rect x="586" y="138" width="20" height="4" rx="1.5" fill="#3A3D48"/>
-    <rect x="502" y="148" width="48" height="4" rx="1.5" fill="#3A3D48"/>
-    <rect x="586" y="148" width="20" height="4" rx="1.5" fill="#3A3D48"/>
+    <!-- Appetizer (course, lavender) -->
+    <rect x="500" y="116" width="110" height="13" rx="3" fill="#2E2640"/>
+    <text class="cart-text" x="506" y="125" font-size="8" font-weight="500" fill="#B9AEF5">Appetizer</text>
+    <text class="cart-text" x="606" y="125" font-size="7" fill="#9080D5" text-anchor="end">Fired</text>
+    <text class="cart-text" x="502" y="140" font-size="7.5" fill="#B0B3BD">Beef Tartare</text>
+    <text class="cart-text" x="608" y="140" font-size="7.5" font-weight="500" fill="#FFFFFF" text-anchor="end">185</text>
+    <text class="cart-text" x="502" y="151" font-size="7.5" fill="#B0B3BD">Foie Gras</text>
+    <text class="cart-text" x="608" y="151" font-size="7.5" font-weight="500" fill="#FFFFFF" text-anchor="end">225</text>
 
-    <!-- Main (lavender) -->
-    <rect x="500" y="162" width="110" height="12" rx="3" fill="#2E2640"/>
-    <rect x="506" y="166" width="32" height="4" rx="1.5" fill="#B9AEF5"/>
-    <rect x="582" y="166" width="22" height="4" rx="1.5" fill="#B9AEF5"/>
-    <rect x="502" y="180" width="54" height="4" rx="1.5" fill="#3A3D48"/>
-    <rect x="586" y="180" width="20" height="4" rx="1.5" fill="#3A3D48"/>
-    <rect x="502" y="190" width="60" height="4" rx="1.5" fill="#3A3D48"/>
-    <rect x="586" y="190" width="20" height="4" rx="1.5" fill="#3A3D48"/>
+    <!-- Main Course (course, lavender) -->
+    <rect x="500" y="162" width="110" height="13" rx="3" fill="#2E2640"/>
+    <text class="cart-text" x="506" y="171" font-size="8" font-weight="500" fill="#B9AEF5">Main Course</text>
+    <text class="cart-text" x="606" y="171" font-size="7" fill="#9080D5" text-anchor="end">Waiting</text>
+    <text class="cart-text" x="502" y="186" font-size="7.5" fill="#B0B3BD">Dover Sole</text>
+    <text class="cart-text" x="608" y="186" font-size="7.5" font-weight="500" fill="#FFFFFF" text-anchor="end">395</text>
+    <text class="cart-text" x="502" y="197" font-size="7.5" fill="#B0B3BD">Lobster Therm.</text>
+    <text class="cart-text" x="608" y="197" font-size="7.5" font-weight="500" fill="#FFFFFF" text-anchor="end">495</text>
 
-    <rect x="502" y="220" width="36" height="8" rx="2" fill="#A8ACB8"/>
-    <rect x="582" y="220" width="28" height="8" rx="2" fill="#A8ACB8"/>
+    <!-- Dessert (course, lavender) -->
+    <rect x="500" y="208" width="110" height="13" rx="3" fill="#2E2640"/>
+    <text class="cart-text" x="506" y="217" font-size="8" font-weight="500" fill="#B9AEF5">Dessert</text>
+    <text class="cart-text" x="606" y="217" font-size="7" fill="#9080D5" text-anchor="end">Waiting</text>
+    <text class="cart-text" x="502" y="232" font-size="7.5" fill="#B0B3BD">Crème Brûlée</text>
+    <text class="cart-text" x="608" y="232" font-size="7.5" font-weight="500" fill="#FFFFFF" text-anchor="end">125</text>
+    <text class="cart-text" x="502" y="243" font-size="7.5" fill="#B0B3BD">Choc. Soufflé</text>
+    <text class="cart-text" x="608" y="243" font-size="7.5" font-weight="500" fill="#FFFFFF" text-anchor="end">155</text>
 
-    <rect x="500" y="268" width="38" height="58" rx="4" fill="#B9AEF5"/>
-    <rect x="542" y="268" width="38" height="58" rx="4" fill="#B9AEF5"/>
-    <rect x="584" y="268" width="36" height="58" rx="4" fill="#B9AEF5"/>
+    <!-- Total -->
+    <line x1="500" y1="256" x2="610" y2="256" stroke="#2A2D38" stroke-width="0.6"/>
+    <text class="cart-text" x="502" y="268" font-size="9" font-weight="500" fill="#FFFFFF">Total</text>
+    <text class="cart-text" x="608" y="268" font-size="9" font-weight="600" fill="#FFFFFF" text-anchor="end">2 000 kr</text>
+
+    <!-- Action buttons -->
+    <rect x="500" y="288" width="38" height="38" rx="4" fill="#2A2D38"/>
+    <text class="cart-text" x="519" y="311" font-size="7" font-weight="500" fill="#B9AEF5" text-anchor="middle">Discount</text>
+    <rect x="542" y="288" width="38" height="38" rx="4" fill="#2A2D38"/>
+    <text class="cart-text" x="561" y="311" font-size="7" font-weight="500" fill="#B9AEF5" text-anchor="middle">Guest bill</text>
+    <rect x="584" y="288" width="36" height="38" rx="4" fill="#B9AEF5"/>
+    <text class="cart-text" x="602" y="311" font-size="7.5" font-weight="600" fill="#1A1A2E" text-anchor="middle">Fire Drinks</text>
   </g>
 
   <rect x="492" y="42" width="126" height="299" rx="12" fill="none" stroke="#B9AEF5" stroke-width="1.2" stroke-dasharray="3 2.5"/>

@@ -1,0 +1,42 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f7f7f5; padding: 32px; min-height: 100vh; }
+  h1 { font-size: 20px; font-weight: 500; color: #1a1a2e; margin-bottom: 4px; }
+  .sub { font-size: 13px; color: #666; margin-bottom: 28px; }
+  h2 { font-size: 14px; font-weight: 500; color: #1a1a2e; margin: 0 0 10px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1480px; }
+  .card { background: #fff; border: 0.5px solid #e0e0da; border-radius: 12px; padding: 18px; }
+  .card.dark { background: #1a1a2e; border-color: #2A2D38; }
+  .card.dark h2 { color: #fff; }
+  .img-wrap { background: transparent; }
+  .img-wrap img { display: block; width: 100%; height: auto; border-radius: 8px; }
+  .label { font-size: 11px; color: #888; margin-top: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .card.dark .label { color: #888; }
+</style>
+
+<h1>Cart preview images</h1>
+<div class="sub">Live preview — edit any SVG and the rendered PNG updates next to it.</div>
+
+<div class="grid">
+  <div class="card">
+    <h2>Flexible servings — light</h2>
+    <div class="img-wrap"><img src="flexible_cart_light.png" alt="Flexible cart light"></div>
+    <div class="label">flexible_cart_light.svg</div>
+  </div>
+  <div class="card dark">
+    <h2>Flexible servings — dark</h2>
+    <div class="img-wrap"><img src="flexible_cart_dark.png" alt="Flexible cart dark"></div>
+    <div class="label">flexible_cart_dark.svg</div>
+  </div>
+  <div class="card">
+    <h2>Serving priorities — light</h2>
+    <div class="img-wrap"><img src="priorities_cart_light.png" alt="Priorities cart light"></div>
+    <div class="label">priorities_cart_light.svg</div>
+  </div>
+  <div class="card dark">
+    <h2>Serving priorities — dark</h2>
+    <div class="img-wrap"><img src="priorities_cart_dark.png" alt="Priorities cart dark"></div>
+    <div class="label">priorities_cart_dark.svg</div>
+  </div>
+</div>

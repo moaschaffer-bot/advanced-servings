@@ -5,11 +5,15 @@
     <clipPath id="screen-clip-fl-light">
       <rect x="60" y="40" width="560" height="303" rx="16"/>
     </clipPath>
+    <style>
+      .cart-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+    </style>
   </defs>
 
-  <rect x="60" y="40" width="560" height="303" rx="16" fill="#F5F6FA"/>
+  <rect x="60" y="40" width="560" height="303" rx="16" fill="#E5E8EE" stroke="#C5C7CE" stroke-width="0.6"/>
 
   <g clip-path="url(#screen-clip-fl-light)">
+    <!-- Sidebar -->
     <rect x="60" y="40" width="44" height="303" fill="#FFFFFF"/>
     <circle cx="82" cy="66" r="3.5" fill="#C5C7CE"/>
     <rect x="68" y="102" width="28" height="28" rx="8" fill="#EAE6FF"/>
@@ -19,8 +23,10 @@
     <circle cx="82" cy="280" r="3.5" fill="#C5C7CE"/>
     <circle cx="82" cy="312" r="3.5" fill="#C5C7CE"/>
 
+    <!-- Top title bar -->
     <rect x="320" y="56" width="36" height="8" rx="2" fill="#9194A0"/>
 
+    <!-- Product groups column -->
     <rect x="118" y="82" width="64" height="36" rx="4" fill="#FFFFFF"/>
     <rect x="118" y="124" width="64" height="36" rx="4" fill="#FFFFFF"/>
     <rect x="118" y="166" width="64" height="36" rx="4" fill="#FFFFFF"/>
@@ -28,6 +34,7 @@
     <rect x="118" y="250" width="64" height="36" rx="4" fill="#FFFFFF"/>
     <rect x="118" y="292" width="64" height="36" rx="4" fill="#FFFFFF"/>
 
+    <!-- Product grid -->
     <g fill="#FFFFFF">
       <rect x="192" y="82" width="70" height="44" rx="3"/>
       <rect x="268" y="82" width="70" height="44" rx="3"/>
@@ -53,42 +60,48 @@
 
     <!-- Cart panel -->
     <rect x="490" y="40" width="130" height="303" fill="#FFFFFF"/>
-    <rect x="502" y="56" width="28" height="7" rx="2" fill="#9194A0"/>
 
-    <!-- Serving 1 (neutral grey) -->
-    <rect x="500" y="78" width="110" height="12" rx="3" fill="#E5E7EE"/>
-    <rect x="506" y="82" width="34" height="4" rx="1.5" fill="#9194A0"/>
-    <rect x="582" y="82" width="22" height="4" rx="1.5" fill="#9194A0"/>
-    <rect x="502" y="96" width="56" height="4" rx="1.5" fill="#D7D9E0"/>
-    <rect x="586" y="96" width="20" height="4" rx="1.5" fill="#D7D9E0"/>
-    <rect x="502" y="106" width="62" height="4" rx="1.5" fill="#D7D9E0"/>
-    <rect x="586" y="106" width="20" height="4" rx="1.5" fill="#D7D9E0"/>
+    <!-- Cart title -->
+    <text class="cart-text" x="502" y="64" font-size="10" font-weight="500" fill="#1a1a2e">Cart</text>
 
-    <!-- Serving 2 (neutral grey) -->
-    <rect x="500" y="120" width="110" height="12" rx="3" fill="#E5E7EE"/>
-    <rect x="506" y="124" width="34" height="4" rx="1.5" fill="#9194A0"/>
-    <rect x="582" y="124" width="22" height="4" rx="1.5" fill="#9194A0"/>
-    <rect x="502" y="138" width="48" height="4" rx="1.5" fill="#D7D9E0"/>
-    <rect x="586" y="138" width="20" height="4" rx="1.5" fill="#D7D9E0"/>
-    <rect x="502" y="148" width="58" height="4" rx="1.5" fill="#D7D9E0"/>
-    <rect x="586" y="148" width="20" height="4" rx="1.5" fill="#D7D9E0"/>
+    <!-- Serving 1 -->
+    <rect x="500" y="74" width="110" height="13" rx="3" fill="#E5E7EE"/>
+    <text class="cart-text" x="506" y="83" font-size="8" font-weight="500" fill="#3C3D48">Serving 1</text>
+    <text class="cart-text" x="606" y="83" font-size="7" fill="#6E707A" text-anchor="end">Fired 5m</text>
+    <text class="cart-text" x="502" y="100" font-size="8" fill="#444">Pripps Blå</text>
+    <text class="cart-text" x="608" y="100" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">64</text>
+    <text class="cart-text" x="502" y="112" font-size="8" fill="#444">Miller</text>
+    <text class="cart-text" x="608" y="112" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">58</text>
 
-    <!-- Serving 3 (neutral grey) -->
-    <rect x="500" y="162" width="110" height="12" rx="3" fill="#E5E7EE"/>
-    <rect x="506" y="166" width="34" height="4" rx="1.5" fill="#9194A0"/>
-    <rect x="582" y="166" width="22" height="4" rx="1.5" fill="#9194A0"/>
-    <rect x="502" y="180" width="42" height="4" rx="1.5" fill="#D7D9E0"/>
-    <rect x="586" y="180" width="20" height="4" rx="1.5" fill="#D7D9E0"/>
+    <!-- Serving 2 -->
+    <rect x="500" y="122" width="110" height="13" rx="3" fill="#E5E7EE"/>
+    <text class="cart-text" x="506" y="131" font-size="8" font-weight="500" fill="#3C3D48">Serving 2</text>
+    <text class="cart-text" x="606" y="131" font-size="7" fill="#6E707A" text-anchor="end">Fired 25m</text>
+    <text class="cart-text" x="502" y="148" font-size="8" fill="#444">Capricciosa</text>
+    <text class="cart-text" x="608" y="148" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">115</text>
+    <text class="cart-text" x="502" y="160" font-size="8" fill="#444">Margherita</text>
+    <text class="cart-text" x="608" y="160" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">115</text>
+
+    <!-- Serving 3 -->
+    <rect x="500" y="170" width="110" height="13" rx="3" fill="#E5E7EE"/>
+    <text class="cart-text" x="506" y="179" font-size="8" font-weight="500" fill="#3C3D48">Serving 3</text>
+    <text class="cart-text" x="606" y="179" font-size="7" fill="#6E707A" text-anchor="end">Waiting</text>
+    <text class="cart-text" x="502" y="196" font-size="8" font-style="italic" fill="#aaa">Empty — add items</text>
 
     <!-- Total -->
-    <rect x="502" y="208" width="36" height="8" rx="2" fill="#9194A0"/>
-    <rect x="582" y="208" width="28" height="8" rx="2" fill="#9194A0"/>
+    <line x1="500" y1="222" x2="610" y2="222" stroke="#E5E7EE" stroke-width="0.6"/>
+    <text class="cart-text" x="502" y="234" font-size="9" font-weight="500" fill="#1a1a2e">Total</text>
+    <text class="cart-text" x="608" y="234" font-size="9" font-weight="600" fill="#1a1a2e" text-anchor="end">352 kr</text>
 
-    <!-- Action buttons (Discount, Guest bill, Fire) -->
-    <rect x="500" y="268" width="38" height="58" rx="4" fill="#B9AEF5"/>
-    <rect x="542" y="268" width="38" height="58" rx="4" fill="#B9AEF5"/>
-    <rect x="584" y="268" width="36" height="58" rx="4" fill="#B9AEF5"/>
+    <!-- Action buttons -->
+    <rect x="500" y="268" width="38" height="58" rx="4" fill="#EEEDFE"/>
+    <text class="cart-text" x="519" y="296" font-size="7" font-weight="500" fill="#3C3489" text-anchor="middle">Discount</text>
+    <rect x="542" y="268" width="38" height="58" rx="4" fill="#EEEDFE"/>
+    <text class="cart-text" x="561" y="296" font-size="7" font-weight="500" fill="#3C3489" text-anchor="middle">Guest bill</text>
+    <rect x="584" y="268" width="36" height="58" rx="4" fill="#534AB7"/>
+    <text class="cart-text" x="602" y="296" font-size="8" font-weight="600" fill="#FFFFFF" text-anchor="middle">Fire 3</text>
   </g>
 
+  <!-- Dashed accent on cart -->
   <rect x="492" y="42" width="126" height="299" rx="12" fill="none" stroke="#6A5AE0" stroke-width="1.2" stroke-dasharray="3 2.5"/>
 </svg>
