@@ -121,6 +121,8 @@
   .chip-filter { display: inline-flex; align-items: center; gap: 2px; padding: 3px 4px 3px 10px; background: #fff; border: 0.5px solid #d0d0c8; border-radius: 999px; font-size: 11px; color: #444; }
   .chip-filter-close { background: transparent; border: none; cursor: pointer; padding: 2px 6px; color: #888; border-radius: 999px; line-height: 1; font-size: 13px; font-family: inherit; }
   .chip-filter-close:hover { color: #c94b4b; }
+  .chip-clear-all { background: transparent; border: none; cursor: pointer; color: #888; font-size: 11px; font-family: inherit; padding: 4px 8px; text-decoration: underline; margin-left: auto; align-self: center; }
+  .chip-clear-all:hover { color: #c94b4b; }
 
   .articles-scroll { max-height: 520px; overflow-y: auto; }
   .articles-table { width: 100%; font-size: 12px; border-collapse: collapse; }
@@ -171,7 +173,7 @@
     <div class="sidebar-item"><svg viewBox="0 0 14 14" fill="none"><path d="M2 3.5h10M2 7h10M2 10.5h6" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg><span data-i18n="sidebar.items">Artiklar</span></div>
     <div class="sidebar-item expanded"><svg viewBox="0 0 14 14" fill="none"><rect x="1" y="5" width="12" height="8" rx="1.5" stroke="rgba(255,255,255,0.75)" stroke-width="1.3"/><path d="M4 5V3.5a3 3 0 016 0V5" stroke="rgba(255,255,255,0.75)" stroke-width="1.3" stroke-linecap="round"/></svg><span data-i18n="sidebar.tables">Bordshantering</span></div>
     <div class="sidebar-sub"><span data-i18n="sidebar.layouts">Bordslayouter</span></div>
-    <div class="sidebar-sub active"><span data-i18n="sidebar.priorities">Serving priorities</span></div>
+    <div class="sidebar-sub active"><span data-i18n="sidebar.priorities">Serveringsordning</span></div>
     <div class="sidebar-item"><svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="2" stroke="rgba(255,255,255,0.4)" stroke-width="1.3"/><path d="M7 1v2M7 11v2M1 7h2M11 7h2" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg><span data-i18n="sidebar.settings">Inställningar</span></div>
   </div>
 
@@ -184,7 +186,7 @@
       <div class="demo-toggle" onclick="toggleMode()"><span data-i18n="demo.prefix">Visa som:</span> <span id="modeLabel">befintlig kund</span> <span data-i18n="demo.suffix">— byt</span></div>
     </div>
 
-    <div class="page-title" data-i18n="page.title">Serving priorities</div>
+    <div class="page-title" data-i18n="page.title">Serveringsordning</div>
     <div class="page-sub" data-i18n="page.sub">Ordna rätterna i serveringsordning. Märk en rätt som öppen om personalen behöver lägga till mer efter bongning.</div>
 
     <div id="content"></div>
@@ -201,17 +203,17 @@ const translations = {
     'sidebar.items': 'Artiklar',
     'sidebar.tables': 'Bordshantering',
     'sidebar.layouts': 'Bordslayouter',
-    'sidebar.priorities': 'Serving priorities',
+    'sidebar.priorities': 'Serveringsordning',
     'sidebar.settings': 'Inställningar',
     'demo.prefix': 'Visa som:',
     'demo.suffix': '— byt',
     'demo.populated': 'befintlig kund',
     'demo.empty': 'ny kund',
-    'page.title': 'Serving priorities',
+    'page.title': 'Serveringsordning',
     'page.sub': 'Ordna rätterna i serveringsordning. Märk en rätt som öppen om personalen behöver lägga till mer efter bongning.',
     'panel.title': 'Rätter',
-    'section.regular': 'Standard',
-    'section.refire': 'Öppna',
+    'section.regular': 'Standard rätter',
+    'section.refire': 'Öppna rätter',
     'section.unassigned': 'Okopplade',
     'regular.info': 'Bongas i tur och ordning — sena tillägg kräver korrigering.',
     'refire.info': 'Bongas före standardrätter — drycker är typexemplet.',
@@ -242,7 +244,7 @@ const translations = {
     'articles.th.course': 'Rätt',
     'articles.empty': 'Inga artiklar matchar.',
     'filter.addBtn': 'Filter',
-    'filter.unassignedOnly': 'Endast okopplade',
+    'filter.clearAll': 'Rensa alla',
     'filter.title': 'Lägg till filter',
     'filter.selectField': 'Välj fält',
     'filter.field.course': 'Rätt',
@@ -250,8 +252,8 @@ const translations = {
     'filter.field.productGroup': 'Produktgrupp',
     'filter.valuesLabel': 'Värden',
     'filter.create': 'Skapa',
-    'optgroup.regular': 'Standard',
-    'optgroup.refire': 'Öppna',
+    'optgroup.regular': 'Standard rätter',
+    'optgroup.refire': 'Öppna rätter',
     'bulk.selected': '{n} valda',
     'bulk.none': 'Markera artiklar för att koppla',
     'bulk.assignTo': 'Koppla till:',
@@ -290,8 +292,8 @@ const translations = {
     'page.title': 'Serving priorities',
     'page.sub': 'Order courses by serving sequence. Mark a course Open if staff need to add items after firing.',
     'panel.title': 'Courses',
-    'section.regular': 'Standard',
-    'section.refire': 'Open',
+    'section.regular': 'Standard courses',
+    'section.refire': 'Open courses',
     'section.unassigned': 'Unassigned',
     'regular.info': 'Fired in serving order — late items need a correction.',
     'refire.info': 'Fires ahead of standard — drinks is the typical case.',
@@ -322,7 +324,7 @@ const translations = {
     'articles.th.course': 'Course',
     'articles.empty': 'No articles match.',
     'filter.addBtn': 'Filter',
-    'filter.unassignedOnly': 'Only unassigned',
+    'filter.clearAll': 'Clear all',
     'filter.title': 'Add filter',
     'filter.selectField': 'Select field',
     'filter.field.course': 'Course',
@@ -330,8 +332,8 @@ const translations = {
     'filter.field.productGroup': 'Product group',
     'filter.valuesLabel': 'Values',
     'filter.create': 'Create',
-    'optgroup.regular': 'Standard',
-    'optgroup.refire': 'Open',
+    'optgroup.regular': 'Standard courses',
+    'optgroup.refire': 'Open courses',
     'bulk.selected': '{n} selected',
     'bulk.none': 'Select articles to assign',
     'bulk.assignTo': 'Assign to:',
@@ -850,10 +852,10 @@ function renderArticlesPanel() {
           <button class="chip-filter-close" onclick="removeChip('${c.field}','${escapeHtml(String(c.value))}')">×</button>
         </span>
       `).join('')}
+      <button class="chip-clear-all" onclick="clearAllFilters()">${t('filter.clearAll')}</button>
     </div>
   ` : '';
   const filterIcon = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 2h10l-3.7 4.5v4l-2.6-1v-3L1 2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" fill="none"/></svg>`;
-  const unassignedActive = isUnassignedFilterActive();
   return `
     <div class="panel articles-panel">
       <div class="panel-head">
@@ -869,7 +871,6 @@ function renderArticlesPanel() {
           </span>
           <input id="searchInput" type="text" placeholder="${t('articles.search')}" value="${escapeHtml(searchQuery)}">
         </div>
-        <button class="btn-filter ${unassignedActive ? 'active' : ''}" onclick="toggleUnassignedFilter()">${t('filter.unassignedOnly')}</button>
         <div class="filter-btn-wrap">
           <button class="btn-filter" onclick="toggleFilterMenu()">${filterIcon} ${t('filter.addBtn')}</button>
           ${renderFilterPopover()}
@@ -1081,6 +1082,10 @@ function toggleUnassignedFilter() {
   const existing = filters.find(f => f.field === 'unassigned');
   if (existing) filters = filters.filter(f => f !== existing);
   else filters.push({ field: 'unassigned', values: ['true'] });
+  render();
+}
+function clearAllFilters() {
+  filters = [];
   render();
 }
 function removeChip(field, value) {
