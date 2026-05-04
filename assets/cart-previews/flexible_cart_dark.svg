@@ -1,16 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="383" viewBox="0 0 680 383" role="img" aria-label="Flexible servings cart preview, dark theme">
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="766" viewBox="0 0 720 383" role="img" aria-label="Flexible servings cart preview, dark theme">
   <title>Flexible servings cart preview (dark)</title>
   <desc>Flexible mode cart — staff names servings; bottom row includes a New serving button so they can spawn the next one.</desc>
   <defs>
     <clipPath id="screen-clip-fl-dark">
-      <rect x="60" y="40" width="560" height="303" rx="16"/>
+      <rect x="60" y="40" width="600" height="303" rx="16"/>
     </clipPath>
     <style>
       .cart-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
     </style>
   </defs>
 
-  <rect x="60" y="40" width="560" height="303" rx="16" fill="#16181F"/>
+  <rect x="60" y="40" width="600" height="303" rx="16" fill="#16181F"/>
 
   <g clip-path="url(#screen-clip-fl-dark)">
     <rect x="60" y="40" width="44" height="303" fill="#1C1E26"/>
@@ -32,79 +32,79 @@
     <rect x="118" y="292" width="64" height="36" rx="4" fill="#2A2D38"/>
 
     <g fill="#2A2D38">
-      <rect x="192" y="82" width="70" height="44" rx="3"/>
-      <rect x="268" y="82" width="70" height="44" rx="3"/>
-      <rect x="344" y="82" width="70" height="44" rx="3"/>
-      <rect x="420" y="82" width="62" height="44" rx="3"/>
-      <rect x="192" y="134" width="70" height="44" rx="3"/>
-      <rect x="268" y="134" width="70" height="44" rx="3"/>
-      <rect x="344" y="134" width="70" height="44" rx="3"/>
-      <rect x="420" y="134" width="62" height="44" rx="3"/>
-      <rect x="192" y="186" width="70" height="44" rx="3"/>
-      <rect x="268" y="186" width="70" height="44" rx="3"/>
-      <rect x="344" y="186" width="70" height="44" rx="3"/>
-      <rect x="420" y="186" width="62" height="44" rx="3"/>
-      <rect x="192" y="238" width="70" height="44" rx="3"/>
-      <rect x="268" y="238" width="70" height="44" rx="3"/>
-      <rect x="344" y="238" width="70" height="44" rx="3"/>
-      <rect x="420" y="238" width="62" height="44" rx="3"/>
-      <rect x="192" y="290" width="70" height="44" rx="3"/>
-      <rect x="268" y="290" width="70" height="44" rx="3"/>
-      <rect x="344" y="290" width="70" height="44" rx="3"/>
-      <rect x="420" y="290" width="62" height="44" rx="3"/>
+      <rect x="192" y="82" width="68" height="44" rx="3"/>
+      <rect x="266" y="82" width="68" height="44" rx="3"/>
+      <rect x="340" y="82" width="68" height="44" rx="3"/>
+      <rect x="414" y="82" width="68" height="44" rx="3"/>
+      <rect x="192" y="134" width="68" height="44" rx="3"/>
+      <rect x="266" y="134" width="68" height="44" rx="3"/>
+      <rect x="340" y="134" width="68" height="44" rx="3"/>
+      <rect x="414" y="134" width="68" height="44" rx="3"/>
+      <rect x="192" y="186" width="68" height="44" rx="3"/>
+      <rect x="266" y="186" width="68" height="44" rx="3"/>
+      <rect x="340" y="186" width="68" height="44" rx="3"/>
+      <rect x="414" y="186" width="68" height="44" rx="3"/>
+      <rect x="192" y="238" width="68" height="44" rx="3"/>
+      <rect x="266" y="238" width="68" height="44" rx="3"/>
+      <rect x="340" y="238" width="68" height="44" rx="3"/>
+      <rect x="414" y="238" width="68" height="44" rx="3"/>
+      <rect x="192" y="290" width="68" height="44" rx="3"/>
+      <rect x="266" y="290" width="68" height="44" rx="3"/>
+      <rect x="340" y="290" width="68" height="44" rx="3"/>
+      <rect x="414" y="290" width="68" height="44" rx="3"/>
     </g>
 
     <!-- Cart panel -->
-    <rect x="490" y="40" width="130" height="303" fill="#16181F"/>
+    <rect x="490" y="40" width="170" height="303" fill="#16181F"/>
 
     <!-- Tabs -->
-    <text class="cart-text" x="502" y="60" font-size="9" font-weight="500" fill="#FFFFFF">Cart</text>
-    <text class="cart-text" x="528" y="60" font-size="7.5" fill="#A8ACB8">Articles</text>
-    <line x1="500" y1="66" x2="522" y2="66" stroke="#B9AEF5" stroke-width="1.2"/>
-    <line x1="490" y1="68" x2="620" y2="68" stroke="#2A2D38" stroke-width="0.5"/>
+    <text class="cart-text" x="504" y="62" font-size="10" font-weight="500" fill="#FFFFFF">Cart</text>
+    <text class="cart-text" x="538" y="62" font-size="8" fill="#A8ACB8">Articles summary</text>
+    <line x1="502" y1="68" x2="528" y2="68" stroke="#B9AEF5" stroke-width="1.4"/>
+    <line x1="490" y1="70" x2="660" y2="70" stroke="#2A2D38" stroke-width="0.5"/>
 
     <!-- Serving 1 (active) -->
-    <circle cx="503" cy="83" r="2.5" fill="#B9AEF5"/>
-    <text class="cart-text" x="510" y="86" font-size="8.5" font-weight="500" fill="#FFFFFF">Serving 1</text>
-    <rect x="586" y="78" width="14" height="11" rx="5.5" fill="#2E2640"/>
-    <text class="cart-text" x="593" y="86" font-size="7" font-weight="600" fill="#B9AEF5" text-anchor="middle">2</text>
-    <text class="cart-text" x="502" y="104" font-size="7.5" fill="#B0B3BD">1 × Châteauneuf-du-P.</text>
-    <text class="cart-text" x="608" y="104" font-size="7.5" font-weight="500" fill="#FFFFFF" text-anchor="end">165</text>
-    <text class="cart-text" x="502" y="118" font-size="7.5" fill="#B0B3BD">1 × Brunello di Mont.</text>
-    <text class="cart-text" x="608" y="118" font-size="7.5" font-weight="500" fill="#FFFFFF" text-anchor="end">185</text>
+    <circle cx="507" cy="86" r="3" fill="#B9AEF5"/>
+    <text class="cart-text" x="516" y="89" font-size="9.5" font-weight="500" fill="#FFFFFF">Serving 1</text>
+    <rect x="638" y="80" width="14" height="12" rx="6" fill="#2E2640"/>
+    <text class="cart-text" x="645" y="89" font-size="8" font-weight="600" fill="#B9AEF5" text-anchor="middle">2</text>
+    <text class="cart-text" x="504" y="108" font-size="8.5" fill="#B0B3BD">1 × Châteauneuf-du-Pape</text>
+    <text class="cart-text" x="652" y="108" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">165</text>
+    <text class="cart-text" x="504" y="124" font-size="8.5" fill="#B0B3BD">1 × Brunello di Montalcino</text>
+    <text class="cart-text" x="652" y="124" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">185</text>
 
-    <line x1="502" y1="130" x2="608" y2="130" stroke="#2A2D38" stroke-width="0.5"/>
+    <line x1="504" y1="138" x2="652" y2="138" stroke="#2A2D38" stroke-width="0.5"/>
 
     <!-- Serving 2 -->
-    <text class="cart-text" x="510" y="146" font-size="8.5" font-weight="500" fill="#FFFFFF">Serving 2</text>
-    <rect x="586" y="138" width="14" height="11" rx="5.5" fill="#2A2D38"/>
-    <text class="cart-text" x="593" y="146" font-size="7" font-weight="600" fill="#A8ACB8" text-anchor="middle">2</text>
-    <text class="cart-text" x="502" y="164" font-size="7.5" fill="#B0B3BD">1 × Dover Sole Meun.</text>
-    <text class="cart-text" x="608" y="164" font-size="7.5" font-weight="500" fill="#FFFFFF" text-anchor="end">395</text>
-    <text class="cart-text" x="502" y="178" font-size="7.5" fill="#B0B3BD">1 × Cacio e Pepe</text>
-    <text class="cart-text" x="608" y="178" font-size="7.5" font-weight="500" fill="#FFFFFF" text-anchor="end">195</text>
+    <text class="cart-text" x="516" y="155" font-size="9.5" font-weight="500" fill="#FFFFFF">Serving 2</text>
+    <rect x="638" y="146" width="14" height="12" rx="6" fill="#2A2D38"/>
+    <text class="cart-text" x="645" y="155" font-size="8" font-weight="600" fill="#A8ACB8" text-anchor="middle">2</text>
+    <text class="cart-text" x="504" y="174" font-size="8.5" fill="#B0B3BD">1 × Dover Sole Meunière</text>
+    <text class="cart-text" x="652" y="174" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">395</text>
+    <text class="cart-text" x="504" y="190" font-size="8.5" fill="#B0B3BD">1 × Cacio e Pepe</text>
+    <text class="cart-text" x="652" y="190" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">195</text>
 
     <!-- Total -->
-    <line x1="500" y1="232" x2="610" y2="232" stroke="#2A2D38" stroke-width="0.6"/>
-    <text class="cart-text" x="608" y="252" font-size="14" font-weight="600" fill="#FFFFFF" text-anchor="end">940,00</text>
-    <text class="cart-text" x="608" y="265" font-size="8" fill="#A8ACB8" text-anchor="end">SEK</text>
+    <line x1="502" y1="240" x2="654" y2="240" stroke="#2A2D38" stroke-width="0.6"/>
+    <text class="cart-text" x="652" y="262" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="end">940,00</text>
+    <text class="cart-text" x="652" y="276" font-size="9" font-weight="500" fill="#A8ACB8" text-anchor="end">SEK</text>
 
     <!-- Icon row -->
-    <text class="cart-text" x="513" y="284" font-size="11" font-weight="500" fill="#B9AEF5" text-anchor="middle">%</text>
-    <text class="cart-text" x="513" y="293" font-size="6" fill="#A8ACB8" text-anchor="middle">Discount</text>
-    <rect x="544" y="276" width="10" height="8" rx="1" fill="none" stroke="#B9AEF5" stroke-width="1"/>
-    <line x1="546" y1="278.5" x2="552" y2="278.5" stroke="#B9AEF5" stroke-width="0.6"/>
-    <line x1="546" y1="281" x2="552" y2="281" stroke="#B9AEF5" stroke-width="0.6"/>
-    <text class="cart-text" x="549" y="293" font-size="6" fill="#A8ACB8" text-anchor="middle">Guest bill</text>
+    <text class="cart-text" x="520" y="296" font-size="13" font-weight="500" fill="#B9AEF5" text-anchor="middle">%</text>
+    <text class="cart-text" x="520" y="306" font-size="7" fill="#A8ACB8" text-anchor="middle">Discount</text>
+    <rect x="554" y="284" width="13" height="10" rx="1.5" fill="none" stroke="#B9AEF5" stroke-width="1.1"/>
+    <line x1="557" y1="287.5" x2="564" y2="287.5" stroke="#B9AEF5" stroke-width="0.7"/>
+    <line x1="557" y1="290.5" x2="564" y2="290.5" stroke="#B9AEF5" stroke-width="0.7"/>
+    <text class="cart-text" x="560" y="306" font-size="7" fill="#A8ACB8" text-anchor="middle">Guest bill</text>
 
     <!-- Action buttons row -->
-    <rect x="500" y="302" width="40" height="24" rx="4" fill="#B9AEF5"/>
-    <text class="cart-text" x="520" y="317" font-size="7.5" font-weight="600" fill="#1A1A2E" text-anchor="middle">Fire Serving 1</text>
-    <rect x="544" y="302" width="34" height="24" rx="4" fill="#16181F" stroke="#B9AEF5" stroke-width="0.6"/>
-    <text class="cart-text" x="561" y="317" font-size="7.5" font-weight="500" fill="#B9AEF5" text-anchor="middle">New serv.</text>
-    <rect x="582" y="302" width="28" height="24" rx="4" fill="#16181F" stroke="#B9AEF5" stroke-width="0.6"/>
-    <text class="cart-text" x="596" y="317" font-size="7.5" font-weight="500" fill="#B9AEF5" text-anchor="middle">Pay</text>
+    <rect x="502" y="316" width="68" height="22" rx="5" fill="#B9AEF5"/>
+    <text class="cart-text" x="536" y="331" font-size="8.5" font-weight="600" fill="#1A1A2E" text-anchor="middle">Fire Serving 1</text>
+    <rect x="574" y="316" width="48" height="22" rx="5" fill="#16181F" stroke="#B9AEF5" stroke-width="0.7"/>
+    <text class="cart-text" x="598" y="331" font-size="8.5" font-weight="500" fill="#B9AEF5" text-anchor="middle">New serving</text>
+    <rect x="626" y="316" width="28" height="22" rx="5" fill="#16181F" stroke="#B9AEF5" stroke-width="0.7"/>
+    <text class="cart-text" x="640" y="331" font-size="8.5" font-weight="500" fill="#B9AEF5" text-anchor="middle">Pay</text>
   </g>
 
-  <rect x="492" y="42" width="126" height="299" rx="12" fill="none" stroke="#B9AEF5" stroke-width="1.2" stroke-dasharray="3 2.5"/>
+  <rect x="492" y="42" width="166" height="299" rx="12" fill="none" stroke="#B9AEF5" stroke-width="1.2" stroke-dasharray="3 2.5"/>
 </svg>
