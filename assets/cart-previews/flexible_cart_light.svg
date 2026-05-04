@@ -59,7 +59,6 @@
 
     <!-- Tabs -->
     <text class="cart-text" x="504" y="62" font-size="10" font-weight="500" fill="#1a1a2e">Cart</text>
-    <text class="cart-text" x="538" y="62" font-size="8" fill="#9194A0">Articles summary</text>
     <line x1="502" y1="68" x2="528" y2="68" stroke="#534AB7" stroke-width="1.4"/>
     <line x1="490" y1="70" x2="660" y2="70" stroke="#E5E7EE" stroke-width="0.5"/>
 

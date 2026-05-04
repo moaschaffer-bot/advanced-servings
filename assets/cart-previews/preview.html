@@ -3,22 +3,24 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #f7f7f5; padding: 32px; min-height: 100vh; }
   h1 { font-size: 20px; font-weight: 500; color: #1a1a2e; margin-bottom: 4px; }
-  .sub { font-size: 13px; color: #666; margin-bottom: 28px; }
+  .sub { font-size: 13px; color: #666; margin-bottom: 24px; }
   h2 { font-size: 14px; font-weight: 500; color: #1a1a2e; margin: 0 0 10px; }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1480px; }
-  .card { background: #fff; border: 0.5px solid #e0e0da; border-radius: 12px; padding: 18px; }
+  .section-title { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin: 32px 0 12px; }
+  .grid-full { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1480px; }
+  .grid-only { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; max-width: 1480px; }
+  .card { background: #fff; border: 0.5px solid #e0e0da; border-radius: 12px; padding: 16px; }
   .card.dark { background: #1a1a2e; border-color: #2A2D38; }
   .card.dark h2 { color: #fff; }
-  .img-wrap { background: transparent; }
   .img-wrap img { display: block; width: 100%; height: auto; border-radius: 8px; }
-  .label { font-size: 11px; color: #888; margin-top: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .label { font-size: 10px; color: #888; margin-top: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
   .card.dark .label { color: #888; }
 </style>
 
 <h1>Cart preview images</h1>
 <div class="sub">Live preview — edit any SVG and the rendered PNG updates next to it.</div>
 
-<div class="grid">
+<div class="section-title">Full POS view</div>
+<div class="grid-full">
   <div class="card">
     <h2>Flexible servings — light</h2>
     <div class="img-wrap"><img id="img-fl" alt="Flexible cart light"></div>
@@ -41,14 +43,45 @@
   </div>
 </div>
 
+<div class="section-title">Cart only</div>
+<div class="grid-only">
+  <div class="card">
+    <h2>Flexible — light</h2>
+    <div class="img-wrap"><img id="img-fol" alt="Flexible cart only light"></div>
+    <div class="label">flexible_cart_only_light.svg</div>
+  </div>
+  <div class="card dark">
+    <h2>Flexible — dark</h2>
+    <div class="img-wrap"><img id="img-fod" alt="Flexible cart only dark"></div>
+    <div class="label">flexible_cart_only_dark.svg</div>
+  </div>
+  <div class="card">
+    <h2>Priorities — light</h2>
+    <div class="img-wrap"><img id="img-pol" alt="Priorities cart only light"></div>
+    <div class="label">priorities_cart_only_light.svg</div>
+  </div>
+  <div class="card dark">
+    <h2>Priorities — dark</h2>
+    <div class="img-wrap"><img id="img-pod" alt="Priorities cart only dark"></div>
+    <div class="label">priorities_cart_only_dark.svg</div>
+  </div>
+</div>
+
 <script>
   // Cache-bust on every page load
   const v = Date.now();
-  document.getElementById('img-fl').src = 'flexible_cart_light.png?v=' + v;
-  document.getElementById('img-fd').src = 'flexible_cart_dark.png?v=' + v;
-  document.getElementById('img-pl').src = 'priorities_cart_light.png?v=' + v;
-  document.getElementById('img-pd').src = 'priorities_cart_dark.png?v=' + v;
+  const map = {
+    'img-fl': 'flexible_cart_light.png',
+    'img-fd': 'flexible_cart_dark.png',
+    'img-pl': 'priorities_cart_light.png',
+    'img-pd': 'priorities_cart_dark.png',
+    'img-fol': 'flexible_cart_only_light.png',
+    'img-fod': 'flexible_cart_only_dark.png',
+    'img-pol': 'priorities_cart_only_light.png',
+    'img-pod': 'priorities_cart_only_dark.png',
+  };
+  for (const id in map) {
+    const el = document.getElementById(id);
+    if (el) el.src = map[id] + '?v=' + v;
+  }
 </script>
-
-<div style="display:none;">
-</div>

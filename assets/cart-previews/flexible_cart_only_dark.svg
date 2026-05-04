@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="666" viewBox="0 0 200 333" role="img" aria-label="Flexible servings cart only, dark theme">
+  <title>Flexible cart only (dark)</title>
+  <defs>
+    <clipPath id="cart-clip-fl-only-dark">
+      <rect x="14" y="14" width="170" height="303" rx="12"/>
+    </clipPath>
+    <style>
+      .cart-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; }
+    </style>
+  </defs>
+
+  <rect width="200" height="333" fill="#1C1E26"/>
+  <rect x="14" y="14" width="170" height="303" rx="12" fill="#16181F"/>
+
+  <g clip-path="url(#cart-clip-fl-only-dark)">
+    <g transform="translate(-476, -26)">
+      <text class="cart-text" x="504" y="62" font-size="10" font-weight="500" fill="#FFFFFF">Cart</text>
+      <line x1="502" y1="68" x2="528" y2="68" stroke="#B9AEF5" stroke-width="1.4"/>
+      <line x1="490" y1="70" x2="660" y2="70" stroke="#2A2D38" stroke-width="0.5"/>
+
+      <circle cx="507" cy="86" r="3" fill="#B9AEF5"/>
+      <text class="cart-text" x="516" y="89" font-size="9.5" font-weight="500" fill="#FFFFFF">Serving 1</text>
+      <rect x="632" y="80" width="14" height="12" rx="6" fill="#2E2640"/>
+      <text class="cart-text" x="639" y="89" font-size="8" font-weight="600" fill="#B9AEF5" text-anchor="middle">2</text>
+      <text class="cart-text" x="504" y="108" font-size="8.5" fill="#B0B3BD">1 × Châteauneuf-du-Pape</text>
+      <text class="cart-text" x="646" y="108" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">165</text>
+      <text class="cart-text" x="504" y="124" font-size="8.5" fill="#B0B3BD">1 × Brunello di Montalcino</text>
+      <text class="cart-text" x="646" y="124" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">185</text>
+
+      <line x1="504" y1="138" x2="646" y2="138" stroke="#2A2D38" stroke-width="0.5"/>
+
+      <text class="cart-text" x="516" y="155" font-size="9.5" font-weight="500" fill="#FFFFFF">Serving 2</text>
+      <rect x="632" y="146" width="14" height="12" rx="6" fill="#2A2D38"/>
+      <text class="cart-text" x="639" y="155" font-size="8" font-weight="600" fill="#A8ACB8" text-anchor="middle">2</text>
+      <text class="cart-text" x="504" y="174" font-size="8.5" fill="#B0B3BD">1 × Dover Sole Meunière</text>
+      <text class="cart-text" x="646" y="174" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">395</text>
+      <text class="cart-text" x="504" y="190" font-size="8.5" fill="#B0B3BD">1 × Cacio e Pepe</text>
+      <text class="cart-text" x="646" y="190" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">195</text>
+
+      <line x1="502" y1="232" x2="648" y2="232" stroke="#2A2D38" stroke-width="0.6"/>
+      <text class="cart-text" x="646" y="254" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="end">940,00</text>
+      <text class="cart-text" x="646" y="267" font-size="9" font-weight="500" fill="#A8ACB8" text-anchor="end">SEK</text>
+
+      <rect x="504" y="289" width="44" height="40" rx="6" fill="#B9AEF5"/>
+      <text class="cart-text" x="526" y="306" font-size="8" font-weight="600" fill="#1A1A2E" text-anchor="middle">Fire</text>
+      <text class="cart-text" x="526" y="316" font-size="8" font-weight="600" fill="#1A1A2E" text-anchor="middle">Serving 1</text>
+      <rect x="553" y="289" width="44" height="40" rx="6" fill="#16181F" stroke="#B9AEF5" stroke-width="0.8"/>
+      <text class="cart-text" x="575" y="306" font-size="8" font-weight="500" fill="#B9AEF5" text-anchor="middle">New</text>
+      <text class="cart-text" x="575" y="316" font-size="8" font-weight="500" fill="#B9AEF5" text-anchor="middle">serving</text>
+      <rect x="602" y="289" width="44" height="40" rx="6" fill="#16181F" stroke="#B9AEF5" stroke-width="0.8"/>
+      <text class="cart-text" x="624" y="313" font-size="9" font-weight="500" fill="#B9AEF5" text-anchor="middle">Pay</text>
+    </g>
+  </g>
+
+  <rect x="14" y="14" width="170" height="303" rx="12" fill="none" stroke="#2A2D38" stroke-width="0.6"/>
+</svg>
