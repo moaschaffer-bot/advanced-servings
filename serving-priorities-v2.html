@@ -54,15 +54,10 @@
   .course-name.editable:hover { background: #f0f0ec; }
   .course-name-input { width: 100%; padding: 2px 6px; font-size: 13px; font-weight: 500; border: 0.5px solid #534AB7; border-radius: 4px; background: #fff; color: #1a1a2e; font-family: inherit; }
   .course-name-input:focus { outline: none; box-shadow: 0 0 0 2px rgba(83,74,183,0.15); }
-  .type-switch { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; padding: 4px 6px; border-radius: 6px; user-select: none; background: transparent; border: none; font-family: inherit; }
-  .type-switch:hover { background: #f7f7f5; }
-  .type-switch-track { width: 22px; height: 12px; border-radius: 999px; background: #d0d0d0; position: relative; transition: background 0.15s; flex-shrink: 0; }
-  .type-switch-thumb { width: 8px; height: 8px; border-radius: 50%; background: #fff; position: absolute; top: 2px; left: 2px; transition: left 0.15s; box-shadow: 0 1px 2px rgba(0,0,0,0.18); }
-  .type-switch.on .type-switch-track { background: #b07410; }
-  .type-switch.on .type-switch-thumb { left: 12px; }
-  .type-switch-label { font-size: 10px; font-weight: 500; color: #888; text-transform: uppercase; letter-spacing: 0.04em; }
-  .type-switch.on .type-switch-label { color: #8a5a18; }
   .panel-subtitle { font-size: 11px; color: #888; margin-top: 3px; font-weight: 400; }
+  .panel[data-drop-section] { transition: box-shadow 0.12s; }
+  .panel.drop-zone-active { box-shadow: 0 0 0 2px #534AB7; }
+  .panel[data-drop-section="allowReFire"].drop-zone-active { box-shadow: 0 0 0 2px #b07410; }
   .course-count { font-size: 11px; color: #888; margin-top: 1px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
   .badge-refire { display: inline-block; font-size: 9px; padding: 1px 6px; background: #FAEEDA; color: #8a5a18; border-radius: 999px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
   .course-del { background: transparent; border: none; color: #ccc; cursor: pointer; padding: 4px; font-size: 14px; line-height: 1; border-radius: 4px; }
@@ -219,8 +214,6 @@ const translations = {
     'refire.info': 'Bongas före standardrätter — drycker är typexemplet.',
     'regular.empty': 'Inga rätter än',
     'refire.empty': 'Inga öppna rätter än',
-    'badge.refire': 'Öppen',
-    'typePill.title': 'Klicka för att växla mellan standard och öppen',
     'courses.count': '{n} totalt',
     'courses.articleCount': '{n} artiklar',
     'courses.articleCount.one': '1 artikel',
@@ -299,8 +292,6 @@ const translations = {
     'refire.info': 'Fires ahead of standard — drinks is the typical case.',
     'regular.empty': 'No courses yet',
     'refire.empty': 'No open courses yet',
-    'badge.refire': 'Open',
-    'typePill.title': 'Click to toggle between standard and open',
     'courses.count': '{n} total',
     'courses.articleCount': '{n} articles',
     'courses.articleCount.one': '1 article',
@@ -556,14 +547,6 @@ function renderCourseNameContent(c) {
   return `<div class="course-name editable" data-edit-cid="${c.id}">${escapeHtml(c.name)}</div>`;
 }
 
-function renderTypePill(c) {
-  const isOpen = c.type === 'allowReFire';
-  return `<button class="type-switch ${isOpen ? 'on' : ''}" data-toggle-cid="${c.id}" title="${t('typePill.title')}">
-    <span class="type-switch-track"><span class="type-switch-thumb"></span></span>
-    <span class="type-switch-label">${t('badge.refire')}</span>
-  </button>`;
-}
-
 function renderRegularRow(c, i) {
   const count = articlesInCourse(c.id).length;
   const countText = count === 1 ? t('courses.articleCount.one') : t('courses.articleCount', { n: count });
@@ -579,7 +562,6 @@ function renderRegularRow(c, i) {
         ${renderCourseNameContent(c)}
         <div class="course-count">${countText}</div>
       </div>
-      ${renderTypePill(c)}
       <button class="course-del" data-cid="${c.id}" title="${t('confirm.delete.confirm')}">×</button>
     </div>
   `;
@@ -600,7 +582,6 @@ function renderRefireRow(c, i) {
         ${renderCourseNameContent(c)}
         <div class="course-count">${countText}</div>
       </div>
-      ${renderTypePill(c)}
       <button class="course-del" data-cid="${c.id}" title="${t('confirm.delete.confirm')}">×</button>
     </div>
   `;
@@ -641,7 +622,7 @@ function renderCoursesPanel() {
 
   return `
     <div class="courses-column">
-      <div class="panel">
+      <div class="panel" data-drop-section="allowReFire">
         <div class="panel-head">
           <div>
             <div class="panel-title">${t('section.refire')}</div>
@@ -652,7 +633,7 @@ function renderCoursesPanel() {
         ${refAdd}
       </div>
 
-      <div class="panel">
+      <div class="panel" data-drop-section="regular">
         <div class="panel-head">
           <div>
             <div class="panel-title">${t('section.regular')}</div>
@@ -974,12 +955,10 @@ function attachHandlers() {
       startEditingCourse(id);
     });
   });
-  document.querySelectorAll('.type-switch[data-toggle-cid]').forEach(el => {
-    el.addEventListener('click', e => {
-      e.stopPropagation();
-      const id = Number(el.getAttribute('data-toggle-cid'));
-      toggleCourseType(id);
-    });
+  document.querySelectorAll('.panel[data-drop-section]').forEach(el => {
+    el.addEventListener('dragover', handlePanelDragOver);
+    el.addEventListener('dragleave', handlePanelDragLeave);
+    el.addEventListener('drop', handlePanelDrop);
   });
   document.querySelectorAll('.course-row[data-filter-cid]').forEach(row => {
     row.addEventListener('click', e => {
@@ -1120,7 +1099,7 @@ function handleDragOver(e) {
   if (targetId === draggedCourseId) return;
   const target = courses.find(c => c.id === targetId);
   const dragged = courses.find(c => c.id === draggedCourseId);
-  if (!target || !dragged || target.type !== dragged.type) return;
+  if (!target || !dragged) return;
   const rect = row.getBoundingClientRect();
   const before = e.clientY < rect.top + rect.height / 2;
   row.classList.toggle('drop-before', before);
@@ -1132,12 +1111,14 @@ function handleDragLeave(e) {
 function handleDrop(e) {
   if (draggedCourseId === null) return;
   e.preventDefault();
+  e.stopPropagation();
   const row = e.currentTarget;
   const targetId = Number(row.getAttribute('data-cid'));
   if (targetId === draggedCourseId) return;
   const dragged = courses.find(c => c.id === draggedCourseId);
   const target = courses.find(c => c.id === targetId);
-  if (!dragged || !target || dragged.type !== target.type) return;
+  if (!dragged || !target) return;
+  if (dragged.type !== target.type) dragged.type = target.type;
   const rect = row.getBoundingClientRect();
   const before = e.clientY < rect.top + rect.height / 2;
   const fromIdx = courses.findIndex(c => c.id === draggedCourseId);
@@ -1147,10 +1128,29 @@ function handleDrop(e) {
   render();
 }
 
-function toggleCourseType(id) {
-  const c = courses.find(x => x.id === id);
-  if (!c) return;
-  c.type = c.type === 'allowReFire' ? 'regular' : 'allowReFire';
+function handlePanelDragOver(e) {
+  if (draggedCourseId === null) return;
+  if (e.target.closest('.course-row')) return;
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  e.currentTarget.classList.add('drop-zone-active');
+}
+function handlePanelDragLeave(e) {
+  if (e.relatedTarget && e.currentTarget.contains(e.relatedTarget)) return;
+  e.currentTarget.classList.remove('drop-zone-active');
+}
+function handlePanelDrop(e) {
+  if (draggedCourseId === null) return;
+  if (e.target.closest('.course-row')) { e.currentTarget.classList.remove('drop-zone-active'); return; }
+  e.preventDefault();
+  const sectionType = e.currentTarget.getAttribute('data-drop-section');
+  const dragged = courses.find(c => c.id === draggedCourseId);
+  e.currentTarget.classList.remove('drop-zone-active');
+  if (!dragged) return;
+  if (dragged.type !== sectionType) dragged.type = sectionType;
+  const fromIdx = courses.findIndex(c => c.id === draggedCourseId);
+  const moved = courses.splice(fromIdx, 1)[0];
+  courses.push(moved);
   render();
 }
 
