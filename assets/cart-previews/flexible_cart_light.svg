@@ -54,7 +54,7 @@
       <rect x="414" y="290" width="68" height="44" rx="3"/>
     </g>
 
-    <!-- Cart panel (wider) -->
+    <!-- Cart panel -->
     <rect x="490" y="40" width="170" height="303" fill="#FFFFFF"/>
 
     <!-- Tabs -->
@@ -85,25 +85,19 @@
     <text class="cart-text" x="652" y="190" font-size="8.5" font-weight="500" fill="#1a1a2e" text-anchor="end">195</text>
 
     <!-- Total -->
-    <line x1="502" y1="240" x2="654" y2="240" stroke="#E5E7EE" stroke-width="0.6"/>
-    <text class="cart-text" x="652" y="262" font-size="16" font-weight="700" fill="#1a1a2e" text-anchor="end">940,00</text>
-    <text class="cart-text" x="652" y="276" font-size="9" font-weight="500" fill="#9194A0" text-anchor="end">SEK</text>
+    <line x1="502" y1="232" x2="654" y2="232" stroke="#E5E7EE" stroke-width="0.6"/>
+    <text class="cart-text" x="652" y="254" font-size="16" font-weight="700" fill="#1a1a2e" text-anchor="end">940,00</text>
+    <text class="cart-text" x="652" y="267" font-size="9" font-weight="500" fill="#9194A0" text-anchor="end">SEK</text>
 
-    <!-- Icon row (Discount, Guest bill) -->
-    <text class="cart-text" x="520" y="296" font-size="13" font-weight="500" fill="#534AB7" text-anchor="middle">%</text>
-    <text class="cart-text" x="520" y="306" font-size="7" fill="#6E707A" text-anchor="middle">Discount</text>
-    <rect x="554" y="284" width="13" height="10" rx="1.5" fill="none" stroke="#534AB7" stroke-width="1.1"/>
-    <line x1="557" y1="287.5" x2="564" y2="287.5" stroke="#534AB7" stroke-width="0.7"/>
-    <line x1="557" y1="290.5" x2="564" y2="290.5" stroke="#534AB7" stroke-width="0.7"/>
-    <text class="cart-text" x="560" y="306" font-size="7" fill="#6E707A" text-anchor="middle">Guest bill</text>
-
-    <!-- Action buttons row: Fire S1 (filled, wide) + New serving + Pay -->
-    <rect x="502" y="316" width="68" height="22" rx="5" fill="#534AB7"/>
-    <text class="cart-text" x="536" y="331" font-size="8.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">Fire Serving 1</text>
-    <rect x="574" y="316" width="48" height="22" rx="5" fill="#FFFFFF" stroke="#534AB7" stroke-width="0.7"/>
-    <text class="cart-text" x="598" y="331" font-size="8.5" font-weight="500" fill="#534AB7" text-anchor="middle">New serving</text>
-    <rect x="626" y="316" width="28" height="22" rx="5" fill="#FFFFFF" stroke="#534AB7" stroke-width="0.7"/>
-    <text class="cart-text" x="640" y="331" font-size="8.5" font-weight="500" fill="#534AB7" text-anchor="middle">Pay</text>
+    <!-- Action buttons row: 3 equal-width buttons -->
+    <rect x="504" y="278" width="46" height="40" rx="6" fill="#534AB7"/>
+    <text class="cart-text" x="527" y="295" font-size="8" font-weight="600" fill="#FFFFFF" text-anchor="middle">Fire</text>
+    <text class="cart-text" x="527" y="305" font-size="8" font-weight="600" fill="#FFFFFF" text-anchor="middle">Serving 1</text>
+    <rect x="554" y="278" width="46" height="40" rx="6" fill="#FFFFFF" stroke="#534AB7" stroke-width="0.8"/>
+    <text class="cart-text" x="577" y="295" font-size="8" font-weight="500" fill="#534AB7" text-anchor="middle">New</text>
+    <text class="cart-text" x="577" y="305" font-size="8" font-weight="500" fill="#534AB7" text-anchor="middle">serving</text>
+    <rect x="604" y="278" width="46" height="40" rx="6" fill="#FFFFFF" stroke="#534AB7" stroke-width="0.8"/>
+    <text class="cart-text" x="627" y="302" font-size="9" font-weight="500" fill="#534AB7" text-anchor="middle">Pay</text>
   </g>
 
   <rect x="492" y="42" width="166" height="299" rx="12" fill="none" stroke="#6A5AE0" stroke-width="1.2" stroke-dasharray="3 2.5"/>
