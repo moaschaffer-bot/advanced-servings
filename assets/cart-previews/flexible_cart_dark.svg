@@ -66,38 +66,38 @@
     <!-- Serving 1 (active) -->
     <circle cx="507" cy="86" r="3" fill="#B9AEF5"/>
     <text class="cart-text" x="516" y="89" font-size="9.5" font-weight="500" fill="#FFFFFF">Serving 1</text>
-    <rect x="638" y="80" width="14" height="12" rx="6" fill="#2E2640"/>
-    <text class="cart-text" x="645" y="89" font-size="8" font-weight="600" fill="#B9AEF5" text-anchor="middle">2</text>
+    <rect x="632" y="80" width="14" height="12" rx="6" fill="#2E2640"/>
+    <text class="cart-text" x="639" y="89" font-size="8" font-weight="600" fill="#B9AEF5" text-anchor="middle">2</text>
     <text class="cart-text" x="504" y="108" font-size="8.5" fill="#B0B3BD">1 × Châteauneuf-du-Pape</text>
-    <text class="cart-text" x="652" y="108" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">165</text>
+    <text class="cart-text" x="646" y="108" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">165</text>
     <text class="cart-text" x="504" y="124" font-size="8.5" fill="#B0B3BD">1 × Brunello di Montalcino</text>
-    <text class="cart-text" x="652" y="124" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">185</text>
+    <text class="cart-text" x="646" y="124" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">185</text>
 
-    <line x1="504" y1="138" x2="652" y2="138" stroke="#2A2D38" stroke-width="0.5"/>
+    <line x1="504" y1="138" x2="646" y2="138" stroke="#2A2D38" stroke-width="0.5"/>
 
     <!-- Serving 2 -->
     <text class="cart-text" x="516" y="155" font-size="9.5" font-weight="500" fill="#FFFFFF">Serving 2</text>
-    <rect x="638" y="146" width="14" height="12" rx="6" fill="#2A2D38"/>
-    <text class="cart-text" x="645" y="155" font-size="8" font-weight="600" fill="#A8ACB8" text-anchor="middle">2</text>
+    <rect x="632" y="146" width="14" height="12" rx="6" fill="#2A2D38"/>
+    <text class="cart-text" x="639" y="155" font-size="8" font-weight="600" fill="#A8ACB8" text-anchor="middle">2</text>
     <text class="cart-text" x="504" y="174" font-size="8.5" fill="#B0B3BD">1 × Dover Sole Meunière</text>
-    <text class="cart-text" x="652" y="174" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">395</text>
+    <text class="cart-text" x="646" y="174" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">395</text>
     <text class="cart-text" x="504" y="190" font-size="8.5" fill="#B0B3BD">1 × Cacio e Pepe</text>
-    <text class="cart-text" x="652" y="190" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">195</text>
+    <text class="cart-text" x="646" y="190" font-size="8.5" font-weight="500" fill="#FFFFFF" text-anchor="end">195</text>
 
     <!-- Total -->
-    <line x1="502" y1="232" x2="654" y2="232" stroke="#2A2D38" stroke-width="0.6"/>
-    <text class="cart-text" x="652" y="254" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="end">940,00</text>
-    <text class="cart-text" x="652" y="267" font-size="9" font-weight="500" fill="#A8ACB8" text-anchor="end">SEK</text>
+    <line x1="502" y1="232" x2="648" y2="232" stroke="#2A2D38" stroke-width="0.6"/>
+    <text class="cart-text" x="646" y="254" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="end">940,00</text>
+    <text class="cart-text" x="646" y="267" font-size="9" font-weight="500" fill="#A8ACB8" text-anchor="end">SEK</text>
 
     <!-- Action buttons row: 3 equal-width buttons -->
-    <rect x="504" y="278" width="46" height="40" rx="6" fill="#B9AEF5"/>
-    <text class="cart-text" x="527" y="295" font-size="8" font-weight="600" fill="#1A1A2E" text-anchor="middle">Fire</text>
-    <text class="cart-text" x="527" y="305" font-size="8" font-weight="600" fill="#1A1A2E" text-anchor="middle">Serving 1</text>
-    <rect x="554" y="278" width="46" height="40" rx="6" fill="#16181F" stroke="#B9AEF5" stroke-width="0.8"/>
-    <text class="cart-text" x="577" y="295" font-size="8" font-weight="500" fill="#B9AEF5" text-anchor="middle">New</text>
-    <text class="cart-text" x="577" y="305" font-size="8" font-weight="500" fill="#B9AEF5" text-anchor="middle">serving</text>
-    <rect x="604" y="278" width="46" height="40" rx="6" fill="#16181F" stroke="#B9AEF5" stroke-width="0.8"/>
-    <text class="cart-text" x="627" y="302" font-size="9" font-weight="500" fill="#B9AEF5" text-anchor="middle">Pay</text>
+    <rect x="504" y="289" width="44" height="40" rx="6" fill="#B9AEF5"/>
+    <text class="cart-text" x="526" y="306" font-size="8" font-weight="600" fill="#1A1A2E" text-anchor="middle">Fire</text>
+    <text class="cart-text" x="526" y="316" font-size="8" font-weight="600" fill="#1A1A2E" text-anchor="middle">Serving 1</text>
+    <rect x="553" y="289" width="44" height="40" rx="6" fill="#16181F" stroke="#B9AEF5" stroke-width="0.8"/>
+    <text class="cart-text" x="575" y="306" font-size="8" font-weight="500" fill="#B9AEF5" text-anchor="middle">New</text>
+    <text class="cart-text" x="575" y="316" font-size="8" font-weight="500" fill="#B9AEF5" text-anchor="middle">serving</text>
+    <rect x="602" y="289" width="44" height="40" rx="6" fill="#16181F" stroke="#B9AEF5" stroke-width="0.8"/>
+    <text class="cart-text" x="624" y="313" font-size="9" font-weight="500" fill="#B9AEF5" text-anchor="middle">Pay</text>
   </g>
 
   <rect x="492" y="42" width="166" height="299" rx="12" fill="none" stroke="#B9AEF5" stroke-width="1.2" stroke-dasharray="3 2.5"/>

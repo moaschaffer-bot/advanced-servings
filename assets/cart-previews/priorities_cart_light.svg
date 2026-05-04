@@ -65,57 +65,57 @@
 
     <!-- Drinks -->
     <text class="cart-text" x="504" y="82" font-size="9" font-weight="500" fill="#1a1a2e">Drinks</text>
-    <rect x="638" y="74" width="14" height="12" rx="6" fill="#F0F1F5"/>
-    <text class="cart-text" x="645" y="83" font-size="7.5" font-weight="600" fill="#6E707A" text-anchor="middle">2</text>
+    <rect x="632" y="74" width="14" height="12" rx="6" fill="#F0F1F5"/>
+    <text class="cart-text" x="639" y="83" font-size="7.5" font-weight="600" fill="#6E707A" text-anchor="middle">2</text>
     <text class="cart-text" x="504" y="96" font-size="8" fill="#3C3D48">1 × Châteauneuf-du-Pape</text>
-    <text class="cart-text" x="652" y="96" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">165</text>
+    <text class="cart-text" x="646" y="96" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">165</text>
     <text class="cart-text" x="504" y="107" font-size="8" fill="#3C3D48">1 × Brunello di Montalcino</text>
-    <text class="cart-text" x="652" y="107" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">185</text>
+    <text class="cart-text" x="646" y="107" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">185</text>
 
-    <line x1="504" y1="115" x2="652" y2="115" stroke="#E5E7EE" stroke-width="0.5"/>
+    <line x1="504" y1="115" x2="646" y2="115" stroke="#E5E7EE" stroke-width="0.5"/>
 
     <!-- Appetizer -->
     <text class="cart-text" x="504" y="127" font-size="9" font-weight="500" fill="#1a1a2e">Appetizer</text>
-    <rect x="638" y="119" width="14" height="12" rx="6" fill="#F0F1F5"/>
-    <text class="cart-text" x="645" y="128" font-size="7.5" font-weight="600" fill="#6E707A" text-anchor="middle">2</text>
+    <rect x="632" y="119" width="14" height="12" rx="6" fill="#F0F1F5"/>
+    <text class="cart-text" x="639" y="128" font-size="7.5" font-weight="600" fill="#6E707A" text-anchor="middle">2</text>
     <text class="cart-text" x="504" y="141" font-size="8" fill="#3C3D48">1 × Beef Tartare</text>
-    <text class="cart-text" x="652" y="141" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">185</text>
+    <text class="cart-text" x="646" y="141" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">185</text>
     <text class="cart-text" x="504" y="152" font-size="8" fill="#3C3D48">1 × Foie Gras Terrine</text>
-    <text class="cart-text" x="652" y="152" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">225</text>
+    <text class="cart-text" x="646" y="152" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">225</text>
 
-    <line x1="504" y1="160" x2="652" y2="160" stroke="#E5E7EE" stroke-width="0.5"/>
+    <line x1="504" y1="160" x2="646" y2="160" stroke="#E5E7EE" stroke-width="0.5"/>
 
     <!-- Main Course -->
     <text class="cart-text" x="504" y="172" font-size="9" font-weight="500" fill="#1a1a2e">Main Course</text>
-    <rect x="638" y="164" width="14" height="12" rx="6" fill="#F0F1F5"/>
-    <text class="cart-text" x="645" y="173" font-size="7.5" font-weight="600" fill="#6E707A" text-anchor="middle">2</text>
+    <rect x="632" y="164" width="14" height="12" rx="6" fill="#F0F1F5"/>
+    <text class="cart-text" x="639" y="173" font-size="7.5" font-weight="600" fill="#6E707A" text-anchor="middle">2</text>
     <text class="cart-text" x="504" y="186" font-size="8" fill="#3C3D48">1 × Wagyu Ribeye 250g</text>
-    <text class="cart-text" x="652" y="186" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">595</text>
+    <text class="cart-text" x="646" y="186" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">595</text>
     <text class="cart-text" x="504" y="197" font-size="8" fill="#3C3D48">1 × Rack of Lamb</text>
-    <text class="cart-text" x="652" y="197" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">385</text>
+    <text class="cart-text" x="646" y="197" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">385</text>
 
-    <line x1="504" y1="205" x2="652" y2="205" stroke="#E5E7EE" stroke-width="0.5"/>
+    <line x1="504" y1="205" x2="646" y2="205" stroke="#E5E7EE" stroke-width="0.5"/>
 
     <!-- Dessert (active) -->
     <circle cx="507" cy="215" r="3" fill="#534AB7"/>
     <text class="cart-text" x="516" y="217" font-size="9" font-weight="500" fill="#1a1a2e">Dessert</text>
-    <rect x="638" y="209" width="14" height="12" rx="6" fill="#EAE6FF"/>
-    <text class="cart-text" x="645" y="218" font-size="7.5" font-weight="600" fill="#3C3489" text-anchor="middle">2</text>
+    <rect x="632" y="209" width="14" height="12" rx="6" fill="#EAE6FF"/>
+    <text class="cart-text" x="639" y="218" font-size="7.5" font-weight="600" fill="#3C3489" text-anchor="middle">2</text>
     <text class="cart-text" x="504" y="231" font-size="8" fill="#3C3D48">1 × Crème Brûlée</text>
-    <text class="cart-text" x="652" y="231" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">125</text>
+    <text class="cart-text" x="646" y="231" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">125</text>
     <text class="cart-text" x="504" y="242" font-size="8" fill="#3C3D48">1 × Chocolate Soufflé</text>
-    <text class="cart-text" x="652" y="242" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">155</text>
+    <text class="cart-text" x="646" y="242" font-size="8" font-weight="500" fill="#1a1a2e" text-anchor="end">155</text>
 
     <!-- Total -->
-    <line x1="502" y1="252" x2="654" y2="252" stroke="#E5E7EE" stroke-width="0.6"/>
-    <text class="cart-text" x="652" y="269" font-size="14" font-weight="700" fill="#1a1a2e" text-anchor="end">2 020,00</text>
-    <text class="cart-text" x="652" y="280" font-size="8.5" font-weight="500" fill="#9194A0" text-anchor="end">SEK</text>
+    <line x1="502" y1="252" x2="648" y2="252" stroke="#E5E7EE" stroke-width="0.6"/>
+    <text class="cart-text" x="646" y="269" font-size="14" font-weight="700" fill="#1a1a2e" text-anchor="end">2 020,00</text>
+    <text class="cart-text" x="646" y="280" font-size="8.5" font-weight="500" fill="#9194A0" text-anchor="end">SEK</text>
 
     <!-- Action buttons row: 2 equal-width buttons (no Discount/Bill row) -->
-    <rect x="504" y="288" width="74" height="40" rx="6" fill="#534AB7"/>
-    <text class="cart-text" x="541" y="312" font-size="9.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">Fire Drinks</text>
-    <rect x="582" y="288" width="74" height="40" rx="6" fill="#FFFFFF" stroke="#534AB7" stroke-width="0.8"/>
-    <text class="cart-text" x="619" y="312" font-size="9.5" font-weight="500" fill="#534AB7" text-anchor="middle">Pay</text>
+    <rect x="504" y="289" width="69" height="40" rx="6" fill="#534AB7"/>
+    <text class="cart-text" x="538" y="313" font-size="9.5" font-weight="600" fill="#FFFFFF" text-anchor="middle">Fire Drinks</text>
+    <rect x="577" y="289" width="69" height="40" rx="6" fill="#FFFFFF" stroke="#534AB7" stroke-width="0.8"/>
+    <text class="cart-text" x="611" y="313" font-size="9.5" font-weight="500" fill="#534AB7" text-anchor="middle">Pay</text>
   </g>
 
   <rect x="492" y="42" width="166" height="299" rx="12" fill="none" stroke="#6A5AE0" stroke-width="1.2" stroke-dasharray="3 2.5"/>
