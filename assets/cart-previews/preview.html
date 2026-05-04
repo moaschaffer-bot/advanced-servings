@@ -21,22 +21,34 @@
 <div class="grid">
   <div class="card">
     <h2>Flexible servings — light</h2>
-    <div class="img-wrap"><img src="flexible_cart_light.png" alt="Flexible cart light"></div>
+    <div class="img-wrap"><img id="img-fl" alt="Flexible cart light"></div>
     <div class="label">flexible_cart_light.svg</div>
   </div>
   <div class="card dark">
     <h2>Flexible servings — dark</h2>
-    <div class="img-wrap"><img src="flexible_cart_dark.png" alt="Flexible cart dark"></div>
+    <div class="img-wrap"><img id="img-fd" alt="Flexible cart dark"></div>
     <div class="label">flexible_cart_dark.svg</div>
   </div>
   <div class="card">
     <h2>Serving priorities — light</h2>
-    <div class="img-wrap"><img src="priorities_cart_light.png" alt="Priorities cart light"></div>
+    <div class="img-wrap"><img id="img-pl" alt="Priorities cart light"></div>
     <div class="label">priorities_cart_light.svg</div>
   </div>
   <div class="card dark">
     <h2>Serving priorities — dark</h2>
-    <div class="img-wrap"><img src="priorities_cart_dark.png" alt="Priorities cart dark"></div>
+    <div class="img-wrap"><img id="img-pd" alt="Priorities cart dark"></div>
     <div class="label">priorities_cart_dark.svg</div>
   </div>
+</div>
+
+<script>
+  // Cache-bust on every page load
+  const v = Date.now();
+  document.getElementById('img-fl').src = 'flexible_cart_light.png?v=' + v;
+  document.getElementById('img-fd').src = 'flexible_cart_dark.png?v=' + v;
+  document.getElementById('img-pl').src = 'priorities_cart_light.png?v=' + v;
+  document.getElementById('img-pd').src = 'priorities_cart_dark.png?v=' + v;
+</script>
+
+<div style="display:none;">
 </div>
