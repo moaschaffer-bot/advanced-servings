@@ -400,15 +400,16 @@ html, body { height: 100%; }
             <div class="wiz-sub">For example, a hot kitchen, a cold kitchen, and a bar. If so, you can separate the tickets by station.</div>
             <div class="wiz-preview-choices" data-wiz-group="stations" style="gap:12px">
               <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="yes-printers">
-                <div class="wiz-preview-card-top"><b>HOT KITCHEN</b>
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; gap:6px; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>HOT KITCHEN</b>
 ─────────────────
   Ribeye steak  x2
-  Fries         x2
-
-<b>BAR PRINTER</b>
+  Fries         x2</div>
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>BAR</b>
 ─────────────────
   Margarita     x2
   Beer          x1</div>
+                </div>
                 <div class="wiz-preview-card-bottom">
                   <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
                   <div class="wiz-preview-card-name">A printer per station</div>
@@ -441,8 +442,8 @@ html, body { height: 100%; }
           <!-- STEP 2: Cross-station awareness -->
           <div class="wizard-body hidden" id="wiz-step-coordination">
             <div class="wiz-category">Printing</div>
-            <div class="wiz-q">Should your stations see what the other stations are preparing?</div>
-            <div class="wiz-sub">When items from different stations are fired together, each ticket can reference what the other station is working on — so they can time their dishes.</div>
+            <div class="wiz-q">Do dishes from different stations need to arrive at the table together?</div>
+            <div class="wiz-sub">When a hot dish and a cold dish are in the same serving, both stations can see what the other is preparing — so they can time their work and plate together.</div>
             <div class="wiz-preview-choices" data-wiz-group="coordination">
               <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="yes">
                 <div class="wiz-preview-card-top"><b>HOT KITCHEN</b>
