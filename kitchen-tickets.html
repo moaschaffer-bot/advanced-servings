@@ -110,13 +110,16 @@ html, body { height: 100%; }
 .wiz-choice-desc { font-size: 12px; color: #666; line-height: 1.5; }
 
 /* — Wizard ticket preview cards ----------------------------------- */
-.wiz-preview-choices { display: flex; gap: 14px; }
+.wiz-preview-choices { display: flex; gap: 14px; align-items: stretch; }
 .wiz-preview-card { flex: 1; border: 1.5px solid #e0e0da; border-radius: 10px; overflow: hidden; cursor: pointer; transition: border-color 0.12s; }
 .wiz-preview-card:hover { border-color: #AFA9EC; }
 .wiz-preview-card.selected { border-color: #534AB7; }
-.wiz-preview-card-top { background: #fafaf8; padding: 12px; font-family: 'Courier New', monospace; font-size: 10px; line-height: 1.6; color: #333; min-height: 80px; white-space: pre; border-bottom: 0.5px solid #e0e0da; }
+.wiz-preview-card.selected .wiz-rdot { border-color: #534AB7; }
+.wiz-preview-card.selected .wiz-rinner { display: block; }
+.wiz-preview-card { display: flex; flex-direction: column; }
+.wiz-preview-card-top { background: #fafaf8; padding: 12px; font-family: 'Courier New', monospace; font-size: 10px; line-height: 1.6; color: #333; min-height: 80px; white-space: pre; border-bottom: 0.5px solid #e0e0da; flex: 1; }
 .wiz-preview-card.selected .wiz-preview-card-top { background: #FAFAFE; }
-.wiz-preview-card-bottom { padding: 10px 14px; display: flex; align-items: center; gap: 8px; background: #fff; }
+.wiz-preview-card-bottom { padding: 10px 14px; display: flex; align-items: center; gap: 8px; background: #fff; flex-shrink: 0; }
 .wiz-preview-card.selected .wiz-preview-card-bottom { background: #FAFAFE; }
 .wiz-preview-card-name { font-size: 12px; font-weight: 500; color: #1a1a2e; }
 
