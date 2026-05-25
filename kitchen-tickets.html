@@ -428,31 +428,16 @@ html, body { height: 100%; }
             </div>
           </div>
 
-          <!-- STEP 4: Servings -->
+          <!-- STEP 4: Servings — visual picker replaces old yes/no + "what gets sent" -->
           <div class="wizard-body hidden" id="wiz-step-servings">
             <div class="wiz-category">Content</div>
-            <div class="wiz-q">Do you work with table servings (courses)?</div>
-            <div class="wiz-sub">If your staff fires courses separately (starters first, then mains), tickets can show current and upcoming courses.</div>
-            <div class="wiz-choices" data-wiz-group="servings">
-              <div class="wiz-choice" onclick="wizSelect(this)" data-value="yes">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">Yes, we use servings</div></div>
-                <div class="wiz-choice-desc">Configure what appears on the ticket for each serving.</div>
-              </div>
-              <div class="wiz-choice" onclick="wizSelect(this)" data-value="no">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">No, everything goes at once</div></div>
-                <div class="wiz-choice-desc">All items on a single ticket, no course separation.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- STEP 5: What gets sent (conditional: servings=yes) -->
-          <div class="wizard-body hidden" id="wiz-step-sent">
-            <div class="wiz-category">Content</div>
-            <div class="wiz-q">What gets sent to the kitchen?</div>
-            <div class="wiz-sub">When a serving is fired, should the kitchen also see what's coming up next?</div>
-            <div class="wiz-preview-choices" data-wiz-group="sent">
-              <div class="wiz-preview-card selected" onclick="wizSelectPreview(this)" data-value="current">
-                <div class="wiz-preview-card-top">SERVING 1
+            <div class="wiz-q">What should the kitchen see when a serving is fired?</div>
+            <div class="wiz-sub">If your staff fires courses separately (starters first, then mains), the ticket can show just the current serving or also include what's coming up next.</div>
+            <div class="wiz-preview-choices" data-wiz-group="servings" style="gap:12px">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="current">
+                <div class="wiz-preview-card-top">TABLE 12        18:42
+─────────────────
+SERVING 1
   Bruschetta    x2
   Caesar salad  x1</div>
                 <div class="wiz-preview-card-bottom">
@@ -461,14 +446,30 @@ html, body { height: 100%; }
                 </div>
               </div>
               <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="upcoming">
-                <div class="wiz-preview-card-top">SERVING 1
+                <div class="wiz-preview-card-top">TABLE 12        18:42
+─────────────────
+SERVING 1
   Bruschetta    x2
-┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
-UPCOMING
-  Ribeye steak  x2</div>
+  Caesar salad  x1
+┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+SERVING 2 (upcoming)
+  Ribeye steak  x2
+  Grilled salmon x1</div>
                 <div class="wiz-preview-card-bottom">
                   <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
-                  <div class="wiz-preview-card-name">Current + upcoming</div>
+                  <div class="wiz-preview-card-name">Current + upcoming servings</div>
+                </div>
+              </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="no-servings">
+                <div class="wiz-preview-card-top">TABLE 12        18:42
+─────────────────
+  Bruschetta    x2
+  Caesar salad  x1
+  Ribeye steak  x2
+  Grilled salmon x1</div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">We don't use servings</div>
                 </div>
               </div>
             </div>
@@ -769,8 +770,7 @@ const ALL_STEPS = [
   { id: 'stations',      phase: 'printing',   label: 'Kitchen stations' },
   { id: 'coordination',  phase: 'printing',   label: 'Station awareness', condition: () => wizAnswers.stations === 'yes-printers' || wizAnswers.stations === 'yes-shared' },
   { id: 'servings',      phase: 'content',    label: 'Servings' },
-  { id: 'sent',          phase: 'content',    label: 'What gets sent',   condition: () => wizAnswers.servings === 'yes' },
-  { id: 'followup',      phase: 'content',    label: 'Follow-up style',  condition: () => wizAnswers.servings === 'yes' },
+  { id: 'followup',      phase: 'content',    label: 'Follow-up style',  condition: () => wizAnswers.servings === 'current' || wizAnswers.servings === 'upcoming' },
   { id: 'corrections',   phase: 'content',    label: 'Corrections' },
   { id: 'look',          phase: 'appearance',  label: 'Ticket priority' },
   { id: 'comments',      phase: 'appearance',  label: 'Comments' },
@@ -913,9 +913,9 @@ function buildSummary() {
   if (wizAnswers.stations === 'yes-printers' || wizAnswers.stations === 'yes-shared') {
     rows.push(['Cross-station awareness', yn(wizAnswers.coordination)]);
   }
-  rows.push(['Table servings', yn(wizAnswers.servings)]);
-  if (wizAnswers.servings === 'yes') {
-    rows.push(['Ticket scope', wizAnswers.sent === 'upcoming' ? 'Current + upcoming' : 'Current only']);
+  const servingLabels = { 'current': 'Current serving only', 'upcoming': 'Current + upcoming', 'no-servings': 'Not used' };
+  rows.push(['Servings on ticket', servingLabels[wizAnswers.servings] || '—']);
+  if (wizAnswers.servings === 'current' || wizAnswers.servings === 'upcoming') {
     rows.push(['Follow-up style', wizAnswers.followup === 'reminder' ? 'Reminder only' : 'Full ticket']);
   }
 
@@ -965,8 +965,8 @@ function applyWizardAnswers() {
     document.querySelector('#served-with-group .radio-item[data-value="off"]').classList.add('selected');
   }
 
-  // Content tab: serving picker
-  if (wizAnswers.sent === 'upcoming') {
+  // Content tab: serving picker (maps new combined values to the tab's card pickers)
+  if (wizAnswers.servings === 'upcoming') {
     const pickers = document.querySelectorAll('#pane-content .card-picker')[0];
     if (pickers) {
       pickers.querySelectorAll('.picker-card').forEach((c, i) => c.classList.toggle('selected', i === 1));
