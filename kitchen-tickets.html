@@ -591,37 +591,45 @@ SERVING 2 (forward)
           <!-- STEP 7: Corrections -->
           <div class="wizard-body hidden" id="wiz-step-corrections">
             <div class="wiz-category">Content</div>
-            <div class="wiz-q">Should the kitchen be notified about order changes?</div>
-            <div class="wiz-sub">After a ticket has printed, items might be removed, added, or modified. A correction ticket is printed to notify the kitchen. Select which changes should trigger one.</div>
-            <div style="display:flex; gap:20px; align-items:flex-start;">
-              <div style="flex:1">
-                <div class="wiz-checks" data-wiz-group="corrections">
-                  <div class="wiz-check checked" onclick="wizToggleCheck(this)" data-value="removed">
-                    <div class="wiz-cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                    <div class="wiz-check-text"><div class="wiz-check-label">Removed items</div><div class="wiz-check-desc">Item taken off the order after being sent.</div></div>
-                  </div>
-                  <div class="wiz-check checked" onclick="wizToggleCheck(this)" data-value="added">
-                    <div class="wiz-cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                    <div class="wiz-check-text"><div class="wiz-check-label">Added items</div><div class="wiz-check-desc">New item added to an already-sent order.</div></div>
-                  </div>
-                  <div class="wiz-check" onclick="wizToggleCheck(this)" data-value="comments">
-                    <div class="wiz-cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                    <div class="wiz-check-text"><div class="wiz-check-label">Edited comments</div><div class="wiz-check-desc">A comment changed after being sent.</div></div>
-                  </div>
+            <div class="wiz-q">What should a correction ticket contain?</div>
+            <div class="wiz-sub">When an order is changed after it's been sent to the kitchen, a correction ticket is printed. You choose how much context the kitchen gets.</div>
+            <div class="wiz-preview-choices" data-wiz-group="corrections">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="whole-order">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:9px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>##UPDATED 18:48##</b>
+<b>Table 12</b>
+─────────────────
+Serving 1
+  Bruschetta    x2
+  Caesar salad  x1
+Serving 2
+  Ribeye steak  x2
+  <b style="color:#c0392b">##DELETED##</b>
+  <span style="color:#c0392b">Grilled salmon x1</span>
+  <b style="color:#1D9E75">##ADDED##</b>
+  <span style="color:#1D9E75">Pasta bolo.    x1</span>
+Serving 3
+  Tiramisu      x3</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Print whole order</div>
                 </div>
               </div>
-              <div style="width:180px; flex-shrink:0;">
-                <div style="font-size:10px; font-weight:500; color:#888; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.3px;">Example correction</div>
-                <div style="background:#fafaf8; border:0.5px solid #ddd; border-radius:3px; padding:10px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:9px; line-height:1.6; color:#333; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-                    <div style="font-weight:700; color:#c0392b;">⚠ CORRECTION</div>
-                    <div>Table 12 · 18:48</div>
-                    <div style="border-top:1px dashed #ccc; margin:4px 0;"></div>
-                    <div style="color:#c0392b;">✕ REMOVED:</div>
-                    <div>&nbsp; Caesar salad x1</div>
-                    <div style="margin-top:4px; color:#1D9E75;">+ ADDED:</div>
-                    <div>&nbsp; Greek salad  x1</div>
-                  </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="corrected-only">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:9px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>##UPDATED 18:48##</b>
+<b>Table 12</b>
+─────────────────
+Serving 2
+  <b style="color:#c0392b">##DELETED##</b>
+  <span style="color:#c0392b">Grilled salmon x1</span>
+  <b style="color:#1D9E75">##ADDED##</b>
+  <span style="color:#1D9E75">Pasta bolo.    x1</span></div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Corrected articles only</div>
                 </div>
               </div>
             </div>
@@ -859,11 +867,35 @@ SERVING 2 forward
             </div>
           </div>
           <div class="section">
-            <div class="section-header"><div class="section-title">Correction tickets <span class="todo-marker">TODO: verify multi-select vs single-choice</span></div></div>
-            <div class="checkbox-group">
-              <div class="checkbox-item checked" onclick="toggleCheck(this)"><div class="cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="cb-label">Removed items</span><span class="cb-default">(default)</span></div>
-              <div class="checkbox-item checked" onclick="toggleCheck(this)"><div class="cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="cb-label">Added items</span><span class="cb-default">(default)</span></div>
-              <div class="checkbox-item" onclick="toggleCheck(this)"><div class="cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="cb-label">Edited comments</span></div>
+            <div class="section-header"><div class="section-title">Correction tickets</div></div>
+            <div class="card-picker-label">Content of correction ticket</div>
+            <div class="card-picker" id="correction-picker">
+              <div class="picker-card" onclick="selectPicker(this)">
+                <div class="picker-card-preview">##UPDATED 18:48##
+TABLE 12
+─────────────────
+Serving 1
+  Bruschetta    x2
+  Caesar salad  x1
+Serving 2
+  Ribeye steak  x2
+  ##DELETED##
+  Grilled salmon x1
+  ##ADDED##
+  Pasta bolo.    x1</div>
+                <div class="picker-card-meta"><div class="radio-dot"><div class="radio-inner"></div></div><div class="picker-card-name">Print whole order</div></div>
+              </div>
+              <div class="picker-card selected" onclick="selectPicker(this)">
+                <div class="picker-card-preview">##UPDATED 18:48##
+TABLE 12
+─────────────────
+Serving 2
+  ##DELETED##
+  Grilled salmon x1
+  ##ADDED##
+  Pasta bolo.    x1</div>
+                <div class="picker-card-meta"><div class="radio-dot"><div class="radio-inner"></div></div><div class="picker-card-name">Corrected articles only</div></div>
+              </div>
             </div>
           </div>
         </div>
@@ -1076,9 +1108,8 @@ function buildSummary() {
     rows.push(['Follow-up style', wizAnswers.followup === 'reminder' ? 'Reminder only' : 'Full ticket']);
   }
 
-  const checks = document.querySelectorAll('#wiz-step-corrections .wiz-check.checked');
-  const corrList = Array.from(checks).map(c => c.dataset.value);
-  rows.push(['Correction tickets', corrList.length ? corrList.join(', ') : 'None']);
+  const corrLabels = { 'whole-order': 'Print whole order', 'corrected-only': 'Corrected articles only' };
+  rows.push(['Correction tickets', corrLabels[wizAnswers.corrections] || '—']);
 
   rows.push(['Ticket priority', wizAnswers.look === 'readability' ? 'Readability' : wizAnswers.look === 'detail' ? 'Detail' : '—']);
   rows.push(['Item comments', yn(wizAnswers.comments)]);
@@ -1135,6 +1166,16 @@ function applyWizardAnswers() {
     const pickers = document.querySelectorAll('#pane-content .card-picker')[1];
     if (pickers) {
       pickers.querySelectorAll('.picker-card').forEach((c, i) => c.classList.toggle('selected', i === 1));
+    }
+  }
+
+  // Correction ticket content
+  if (wizAnswers.corrections) {
+    const corrPicker = document.getElementById('correction-picker');
+    if (corrPicker) {
+      corrPicker.querySelectorAll('.picker-card').forEach((c, i) => {
+        c.classList.toggle('selected', wizAnswers.corrections === 'whole-order' ? i === 0 : i === 1);
+      });
     }
   }
 }
