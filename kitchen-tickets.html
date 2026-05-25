@@ -394,36 +394,80 @@ html, body { height: 100%; }
           <div class="wizard-body hidden" id="wiz-step-stations">
             <div class="wiz-category">Printing</div>
             <div class="wiz-q">Do you have multiple kitchen areas or stations?</div>
-            <div class="wiz-sub">For example, a hot kitchen, a cold kitchen, and a bar. If so, you can separate the tickets — either with a printer per station, or by splitting per category on a shared printer.</div>
-            <div class="wiz-choices" data-wiz-group="stations">
-              <div class="wiz-choice" onclick="wizSelect(this)" data-value="yes-printers">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">Yes, with a printer per station</div></div>
-                <div class="wiz-choice-desc">Each station has its own printer. Items route to the right one based on category.</div>
+            <div class="wiz-sub">For example, a hot kitchen, a cold kitchen, and a bar. If so, you can separate the tickets by station.</div>
+            <div class="wiz-preview-choices" data-wiz-group="stations" style="gap:12px">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="yes-printers">
+                <div class="wiz-preview-card-top"><b>HOT KITCHEN</b>
+─────────────────
+  Ribeye steak  x2
+  Fries         x2
+
+<b>BAR PRINTER</b>
+─────────────────
+  Margarita     x2
+  Beer          x1</div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">A printer per station</div>
+                </div>
               </div>
-              <div class="wiz-choice" onclick="wizSelect(this)" data-value="yes-shared">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">Yes, but we share a printer</div></div>
-                <div class="wiz-choice-desc">One printer, but the ticket is cut per category so each station gets its own slip.</div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="yes-shared">
+                <div class="wiz-preview-card-top">  Ribeye steak  x2
+  Fries         x2
+✂ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+  Margarita     x2
+  Beer          x1</div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Shared printer, cut per category</div>
+                </div>
               </div>
-              <div class="wiz-choice" onclick="wizSelect(this)" data-value="no">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">No, one ticket with everything</div></div>
-                <div class="wiz-choice-desc">All items on a single ticket. No separation needed.</div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="no">
+                <div class="wiz-preview-card-top">  Ribeye steak  x2
+  Fries         x2
+  Margarita     x2
+  Beer          x1</div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">One ticket with everything</div>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- STEP 3: Cross-station awareness -->
+          <!-- STEP 2: Cross-station awareness -->
           <div class="wizard-body hidden" id="wiz-step-coordination">
             <div class="wiz-category">Printing</div>
             <div class="wiz-q">Should your stations see what the other stations are preparing?</div>
-            <div class="wiz-sub">When items from different stations are fired at the same time — for example, a steak from the hot kitchen and a salad from the cold kitchen — each station's ticket can show what the other is working on, so they can time their dishes together.</div>
-            <div class="wiz-choices" data-wiz-group="coordination">
-              <div class="wiz-choice" onclick="wizSelect(this)" data-value="yes">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">Yes, show what other stations are preparing</div></div>
-                <div class="wiz-choice-desc">Each ticket includes a reference to items being prepared at other stations in the same serving, so the kitchen can coordinate timing.</div>
+            <div class="wiz-sub">When items from different stations are fired together, each ticket can reference what the other station is working on — so they can time their dishes.</div>
+            <div class="wiz-preview-choices" data-wiz-group="coordination">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="yes">
+                <div class="wiz-preview-card-top"><b>HOT KITCHEN</b>
+─────────────────
+  Ribeye steak  x2
+  <i>– medium rare</i>
+  ↳ served with:
+    Caesar salad (cold)
+
+  Grilled salmon x1</div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Show other stations' items</div>
+                </div>
               </div>
-              <div class="wiz-choice" onclick="wizSelect(this)" data-value="no">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">No, each station only sees its own items</div></div>
-                <div class="wiz-choice-desc">Stations work independently. No cross-references between tickets.</div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="no">
+                <div class="wiz-preview-card-top"><b>HOT KITCHEN</b>
+─────────────────
+  Ribeye steak  x2
+  <i>– medium rare</i>
+
+  Grilled salmon x1
+
+</div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Own items only</div>
+                </div>
               </div>
             </div>
           </div>
@@ -509,19 +553,35 @@ SERVING 2 (upcoming)
           <div class="wizard-body hidden" id="wiz-step-corrections">
             <div class="wiz-category">Content</div>
             <div class="wiz-q">Should the kitchen be notified about order changes?</div>
-            <div class="wiz-sub">After a ticket has printed, items might be removed, added, or modified. Select which changes should trigger a correction ticket.</div>
-            <div class="wiz-checks" data-wiz-group="corrections">
-              <div class="wiz-check checked" onclick="wizToggleCheck(this)" data-value="removed">
-                <div class="wiz-cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                <div class="wiz-check-text"><div class="wiz-check-label">Removed items</div><div class="wiz-check-desc">When an item is taken off the order after being sent.</div></div>
+            <div class="wiz-sub">After a ticket has printed, items might be removed, added, or modified. A correction ticket is printed to notify the kitchen. Select which changes should trigger one.</div>
+            <div style="display:flex; gap:20px; align-items:flex-start;">
+              <div style="flex:1">
+                <div class="wiz-checks" data-wiz-group="corrections">
+                  <div class="wiz-check checked" onclick="wizToggleCheck(this)" data-value="removed">
+                    <div class="wiz-cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    <div class="wiz-check-text"><div class="wiz-check-label">Removed items</div><div class="wiz-check-desc">Item taken off the order after being sent.</div></div>
+                  </div>
+                  <div class="wiz-check checked" onclick="wizToggleCheck(this)" data-value="added">
+                    <div class="wiz-cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    <div class="wiz-check-text"><div class="wiz-check-label">Added items</div><div class="wiz-check-desc">New item added to an already-sent order.</div></div>
+                  </div>
+                  <div class="wiz-check" onclick="wizToggleCheck(this)" data-value="comments">
+                    <div class="wiz-cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    <div class="wiz-check-text"><div class="wiz-check-label">Edited comments</div><div class="wiz-check-desc">A comment changed after being sent.</div></div>
+                  </div>
+                </div>
               </div>
-              <div class="wiz-check checked" onclick="wizToggleCheck(this)" data-value="added">
-                <div class="wiz-cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                <div class="wiz-check-text"><div class="wiz-check-label">Added items</div><div class="wiz-check-desc">When a new item is added to an already-sent order.</div></div>
-              </div>
-              <div class="wiz-check" onclick="wizToggleCheck(this)" data-value="comments">
-                <div class="wiz-cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                <div class="wiz-check-text"><div class="wiz-check-label">Edited comments</div><div class="wiz-check-desc">When a comment (e.g. "no onions") is changed after being sent.</div></div>
+              <div style="width:180px; flex-shrink:0;">
+                <div style="font-size:10px; font-weight:500; color:#888; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.3px;">Example correction</div>
+                <div style="background:#fafaf8; border:1px solid #e0e0da; border-radius:8px; padding:12px; font-family:'Courier New',monospace; font-size:9px; line-height:1.6; color:#333;">
+                  <div style="font-weight:700; color:#c0392b;">⚠ CORRECTION</div>
+                  <div>Table 12 &middot; 18:48</div>
+                  <div style="border-top:1px dashed #ccc; margin:4px 0;"></div>
+                  <div style="color:#c0392b;">✕ REMOVED:</div>
+                  <div>&nbsp; Caesar salad x1</div>
+                  <div style="margin-top:4px; color:#1D9E75;">+ ADDED:</div>
+                  <div>&nbsp; Greek salad  x1</div>
+                </div>
               </div>
             </div>
           </div>
@@ -531,14 +591,38 @@ SERVING 2 (upcoming)
             <div class="wiz-category">Appearance</div>
             <div class="wiz-q">What matters most for your kitchen tickets?</div>
             <div class="wiz-sub">This sets sensible defaults for text sizes and what's shown. You can fine-tune everything afterwards.</div>
-            <div class="wiz-choices" data-wiz-group="look">
-              <div class="wiz-choice" onclick="wizSelect(this)" data-value="readability">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">Readability at a glance</div></div>
-                <div class="wiz-choice-desc">Large table numbers and item names. Best for busy, noisy kitchens.</div>
+            <div class="wiz-preview-choices" data-wiz-group="look">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="readability">
+                <div class="wiz-preview-card-top" style="font-size:11px"><b style="font-size:15px">Table 12</b>
+<span style="font-size:9px;color:#888">18:42 · Emma</span>
+─────────────────
+<b style="font-size:9px">STARTERS</b>
+<span style="font-size:13px">Bruschetta    x2</span>
+<span style="font-size:13px">Caesar salad  x1</span>
+─────────────────
+<b style="font-size:9px">MAINS</b>
+<span style="font-size:13px">Ribeye steak  x2</span></div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Readability at a glance</div>
+                </div>
               </div>
-              <div class="wiz-choice" onclick="wizSelect(this)" data-value="detail">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">Maximum detail</div></div>
-                <div class="wiz-choice-desc">Comments, prices, categories. Best for complex menus with many modifiers.</div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="detail">
+                <div class="wiz-preview-card-top"><b>Table 12</b>
+<span style="font-size:9px;color:#888">18:42 · Emma</span>
+─────────────────
+<b style="font-size:8px">STARTERS</b>
+Bruschetta    x2  €12
+<i style="color:#666">– extra lemon</i>
+Caesar salad  x1   €9
+─────────────────
+<b style="font-size:8px">MAINS</b>
+Ribeye steak  x2  €28
+<i style="color:#666">– medium rare</i></div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Maximum detail</div>
+                </div>
               </div>
             </div>
           </div>
@@ -548,14 +632,34 @@ SERVING 2 (upcoming)
             <div class="wiz-category">Appearance</div>
             <div class="wiz-q">Do items need comments or special instructions?</div>
             <div class="wiz-sub">Things like "extra lemon", "no onions", or "allergy: nuts" appear below each item on the ticket.</div>
-            <div class="wiz-choices" data-wiz-group="comments">
-              <div class="wiz-choice" onclick="wizSelect(this)" data-value="yes">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">Yes, comments are important</div></div>
-                <div class="wiz-choice-desc">Item comments will be shown on the ticket.</div>
+            <div class="wiz-preview-choices" data-wiz-group="comments">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="yes">
+                <div class="wiz-preview-card-top"><b style="font-size:8px">MAINS</b>
+Ribeye steak     x2
+<i style="color:#666">– medium rare</i>
+<i style="color:#666">– no pepper sauce</i>
+Grilled salmon   x1
+<i style="color:#666">– allergy: nuts</i>
+Caesar salad     x1
+<i style="color:#666">– extra lemon</i></div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Show comments</div>
+                </div>
               </div>
-              <div class="wiz-choice" onclick="wizSelect(this)" data-value="no">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">No, we don't use comments</div></div>
-                <div class="wiz-choice-desc">Comments hidden to save space on the ticket.</div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="no">
+                <div class="wiz-preview-card-top"><b style="font-size:8px">MAINS</b>
+Ribeye steak     x2
+Grilled salmon   x1
+Caesar salad     x1
+
+
+
+</div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">No comments</div>
+                </div>
               </div>
             </div>
           </div>
