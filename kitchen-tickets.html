@@ -411,19 +411,19 @@ html, body { height: 100%; }
             </div>
           </div>
 
-          <!-- STEP 3: Coordination -->
+          <!-- STEP 3: Cross-station awareness -->
           <div class="wizard-body hidden" id="wiz-step-coordination">
             <div class="wiz-category">Printing</div>
-            <div class="wiz-q">Do you serve items together as a course?</div>
-            <div class="wiz-sub">For example, all starters go out at the same time. The "Served with" feature links items so the kitchen knows what belongs together.</div>
+            <div class="wiz-q">Should your stations see what the other stations are preparing?</div>
+            <div class="wiz-sub">When items from different stations are fired at the same time — for example, a steak from the hot kitchen and a salad from the cold kitchen — each station's ticket can show what the other is working on, so they can time their dishes together.</div>
             <div class="wiz-choices" data-wiz-group="coordination">
               <div class="wiz-choice" onclick="wizSelect(this)" data-value="yes">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">Yes, we coordinate courses</div></div>
-                <div class="wiz-choice-desc">Items show which other items they should go out with.</div>
+                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">Yes, show what other stations are preparing</div></div>
+                <div class="wiz-choice-desc">Each ticket includes a reference to items being prepared at other stations in the same serving, so the kitchen can coordinate timing.</div>
               </div>
               <div class="wiz-choice" onclick="wizSelect(this)" data-value="no">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">No, items go out when ready</div></div>
-                <div class="wiz-choice-desc">Each item is prepared and served independently.</div>
+                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">No, each station only sees its own items</div></div>
+                <div class="wiz-choice-desc">Stations work independently. No cross-references between tickets.</div>
               </div>
             </div>
           </div>
@@ -767,7 +767,7 @@ SERVING 2 forward
 const ALL_STEPS = [
   { id: 'welcome',       phase: null,         label: 'Welcome' },
   { id: 'stations',      phase: 'printing',   label: 'Kitchen stations' },
-  { id: 'coordination',  phase: 'printing',   label: 'Coordination' },
+  { id: 'coordination',  phase: 'printing',   label: 'Station awareness', condition: () => wizAnswers.stations === 'yes-printers' || wizAnswers.stations === 'yes-shared' },
   { id: 'servings',      phase: 'content',    label: 'Servings' },
   { id: 'sent',          phase: 'content',    label: 'What gets sent',   condition: () => wizAnswers.servings === 'yes' },
   { id: 'followup',      phase: 'content',    label: 'Follow-up style',  condition: () => wizAnswers.servings === 'yes' },
@@ -910,7 +910,9 @@ function buildSummary() {
 
   const stationLabels = { 'yes-printers': 'Yes, separate printers', 'yes-shared': 'Yes, shared printer', 'no': 'No' };
   rows.push(['Multiple stations', stationLabels[wizAnswers.stations] || '—']);
-  rows.push(['Course coordination', yn(wizAnswers.coordination)]);
+  if (wizAnswers.stations === 'yes-printers' || wizAnswers.stations === 'yes-shared') {
+    rows.push(['Cross-station awareness', yn(wizAnswers.coordination)]);
+  }
   rows.push(['Table servings', yn(wizAnswers.servings)]);
   if (wizAnswers.servings === 'yes') {
     rows.push(['Ticket scope', wizAnswers.sent === 'upcoming' ? 'Current + upcoming' : 'Current only']);
