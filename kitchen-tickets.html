@@ -394,15 +394,19 @@ html, body { height: 100%; }
           <div class="wizard-body hidden" id="wiz-step-stations">
             <div class="wiz-category">Printing</div>
             <div class="wiz-q">Do you have multiple kitchen areas or stations?</div>
-            <div class="wiz-sub">For example, a hot kitchen, a cold kitchen, and a bar. You can route specific items to specific printers.</div>
+            <div class="wiz-sub">For example, a hot kitchen, a cold kitchen, and a bar. If so, you can separate the tickets — either with a printer per station, or by splitting per category on a shared printer.</div>
             <div class="wiz-choices" data-wiz-group="stations">
-              <div class="wiz-choice" onclick="wizSelect(this)" data-value="yes">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">Yes, multiple stations</div></div>
-                <div class="wiz-choice-desc">Set up one printer per station and assign categories to each.</div>
+              <div class="wiz-choice" onclick="wizSelect(this)" data-value="yes-printers">
+                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">Yes, with a printer per station</div></div>
+                <div class="wiz-choice-desc">Each station has its own printer. Items route to the right one based on category.</div>
+              </div>
+              <div class="wiz-choice" onclick="wizSelect(this)" data-value="yes-shared">
+                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">Yes, but we share a printer</div></div>
+                <div class="wiz-choice-desc">One printer, but the ticket is cut per category so each station gets its own slip.</div>
               </div>
               <div class="wiz-choice" onclick="wizSelect(this)" data-value="no">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">No, one printer is enough</div></div>
-                <div class="wiz-choice-desc">All items print to a single kitchen printer.</div>
+                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">No, one ticket with everything</div></div>
+                <div class="wiz-choice-desc">All items on a single ticket. No separation needed.</div>
               </div>
             </div>
           </div>
@@ -904,7 +908,8 @@ function buildSummary() {
   const rows = [];
   const yn = v => v === 'yes' ? 'Yes' : v === 'no' ? 'No' : v || '—';
 
-  rows.push(['Multiple stations', yn(wizAnswers.stations)]);
+  const stationLabels = { 'yes-printers': 'Yes, separate printers', 'yes-shared': 'Yes, shared printer', 'no': 'No' };
+  rows.push(['Multiple stations', stationLabels[wizAnswers.stations] || '—']);
   rows.push(['Course coordination', yn(wizAnswers.coordination)]);
   rows.push(['Table servings', yn(wizAnswers.servings)]);
   if (wizAnswers.servings === 'yes') {
