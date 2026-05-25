@@ -443,34 +443,43 @@ html, body { height: 100%; }
           <div class="wizard-body hidden" id="wiz-step-coordination">
             <div class="wiz-category">Printing</div>
             <div class="wiz-q">Do dishes from different stations need to arrive at the table together?</div>
-            <div class="wiz-sub">When a hot dish and a cold dish are in the same serving, both stations can see what the other is preparing — so they can time their work and plate together.</div>
-            <div class="wiz-preview-choices" data-wiz-group="coordination">
-              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="yes">
+            <div class="wiz-sub">When they do, each station's ticket can reference what the other is preparing — so they can time their work. Choose how much detail to show.</div>
+            <div class="wiz-preview-choices" data-wiz-group="coordination" style="gap:12px">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="category">
                 <div class="wiz-preview-card-top"><b>HOT KITCHEN</b>
 ─────────────────
   Ribeye steak  x2
   <i>– medium rare</i>
-  ↳ served with:
-    Caesar salad (cold)
-
-  Grilled salmon x1</div>
+  Pasta bolo.   x1
+  <span style="color:#854F0B">Served w/ Pizza</span></div>
                 <div class="wiz-preview-card-bottom">
                   <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
-                  <div class="wiz-preview-card-name">Show other stations' items</div>
+                  <div class="wiz-preview-card-name">Category only</div>
                 </div>
               </div>
-              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="no">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="category-items">
                 <div class="wiz-preview-card-top"><b>HOT KITCHEN</b>
 ─────────────────
   Ribeye steak  x2
   <i>– medium rare</i>
-
-  Grilled salmon x1
-
+  Pasta bolo.   x1
+  <span style="color:#854F0B">Served w/ Pizza</span>
+  <span style="color:#854F0B">Pizza Salciccia x1</span></div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Category + items</div>
+                </div>
+              </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="off">
+                <div class="wiz-preview-card-top"><b>HOT KITCHEN</b>
+─────────────────
+  Ribeye steak  x2
+  <i>– medium rare</i>
+  Pasta bolo.   x1
 </div>
                 <div class="wiz-preview-card-bottom">
                   <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
-                  <div class="wiz-preview-card-name">Own items only</div>
+                  <div class="wiz-preview-card-name">Off — own items only</div>
                 </div>
               </div>
             </div>
@@ -736,16 +745,19 @@ Caesar salad     x1
             <div class="printer-card">
               <div class="printer-top"><div class="printer-name">Hot kitchen</div><div class="status-badge connected">Connected</div><div class="printer-ip">192.168.1.40</div></div>
               <div class="printer-detail"><strong>Prints:</strong> Starters, Mains, Desserts, Sides</div>
+              <div class="printer-detail"><strong>Served with:</strong> Starters, Desserts <span class="muted">(from Cold kitchen)</span></div>
               <div class="printer-detail"><strong>From registers:</strong> Register 1, Register 2 <span class="muted">(not Bar register)</span></div>
             </div>
             <div class="printer-card">
               <div class="printer-top"><div class="printer-name">Bar printer</div><div class="status-badge connected">Connected</div><div class="printer-ip">192.168.1.41</div></div>
               <div class="printer-detail"><strong>Prints:</strong> Beer &amp; wine, Cocktails, Non-alcoholic</div>
+              <div class="printer-detail"><strong>Served with:</strong> <span class="muted">None configured</span></div>
               <div class="printer-detail"><strong>From registers:</strong> All registers</div>
             </div>
             <div class="printer-card">
               <div class="printer-top"><div class="printer-name">Cold kitchen</div><div class="status-badge offline">Offline</div><div class="printer-ip">192.168.1.42</div></div>
               <div class="printer-detail"><strong>Prints:</strong> Starters, Desserts</div>
+              <div class="printer-detail"><strong>Served with:</strong> Mains, Sides <span class="muted">(from Hot kitchen)</span></div>
               <div class="printer-detail"><strong>From registers:</strong> Register 1 <span class="muted">(not Bar register)</span></div>
             </div>
           </div>
@@ -845,8 +857,8 @@ SERVING 2 forward
                 <div style="font-size:12px; color:#666; margin-bottom:14px;">Controls how related items appear when "Served with" is used on an order.</div>
                 <div class="radio-group" id="served-with-group">
                   <div class="radio-item" onclick="selectRadio(this, 'served-with-group'); updatePreview()" data-value="off"><div class="r-dot"><div class="r-inner"></div></div><div><div class="r-label">Off</div><div class="r-desc">No "served with" information on tickets.</div></div></div>
-                  <div class="radio-item selected" onclick="selectRadio(this, 'served-with-group'); updatePreview()" data-value="ref-only"><div class="r-dot"><div class="r-inner"></div></div><div><div class="r-label">Show reference, don't include item</div><div class="r-desc">The ticket shows what the item is served with, but the reference item only prints on its own station's printer.</div></div></div>
-                  <div class="radio-item" onclick="selectRadio(this, 'served-with-group'); updatePreview()" data-value="ref-include"><div class="r-dot"><div class="r-inner"></div></div><div><div class="r-label">Show reference and include item</div><div class="r-desc">The reference item prints on both its own printer and the station where the served-with item is prepared.</div></div></div>
+                  <div class="radio-item selected" onclick="selectRadio(this, 'served-with-group'); updatePreview()" data-value="ref-only"><div class="r-dot"><div class="r-inner"></div></div><div><div class="r-label">Show served with category</div><div class="r-desc">The ticket shows the category name (e.g. "Served with Pizza") so the station knows to coordinate timing.</div></div></div>
+                  <div class="radio-item" onclick="selectRadio(this, 'served-with-group'); updatePreview()" data-value="ref-include"><div class="r-dot"><div class="r-inner"></div></div><div><div class="r-label">Show category and items</div><div class="r-desc">The ticket shows the category name and lists the specific items from the other station (e.g. "1 x Pizza Salciccia").</div></div></div>
                 </div>
               </div>
               <div class="section">
@@ -1019,7 +1031,8 @@ function buildSummary() {
   const stationLabels = { 'yes-printers': 'Yes, separate printers', 'yes-shared': 'Yes, shared printer', 'no': 'No' };
   rows.push(['Multiple stations', stationLabels[wizAnswers.stations] || '—']);
   if (wizAnswers.stations === 'yes-printers' || wizAnswers.stations === 'yes-shared') {
-    rows.push(['Cross-station awareness', yn(wizAnswers.coordination)]);
+    const coordLabels = { 'category': 'Category only', 'category-items': 'Category + items', 'off': 'Off' };
+    rows.push(['Served with', coordLabels[wizAnswers.coordination] || '—']);
   }
   const servingLabels = { 'current': 'Current serving only', 'upcoming': 'Current + upcoming', 'no-servings': 'Not used' };
   rows.push(['Servings on ticket', servingLabels[wizAnswers.servings] || '—']);
@@ -1068,9 +1081,11 @@ function applyWizardAnswers() {
   }
 
   // Served with (based on coordination answer)
-  if (wizAnswers.coordination === 'no') {
+  if (wizAnswers.coordination) {
+    const swMap = { 'off': 'off', 'category': 'ref-only', 'category-items': 'ref-include' };
+    const swVal = swMap[wizAnswers.coordination] || 'off';
     document.querySelectorAll('#served-with-group .radio-item').forEach(r => r.classList.remove('selected'));
-    document.querySelector('#served-with-group .radio-item[data-value="off"]').classList.add('selected');
+    document.querySelector('#served-with-group .radio-item[data-value="' + swVal + '"]').classList.add('selected');
   }
 
   // Content tab: serving picker (maps new combined values to the tab's card pickers)
