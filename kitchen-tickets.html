@@ -390,24 +390,7 @@ html, body { height: 100%; }
             </div>
           </div>
 
-          <!-- STEP 1: Table orders -->
-          <div class="wizard-body hidden" id="wiz-step-table-orders">
-            <div class="wiz-category">Printing</div>
-            <div class="wiz-q">Are you working with table orders?</div>
-            <div class="wiz-sub">If your guests order from tables (not just a counter), kitchen tickets help the kitchen know what to prepare and for which table.</div>
-            <div class="wiz-choices" data-wiz-group="table-orders">
-              <div class="wiz-choice" onclick="wizSelect(this)" data-value="yes">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">Yes, we take table orders</div></div>
-                <div class="wiz-choice-desc">Tickets show table numbers and serving info.</div>
-              </div>
-              <div class="wiz-choice" onclick="wizSelect(this)" data-value="no">
-                <div class="wiz-choice-top"><div class="wiz-rdot"><div class="wiz-rinner"></div></div><div class="wiz-choice-label">No, counter or takeaway only</div></div>
-                <div class="wiz-choice-desc">Tickets show order numbers instead.</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- STEP 2: Kitchen stations -->
+          <!-- STEP 1: Kitchen stations -->
           <div class="wizard-body hidden" id="wiz-step-stations">
             <div class="wiz-category">Printing</div>
             <div class="wiz-q">Do you have multiple kitchen areas or stations?</div>
@@ -779,7 +762,6 @@ SERVING 2 forward
 // when their condition is not met.
 const ALL_STEPS = [
   { id: 'welcome',       phase: null,         label: 'Welcome' },
-  { id: 'table-orders',  phase: 'printing',   label: 'Table orders' },
   { id: 'stations',      phase: 'printing',   label: 'Kitchen stations' },
   { id: 'coordination',  phase: 'printing',   label: 'Coordination' },
   { id: 'servings',      phase: 'content',    label: 'Servings' },
@@ -922,7 +904,6 @@ function buildSummary() {
   const rows = [];
   const yn = v => v === 'yes' ? 'Yes' : v === 'no' ? 'No' : v || '—';
 
-  rows.push(['Table orders', yn(wizAnswers['table-orders'])]);
   rows.push(['Multiple stations', yn(wizAnswers.stations)]);
   rows.push(['Course coordination', yn(wizAnswers.coordination)]);
   rows.push(['Table servings', yn(wizAnswers.servings)]);
