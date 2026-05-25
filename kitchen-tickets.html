@@ -545,7 +545,7 @@ SERVING 1
                 </div>
                 <div class="wiz-preview-card-bottom">
                   <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
-                  <div class="wiz-preview-card-name">We don't use servings</div>
+                  <div class="wiz-preview-card-name">Everything at once</div>
                 </div>
               </div>
             </div>
@@ -1070,7 +1070,7 @@ function buildSummary() {
     const coordLabels = { 'category': 'Category only', 'category-items': 'Category + items', 'off': 'Off' };
     rows.push(['Served with', coordLabels[wizAnswers.coordination] || '—']);
   }
-  const servingLabels = { 'current': 'Current serving only', 'upcoming': 'Current + upcoming', 'no-servings': 'Not used' };
+  const servingLabels = { 'current': 'Current serving only', 'upcoming': 'Current + upcoming', 'no-servings': 'Everything at once' };
   rows.push(['Servings on ticket', servingLabels[wizAnswers.servings] || '—']);
   if (wizAnswers.servings === 'current' || wizAnswers.servings === 'upcoming') {
     rows.push(['Follow-up style', wizAnswers.followup === 'reminder' ? 'Reminder only' : 'Full ticket']);
