@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kitchen Tickets — OPEN BackOffice</title>
+<style>
+/* ===================================================================
+   IA PRINCIPLES (do not remove):
+   - Printing = where it prints. Content = what it contains. Appearance = how it looks.
+   - If a setting fits two categories, it lives in the one with operational
+     consequence and cross-links from the other.
+   - Per-printer scoping only exists on the Printing tab. All content and
+     design settings are company-wide.
+   - Summary rows link out to existing detailed pages; the hub doesn't
+     duplicate management surfaces.
+   =================================================================== */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+
+.bo {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f7f7f5;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* — Sidebar -------------------------------------------------------- */
+.sidebar { width: 220px; background: #1a1a2e; flex-shrink: 0; padding: 16px 0; display: flex; flex-direction: column; }
+.sidebar-logo { color: #fff; font-size: 13px; font-weight: 500; padding: 0 16px 20px; opacity: 0.9; letter-spacing: 0.3px; }
+.sidebar-item { font-size: 13px; color: rgba(255,255,255,0.5); padding: 8px 16px; display: flex; align-items: center; gap: 8px; cursor: default; }
+.sidebar-item.active { color: #fff; background: rgba(255,255,255,0.1); }
+.sidebar-item svg { width: 14px; height: 14px; flex-shrink: 0; }
+.sidebar-spacer { flex: 1; }
+
+/* — Topbar --------------------------------------------------------- */
+.topbar { height: 48px; border-bottom: 0.5px solid #e0e0da; background: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; flex-shrink: 0; }
+.topbar-left { display: flex; align-items: center; gap: 8px; }
+.topbar-breadcrumb { font-size: 12px; color: #888; }
+.topbar-breadcrumb span { color: #1a1a2e; font-weight: 500; }
+.topbar-right { display: flex; align-items: center; gap: 16px; }
+.topbar-avatar { width: 28px; height: 28px; border-radius: 50%; background: #EEEDFE; color: #534AB7; font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+
+/* — Main layout ---------------------------------------------------- */
+.main-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.main { flex: 1; padding: 32px 48px; overflow-y: auto; max-width: 1120px; }
+.page-header { margin-bottom: 24px; }
+.page-title { font-size: 22px; font-weight: 500; color: #1a1a2e; margin-bottom: 4px; }
+.page-desc { font-size: 13px; color: #888; }
+
+/* — Hub tabs ------------------------------------------------------- */
+.hub-tabs { display: flex; gap: 0; border-bottom: 1px solid #e0e0da; margin-bottom: 28px; }
+.hub-tab { padding: 10px 20px; font-size: 13px; font-weight: 500; color: #888; border-bottom: 2px solid transparent; cursor: pointer; transition: color 0.12s; user-select: none; }
+.hub-tab:hover { color: #534AB7; }
+.hub-tab.active { color: #534AB7; border-bottom-color: #534AB7; }
+
+/* — Tab panes ------------------------------------------------------ */
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* — Setup guide banner -------------------------------------------- */
+.setup-banner { background: linear-gradient(135deg, #EEEDFE 0%, #f3f1fb 100%); border: 0.5px solid #d0c8e8; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; display: flex; align-items: center; gap: 16px; }
+.setup-banner-icon { width: 40px; height: 40px; border-radius: 10px; background: #534AB7; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.setup-banner-text { flex: 1; }
+.setup-banner-title { font-size: 14px; font-weight: 500; color: #3C3489; margin-bottom: 2px; }
+.setup-banner-sub { font-size: 12px; color: #534AB7; line-height: 1.5; }
+.setup-banner .btn-primary { flex-shrink: 0; }
+.setup-banner.hidden { display: none; }
+
+/* ================================================================
+   UNIFIED SETUP WIZARD
+   ================================================================ */
+.wizard-overlay { display: none; }
+.wizard-overlay.active { display: block; }
+.wizard-card { background: #fff; border: 0.5px solid #e0e0da; border-radius: 14px; overflow: hidden; max-width: 640px; margin: 0 auto; }
+
+/* — Progress bar --------------------------------------------------- */
+.wizard-progress { height: 3px; background: #eee; }
+.wizard-progress-bar { height: 100%; background: #534AB7; transition: width 0.3s ease; border-radius: 0 3px 3px 0; }
+
+/* — Wizard header with phase indicators --------------------------- */
+.wizard-phase-bar { display: flex; align-items: center; gap: 0; padding: 16px 24px 12px; border-bottom: 0.5px solid #f0f0ec; }
+.wizard-phase { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 500; color: #bbb; padding: 4px 0; position: relative; }
+.wizard-phase.active { color: #534AB7; }
+.wizard-phase.done { color: #1D9E75; }
+.wizard-phase-dot { width: 20px; height: 20px; border-radius: 50%; background: #eee; color: #aaa; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.wizard-phase.active .wizard-phase-dot { background: #534AB7; color: #fff; }
+.wizard-phase.done .wizard-phase-dot { background: #1D9E75; color: #fff; }
+.wizard-phase-sep { width: 24px; height: 1px; background: #e0e0da; margin: 0 6px; flex-shrink: 0; }
+
+/* — Wizard step content ------------------------------------------- */
+.wizard-body { padding: 28px 32px 24px; min-height: 260px; }
+.wizard-body.hidden { display: none; }
+.wiz-category { font-size: 11px; font-weight: 600; color: #534AB7; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+.wiz-q { font-size: 17px; font-weight: 500; color: #1a1a2e; margin-bottom: 6px; line-height: 1.35; }
+.wiz-sub { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 20px; max-width: 520px; }
+
+/* — Choice cards (wizard) ----------------------------------------- */
+.wiz-choices { display: flex; gap: 14px; }
+.wiz-choice { flex: 1; border: 1.5px solid #e0e0da; border-radius: 10px; padding: 16px; cursor: pointer; transition: border-color 0.12s, background 0.12s; }
+.wiz-choice:hover { border-color: #AFA9EC; }
+.wiz-choice.selected { border-color: #534AB7; background: #FAFAFE; }
+.wiz-choice-top { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.wiz-rdot { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid #ccc; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.wiz-choice.selected .wiz-rdot { border-color: #534AB7; }
+.wiz-rinner { width: 8px; height: 8px; border-radius: 50%; background: #534AB7; display: none; }
+.wiz-choice.selected .wiz-rinner { display: block; }
+.wiz-choice-label { font-size: 13px; font-weight: 500; color: #1a1a2e; }
+.wiz-choice-desc { font-size: 12px; color: #666; line-height: 1.5; }
+
+/* — Wizard ticket preview cards ----------------------------------- */
+.wiz-preview-choices { display: flex; gap: 14px; align-items: stretch; }
+.wiz-preview-card { flex: 1; border: 1.5px solid #e0e0da; border-radius: 10px; overflow: hidden; cursor: pointer; transition: border-color 0.12s; }
+.wiz-preview-card:hover { border-color: #AFA9EC; }
+.wiz-preview-card.selected { border-color: #534AB7; }
+.wiz-preview-card.selected .wiz-rdot { border-color: #534AB7; }
+.wiz-preview-card.selected .wiz-rinner { display: block; }
+.wiz-preview-card { display: flex; flex-direction: column; }
+.wiz-preview-card-top { background: #fafaf8; padding: 12px; font-family: 'Courier New', monospace; font-size: 10px; line-height: 1.6; color: #333; min-height: 80px; white-space: pre; border-bottom: 0.5px solid #e0e0da; flex: 1; }
+.wiz-preview-card.selected .wiz-preview-card-top { background: #FAFAFE; }
+.wiz-preview-card-bottom { padding: 10px 14px; display: flex; align-items: center; gap: 8px; background: #fff; flex-shrink: 0; }
+.wiz-preview-card.selected .wiz-preview-card-bottom { background: #FAFAFE; }
+.wiz-preview-card-name { font-size: 12px; font-weight: 500; color: #1a1a2e; }
+
+/* — Wizard checkbox list ------------------------------------------ */
+.wiz-checks { display: flex; flex-direction: column; gap: 10px; }
+.wiz-check { display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; padding: 10px 14px; border: 1px solid #e0e0da; border-radius: 8px; transition: background 0.1s, border-color 0.1s; }
+.wiz-check:hover { background: #fafaf8; }
+.wiz-check.checked { background: #FAFAFE; border-color: #d0c8e8; }
+.wiz-cbox { width: 18px; height: 18px; border: 1.5px solid #ccc; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.1s; }
+.wiz-check.checked .wiz-cbox { background: #534AB7; border-color: #534AB7; }
+.wiz-cbox svg { display: none; }
+.wiz-check.checked .wiz-cbox svg { display: block; }
+.wiz-check-text { flex: 1; }
+.wiz-check-label { font-size: 13px; color: #1a1a2e; font-weight: 500; }
+.wiz-check-desc { font-size: 12px; color: #666; margin-top: 1px; }
+
+/* — Wizard footer ------------------------------------------------- */
+.wizard-footer { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px; border-top: 0.5px solid #e0e0da; background: #fafaf8; border-radius: 0 0 14px 14px; }
+.wizard-step-label { font-size: 12px; color: #aaa; }
+
+/* — Wizard intro / done screens ----------------------------------- */
+.wiz-intro { text-align: center; padding: 16px 0 8px; }
+.wiz-intro-icon { width: 56px; height: 56px; border-radius: 14px; background: #EEEDFE; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+.wiz-intro h2 { font-size: 18px; font-weight: 500; color: #1a1a2e; margin-bottom: 6px; }
+.wiz-intro p { font-size: 13px; color: #666; line-height: 1.6; max-width: 400px; margin: 0 auto; }
+.wiz-checklist { text-align: left; margin: 20px auto 0; max-width: 340px; }
+.wiz-checklist-item { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 13px; color: #444; }
+.wiz-checklist-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.wiz-checklist-dot.purple { background: #AFA9EC; }
+
+.wiz-done { text-align: center; padding: 20px 0 8px; }
+.wiz-done-icon { width: 56px; height: 56px; border-radius: 50%; background: #E8F8F1; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+.wiz-done h2 { font-size: 18px; font-weight: 500; color: #1a1a2e; margin-bottom: 6px; }
+.wiz-done p { font-size: 13px; color: #666; line-height: 1.6; max-width: 400px; margin: 0 auto 20px; }
+.wiz-summary { text-align: left; max-width: 400px; margin: 0 auto; }
+.wiz-summary-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 0.5px solid #f0f0ec; font-size: 13px; }
+.wiz-summary-row:last-child { border-bottom: none; }
+.wiz-summary-key { color: #888; }
+.wiz-summary-val { color: #1a1a2e; font-weight: 500; }
+
+/* — Buttons -------------------------------------------------------- */
+.btn-primary { background: #534AB7; color: #fff; border: none; border-radius: 6px; padding: 8px 18px; font-size: 13px; font-weight: 500; cursor: pointer; font-family: inherit; }
+.btn-primary:hover { background: #3C3489; }
+.btn-primary:disabled { background: #ccc; cursor: default; }
+.btn-secondary { background: transparent; color: #666; border: 0.5px solid #d0d0c8; border-radius: 6px; padding: 8px 14px; font-size: 13px; cursor: pointer; font-family: inherit; }
+.btn-secondary:hover { background: #f0f0ec; }
+.btn-ghost { background: transparent; border: none; color: #534AB7; font-size: 13px; font-weight: 500; cursor: pointer; padding: 4px 0; font-family: inherit; }
+.btn-ghost:hover { text-decoration: underline; }
+.btn-skip { background: transparent; border: none; color: #aaa; font-size: 12px; cursor: pointer; font-family: inherit; }
+.btn-skip:hover { color: #666; }
+
+/* — Sections ------------------------------------------------------- */
+.section { margin-bottom: 28px; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.section-title { font-size: 14px; font-weight: 500; color: #1a1a2e; }
+.section-link { font-size: 12px; color: #534AB7; cursor: pointer; font-weight: 500; text-decoration: none; }
+.section-link:hover { text-decoration: underline; }
+
+/* — Summary row ---------------------------------------------------- */
+.summary-row { background: #fff; border: 0.5px solid #e0e0da; border-radius: 10px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.summary-left { flex: 1; }
+.summary-label { font-size: 13px; font-weight: 500; color: #1a1a2e; margin-bottom: 2px; }
+.summary-value { font-size: 12px; color: #666; }
+.summary-value .warn { color: #854F0B; background: #FEF3E2; padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 500; margin-left: 8px; }
+
+/* — Chips ---------------------------------------------------------- */
+.chip-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-block; background: #fff; border: 0.5px solid #e0e0da; border-radius: 99px; padding: 5px 14px; font-size: 12px; color: #1a1a2e; }
+
+/* — Printer card --------------------------------------------------- */
+.printer-card { background: #fff; border: 0.5px solid #e0e0da; border-radius: 10px; padding: 18px 20px; margin-bottom: 12px; }
+.printer-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.printer-name { font-size: 14px; font-weight: 500; color: #1a1a2e; }
+.status-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; }
+.status-badge.connected { background: #E8F8F1; color: #1D9E75; }
+.status-badge.connected::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #1D9E75; }
+.status-badge.offline { background: #FEF3E2; color: #854F0B; }
+.status-badge.offline::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #854F0B; }
+.printer-ip { font-size: 11px; color: #aaa; margin-left: auto; }
+.printer-detail { font-size: 12px; color: #666; line-height: 1.6; margin-bottom: 4px; }
+.printer-detail strong { color: #1a1a2e; font-weight: 500; }
+.printer-detail .muted { color: #aaa; }
+
+/* — Card picker (Content tab) ------------------------------------- */
+.card-picker-label { font-size: 13px; font-weight: 500; color: #1a1a2e; margin-bottom: 10px; }
+.card-picker { display: flex; gap: 14px; margin-bottom: 20px; }
+.picker-card { flex: 1; border: 1.5px solid #e0e0da; border-radius: 10px; overflow: hidden; cursor: pointer; transition: border-color 0.12s, background 0.12s; }
+.picker-card:hover { border-color: #AFA9EC; }
+.picker-card.selected { border-color: #534AB7; }
+.picker-card-preview { background: #fafaf8; padding: 14px; font-family: 'Courier New', monospace; font-size: 10px; line-height: 1.6; color: #333; min-height: 100px; border-bottom: 0.5px solid #e0e0da; white-space: pre; }
+.picker-card.selected .picker-card-preview { background: #FAFAFE; }
+.picker-card-meta { padding: 10px 14px; display: flex; align-items: center; gap: 8px; background: #fff; }
+.picker-card.selected .picker-card-meta { background: #FAFAFE; }
+.picker-card-name { font-size: 12px; font-weight: 500; color: #1a1a2e; }
+
+/* — Checkbox group ------------------------------------------------- */
+.checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+.checkbox-item { display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+.cbox { width: 18px; height: 18px; border: 1.5px solid #ccc; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.1s; }
+.checkbox-item.checked .cbox { background: #534AB7; border-color: #534AB7; }
+.cbox svg { display: none; }
+.checkbox-item.checked .cbox svg { display: block; }
+.checkbox-item .cb-label { font-size: 13px; color: #1a1a2e; }
+.checkbox-item .cb-default { font-size: 11px; color: #aaa; margin-left: 4px; }
+
+/* — Appearance: two-column layout ---------------------------------- */
+.appearance-layout { display: grid; grid-template-columns: 1fr 280px; gap: 28px; align-items: start; }
+.controls-col { }
+.preview-col { position: sticky; top: 0; }
+
+/* — Dropdown / select --------------------------------------------- */
+.form-group { margin-bottom: 16px; }
+.form-label { font-size: 12px; font-weight: 500; color: #666; margin-bottom: 6px; display: block; }
+.form-select { width: 100%; padding: 8px 12px; border: 0.5px solid #d0d0c8; border-radius: 6px; font-size: 13px; color: #1a1a2e; background: #fff; appearance: auto; font-family: inherit; cursor: pointer; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+/* — Radio group ---------------------------------------------------- */
+.radio-group { display: flex; flex-direction: column; gap: 10px; }
+.radio-item { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; user-select: none; padding: 8px 12px; border: 1px solid transparent; border-radius: 8px; transition: background 0.1s; }
+.radio-item:hover { background: #fafaf8; }
+.radio-item.selected { background: #FAFAFE; border-color: #EEEDFE; }
+.radio-item .r-dot { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid #ccc; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.radio-item.selected .r-dot { border-color: #534AB7; }
+.radio-item .r-inner { width: 8px; height: 8px; border-radius: 50%; background: #534AB7; display: none; }
+.radio-item.selected .r-inner { display: block; }
+.radio-item .r-label { font-size: 13px; color: #1a1a2e; font-weight: 500; }
+.radio-item .r-desc { font-size: 12px; color: #666; margin-top: 2px; }
+
+/* — Range slider --------------------------------------------------- */
+.range-wrap { display: flex; align-items: center; gap: 12px; }
+.range-wrap input[type=range] { flex: 1; accent-color: #534AB7; }
+.range-val { font-size: 13px; color: #1a1a2e; font-weight: 500; min-width: 42px; text-align: right; }
+
+/* — Ticket preview ------------------------------------------------- */
+.ticket-preview { background: #fff; border: 1px solid #e0e0da; border-radius: 10px; padding: 6px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.ticket { background: #fff; padding: 20px 16px; font-family: 'Courier New', monospace; color: #1a1a2e; line-height: 1.5; }
+.ticket-table { font-weight: 700; margin-bottom: 2px; }
+.ticket-meta { font-size: 10px; color: #666; margin-bottom: 8px; }
+.ticket-divider { border: none; border-top: 1px dashed #ccc; margin: 8px 0; }
+.ticket-cat { font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 8px; margin-bottom: 4px; }
+.ticket-item { display: flex; justify-content: space-between; }
+.ticket-comment { color: #666; font-style: italic; padding-left: 8px; }
+.ticket-served { color: #888; font-size: 0.9em; padding-left: 8px; }
+.ticket-footer { font-size: 10px; color: #aaa; text-align: center; margin-top: 12px; }
+
+/* — Info badge (cross-link) --------------------------------------- */
+.info-badge { display: inline-flex; align-items: center; gap: 4px; background: #E8F0FE; color: #3366CC; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; }
+
+/* — Context note --------------------------------------------------- */
+.context-note { background: #f7f6ff; border-left: 2px solid #AFA9EC; border-radius: 6px; padding: 10px 14px; font-size: 12px; color: #444; line-height: 1.55; margin-top: 12px; }
+.context-note strong { color: #3C3489; font-weight: 500; }
+
+/* — TODO markers (visible in prototype) --------------------------- */
+.todo-marker { display: inline-block; background: #FEF3E2; color: #854F0B; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin-left: 6px; vertical-align: middle; letter-spacing: 0.3px; }
+
+/* — Responsive ----------------------------------------------------- */
+@media (max-width: 680px) {
+  .appearance-layout { grid-template-columns: 1fr; }
+  .preview-col { position: static; }
+}
+
+/* — Animations ----------------------------------------------------- */
+.tab-pane { animation: fadeIn 0.15s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+.wizard-body { animation: fadeIn 0.15s ease; }
+
+/* — Hidden utility ------------------------------------------------- */
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="bo">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-logo">OPEN BACKOFFICE</div>
+    <div class="sidebar-item">
+      <svg viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" fill="rgba(255,255,255,0.4)"/><rect x="8" y="1" width="5" height="5" rx="1" fill="rgba(255,255,255,0.4)"/><rect x="1" y="8" width="5" height="5" rx="1" fill="rgba(255,255,255,0.4)"/><rect x="8" y="8" width="5" height="5" rx="1" fill="rgba(255,255,255,0.4)"/></svg>
+      <span>Dashboard</span>
+    </div>
+    <div class="sidebar-item">
+      <svg viewBox="0 0 14 14" fill="none"><path d="M2 3.5h10M2 7h10M2 10.5h6" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <span>Articles</span>
+    </div>
+    <div class="sidebar-item">
+      <svg viewBox="0 0 14 14" fill="none"><path d="M1 10l3-4 3 2.5 3-5 3 3.5" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Reports</span>
+    </div>
+    <div class="sidebar-item">
+      <svg viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="2" stroke="rgba(255,255,255,0.4)" stroke-width="1.3"/><path d="M5 5h4M5 7h4M5 9h2" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-linecap="round"/></svg>
+      <span>Company</span>
+    </div>
+    <div class="sidebar-item active">
+      <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="#fff" stroke-width="1.3"/><path d="M7 4.5v3l2 1.5" stroke="#fff" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <span>Settings</span>
+    </div>
+    <div style="padding: 4px 16px 4px 38px;">
+      <div class="sidebar-item" style="padding-left:0; font-size:12px; color:rgba(255,255,255,0.35);">Registers</div>
+      <div class="sidebar-item" style="padding-left:0; font-size:12px; color:rgba(255,255,255,0.35);">Payment</div>
+      <div class="sidebar-item active" style="padding-left:0; font-size:12px; color:#fff; background:none;">Kitchen tickets</div>
+      <div class="sidebar-item" style="padding-left:0; font-size:12px; color:rgba(255,255,255,0.35);">Receipt</div>
+      <div class="sidebar-item" style="padding-left:0; font-size:12px; color:rgba(255,255,255,0.35);">Table management</div>
+    </div>
+    <div class="sidebar-spacer"></div>
+    <div class="sidebar-item">
+      <svg viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="rgba(255,255,255,0.4)" stroke-width="1.3"/><path d="M7 5v2.5M7 9.5v0" stroke="rgba(255,255,255,0.4)" stroke-width="1.3" stroke-linecap="round"/></svg>
+      <span>Help center</span>
+    </div>
+  </div>
+
+  <!-- Main area -->
+  <div class="main-wrap">
+    <div class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-breadcrumb">Settings &rsaquo; <span>Kitchen tickets</span></div>
+      </div>
+      <div class="topbar-right">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M14 6.5a5 5 0 10-10 0c0 2.5-1.5 4.5-1.5 4.5h13S14 9 14 6.5z" stroke="#888" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.5 14a1.5 1.5 0 003 0" stroke="#888" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <div class="topbar-avatar">MS</div>
+      </div>
+    </div>
+
+    <div class="main">
+      <div class="page-header">
+        <div class="page-title">Kitchen tickets</div>
+        <div class="page-desc">Manage how kitchen tickets are printed, what they contain, and how they look.</div>
+      </div>
+
+      <!-- ============================================================
+           SETUP GUIDE BANNER  (visible when wizard is not active)
+           ============================================================ -->
+      <div class="setup-banner" id="setup-banner">
+        <div class="setup-banner-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3v5.5l3 2.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="10" r="7" stroke="#fff" stroke-width="1.5"/></svg>
+        </div>
+        <div class="setup-banner-text">
+          <div class="setup-banner-title">New here? Set up kitchen tickets in 2 minutes</div>
+          <div class="setup-banner-sub">A guided walkthrough will ask a few questions about your restaurant and configure the right settings for you.</div>
+        </div>
+        <button class="btn-primary" onclick="startWizard()">Start setup guide</button>
+      </div>
+
+      <!-- ============================================================
+           UNIFIED SETUP WIZARD
+           ============================================================ -->
+      <div class="wizard-overlay" id="wizard">
+        <div class="wizard-card">
+          <div class="wizard-progress"><div class="wizard-progress-bar" id="wiz-progress-bar" style="width:0%"></div></div>
+
+          <div class="wizard-phase-bar" id="wiz-phases">
+            <div class="wizard-phase active" data-phase="printing"><span class="wizard-phase-dot">1</span> Printing</div>
+            <div class="wizard-phase-sep"></div>
+            <div class="wizard-phase" data-phase="content"><span class="wizard-phase-dot">2</span> Content</div>
+            <div class="wizard-phase-sep"></div>
+            <div class="wizard-phase" data-phase="appearance"><span class="wizard-phase-dot">3</span> Appearance</div>
+          </div>
+
+          <!-- STEP 0: Welcome -->
+          <div class="wizard-body" id="wiz-step-welcome">
+            <div class="wiz-intro">
+              <div class="wiz-intro-icon">
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="2" width="20" height="24" rx="3" stroke="#534AB7" stroke-width="1.5"/><path d="M9 8h10M9 12h10M9 16h6" stroke="#534AB7" stroke-width="1.3" stroke-linecap="round"/><path d="M9 21h4" stroke="#AFA9EC" stroke-width="1.3" stroke-linecap="round"/></svg>
+              </div>
+              <h2>Let's set up your kitchen tickets</h2>
+              <p>We'll ask a few questions about how your restaurant works and configure the settings to match. Takes about 2 minutes.</p>
+              <div class="wiz-checklist">
+                <div class="wiz-checklist-item"><span class="wiz-checklist-dot purple"></span> Where tickets print (printers &amp; routing)</div>
+                <div class="wiz-checklist-item"><span class="wiz-checklist-dot purple"></span> What goes on the ticket (servings &amp; corrections)</div>
+                <div class="wiz-checklist-item"><span class="wiz-checklist-dot purple"></span> How the ticket looks (text size &amp; layout)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 1: Kitchen stations -->
+          <div class="wizard-body hidden" id="wiz-step-stations">
+            <div class="wiz-category">Printing</div>
+            <div class="wiz-q">Do you have multiple kitchen areas or stations?</div>
+            <div class="wiz-sub">For example, a hot kitchen, a cold kitchen, and a bar. If so, you can separate the tickets by station.</div>
+            <div class="wiz-preview-choices" data-wiz-group="stations" style="gap:12px">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="yes-printers">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; gap:6px; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>HOT KITCHEN</b>
+─────────────────
+  Ribeye steak  x2
+  Fries         x2</div>
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>BAR</b>
+─────────────────
+  Margarita     x2
+  Beer          x1</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">A printer per station</div>
+                </div>
+              </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="yes-shared">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>Table 12</b>        18:42
+─────────────────
+  Ribeye steak  x2
+  Fries         x2
+<span style="color:#888">✂ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄</span>
+  Margarita     x2
+  Beer          x1</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Shared printer, cut per category</div>
+                </div>
+              </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="no">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>Table 12</b>        18:42
+─────────────────
+  Ribeye steak  x2
+  Fries         x2
+  Margarita     x2
+  Beer          x1</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">One ticket with everything</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2: Cross-station awareness -->
+          <div class="wizard-body hidden" id="wiz-step-coordination">
+            <div class="wiz-category">Printing</div>
+            <div class="wiz-q">Do dishes from different stations need to arrive at the table together?</div>
+            <div class="wiz-sub">When they do, each station's ticket can reference what the other is preparing — so they can time their work. Choose how much detail to show.</div>
+            <div class="wiz-preview-choices" data-wiz-group="coordination" style="gap:12px">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="category">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>HOT KITCHEN</b>
+─────────────────
+  Ribeye steak  x2
+  <i>– medium rare</i>
+  Pasta bolo.   x1
+  <span style="color:#854F0B">Served w/ Pizza</span></div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Category only</div>
+                </div>
+              </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="category-items">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>HOT KITCHEN</b>
+─────────────────
+  Ribeye steak  x2
+  <i>– medium rare</i>
+  Pasta bolo.   x1
+  <span style="color:#854F0B">Served w/ Pizza</span>
+  <span style="color:#854F0B">Pizza Salciccia x1</span></div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Category + items</div>
+                </div>
+              </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="off">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>HOT KITCHEN</b>
+─────────────────
+  Ribeye steak  x2
+  <i>– medium rare</i>
+  Pasta bolo.   x1</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Off — own items only</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4a: Servings — binary gate -->
+          <div class="wizard-body hidden" id="wiz-step-servings">
+            <div class="wiz-category">Content</div>
+            <div class="wiz-q">Do you fire dishes in courses?</div>
+            <div class="wiz-sub">Some restaurants send starters first, then mains. Others fire the whole order at once — all items go to the kitchen the moment the order is placed.</div>
+            <div class="wiz-preview-choices" data-wiz-group="servings">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="courses">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>Table 12</b>        18:42
+─────────────────
+SERVING 1
+  Bruschetta    x2
+  Caesar salad  x1
+─ ─ ─ ─ ─ ─ ─ ─ ─
+SERVING 2
+  Ribeye steak  x2
+  Grilled salmon x1</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Yes, in courses</div>
+                </div>
+              </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="all-at-once">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>Table 12</b>        18:42
+─────────────────
+  Bruschetta    x2
+  Caesar salad  x1
+  Ribeye steak  x2
+  Grilled salmon x1</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Everything at once</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4b: Servings detail — conditional on courses -->
+          <div class="wizard-body hidden" id="wiz-step-servings-detail">
+            <div class="wiz-category">Content</div>
+            <div class="wiz-q">Should the kitchen also see what's coming next?</div>
+            <div class="wiz-sub">When a serving is fired, the ticket can include a preview of the next course so the kitchen can start prepping ahead.</div>
+            <div class="wiz-preview-choices" data-wiz-group="servings-detail">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="current">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>Table 12</b>        18:42
+─────────────────
+SERVING 1
+  Bruschetta    x2
+  Caesar salad  x1</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Current serving only</div>
+                </div>
+              </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="upcoming">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>Table 12</b>        18:42
+─────────────────
+SERVING 1
+  Bruschetta    x2
+  Caesar salad  x1
+<span style="color:#888">┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄</span>
+<span style="color:#888">SERVING 2 (upcoming)</span>
+<span style="color:#888">  Ribeye steak  x2</span>
+<span style="color:#888">  Grilled salmon x1</span></div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Current + upcoming</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 6: Follow-up style (conditional: servings=yes) -->
+          <div class="wizard-body hidden" id="wiz-step-followup">
+            <div class="wiz-category">Content</div>
+            <div class="wiz-q">How should follow-up tickets look?</div>
+            <div class="wiz-sub">When the next serving is fired, should the kitchen get the full item list or just a heads-up?</div>
+            <div class="wiz-preview-choices" data-wiz-group="followup">
+              <div class="wiz-preview-card selected" onclick="wizSelectPreview(this)" data-value="full">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>Table 12</b>        18:55
+─────────────────
+SERVING 2 (forward)
+  Ribeye steak  x2
+  Grilled salmon x1
+  Fries         x2</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Full ticket with items</div>
+                </div>
+              </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="reminder">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>Table 12</b>        18:55
+─────────────────
+
+  ► Serving 2 forward
+
+</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Reminder only</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 7: Corrections -->
+          <div class="wizard-body hidden" id="wiz-step-corrections">
+            <div class="wiz-category">Content</div>
+            <div class="wiz-q">What should a correction ticket contain?</div>
+            <div class="wiz-sub">When an order is changed after it's been sent to the kitchen, a correction ticket is printed. You choose how much context the kitchen gets.</div>
+            <div class="wiz-preview-choices" data-wiz-group="corrections">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="whole-order">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:9px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>##UPDATED 18:48##</b>
+<b>Table 12</b>
+─────────────────
+Serving 1
+  Bruschetta    x2
+  Caesar salad  x1
+Serving 2
+  Ribeye steak  x2
+  <b style="color:#c0392b">##DELETED##</b>
+  <span style="color:#c0392b">Grilled salmon x1</span>
+  <b style="color:#1D9E75">##ADDED##</b>
+  <span style="color:#1D9E75">Pasta bolo.    x1</span>
+Serving 3
+  Tiramisu      x3</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Print whole order</div>
+                </div>
+              </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="corrected-only">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:9px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>##UPDATED 18:48##</b>
+<b>Table 12</b>
+─────────────────
+Serving 2
+  <b style="color:#c0392b">##DELETED##</b>
+  <span style="color:#c0392b">Grilled salmon x1</span>
+  <b style="color:#1D9E75">##ADDED##</b>
+  <span style="color:#1D9E75">Pasta bolo.    x1</span></div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Corrected articles only</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 8: Appearance priority -->
+          <div class="wizard-body hidden" id="wiz-step-look">
+            <div class="wiz-category">Appearance</div>
+            <div class="wiz-q">What matters most for your kitchen tickets?</div>
+            <div class="wiz-sub">This sets sensible defaults for text sizes and what's shown. You can fine-tune everything afterwards.</div>
+            <div class="wiz-preview-choices" data-wiz-group="look">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="readability">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:11px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b style="font-size:15px">Table 12</b>
+<span style="font-size:9px;color:#888">18:42 · Emma</span>
+─────────────────
+<b style="font-size:9px">STARTERS</b>
+<span style="font-size:13px">Bruschetta    x2</span>
+<span style="font-size:13px">Caesar salad  x1</span>
+─────────────────
+<b style="font-size:9px">MAINS</b>
+<span style="font-size:13px">Ribeye steak  x2</span></div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Readability at a glance</div>
+                </div>
+              </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="detail">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>Table 12</b>
+<span style="font-size:9px;color:#888">18:42 · Emma</span>
+─────────────────
+<b style="font-size:8px">STARTERS</b>
+Bruschetta    x2  €12
+<i style="color:#666">– extra lemon</i>
+Caesar salad  x1   €9
+─────────────────
+<b style="font-size:8px">MAINS</b>
+Ribeye steak  x2  €28
+<i style="color:#666">– medium rare</i></div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Maximum detail</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 9: Comments -->
+          <div class="wizard-body hidden" id="wiz-step-comments">
+            <div class="wiz-category">Appearance</div>
+            <div class="wiz-q">Does your kitchen need to see special requests?</div>
+            <div class="wiz-sub">Preparation notes like "medium rare", "no onions", or "allergy: nuts" are printed below each item on the ticket.</div>
+            <div class="wiz-preview-choices" data-wiz-group="comments">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="yes">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>Table 12</b>        18:42
+─────────────────
+<b style="font-size:8px">MAINS</b>
+Ribeye steak     x2
+<i style="color:#666">– medium rare</i>
+<i style="color:#666">– no pepper sauce</i>
+Grilled salmon   x1
+<i style="color:#666">– allergy: nuts</i>
+Caesar salad     x1
+<i style="color:#666">– extra lemon</i></div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Show comments</div>
+                </div>
+              </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="no">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>Table 12</b>        18:42
+─────────────────
+<b style="font-size:8px">MAINS</b>
+Ribeye steak     x2
+Grilled salmon   x1
+Caesar salad     x1</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">No comments</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 10: Done -->
+          <div class="wizard-body hidden" id="wiz-step-done">
+            <div class="wiz-done">
+              <div class="wiz-done-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="#1D9E75" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <h2>You're all set!</h2>
+              <p>Your kitchen tickets are configured. Here's a summary of your choices. You can fine-tune any setting on the tabs below.</p>
+              <div class="wiz-summary" id="wiz-summary">
+                <!-- Filled by JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="wizard-footer">
+            <button class="btn-skip" id="wiz-skip-btn" onclick="exitWizard()">Skip guide</button>
+            <span class="wizard-step-label" id="wiz-step-label"></span>
+            <div style="display:flex; gap:8px;">
+              <button class="btn-secondary" id="wiz-back-btn" onclick="wizNav(-1)">Back</button>
+              <button class="btn-primary" id="wiz-next-btn" onclick="wizNav(1)">Get started</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           TAB CONTENT (visible when wizard is not active)
+           ============================================================ -->
+      <div id="tabs-area">
+        <div class="hub-tabs">
+          <div class="hub-tab active" data-tab="printing" onclick="switchTab('printing')">Printing</div>
+          <div class="hub-tab" data-tab="content" onclick="switchTab('content')">Content</div>
+          <div class="hub-tab" data-tab="appearance" onclick="switchTab('appearance')">Appearance</div>
+          <!-- TODO: Tab label naming — confirm "Printing / Content / Appearance" vs question-form alternatives -->
+        </div>
+
+        <!-- TAB 1: PRINTING -->
+        <div class="tab-pane active" id="pane-printing">
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Articles on tickets</div>
+              <a class="section-link" href="#">Manage articles &rsaquo;</a>
+            </div>
+            <div class="summary-row">
+              <div class="summary-left">
+                <div class="summary-label">142 of 158 articles print to kitchen</div>
+                <div class="summary-value">Based on the "Print to kitchen" flag on each article. <span class="warn">16 missing category</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Categories</div>
+              <a class="section-link" href="#">Manage categories &rsaquo;</a>
+            </div>
+            <div class="chip-group">
+              <div class="chip">Starters</div><div class="chip">Mains</div><div class="chip">Desserts</div><div class="chip">Sides</div><div class="chip">Beer &amp; wine</div><div class="chip">Cocktails</div><div class="chip">Non-alcoholic</div>
+            </div>
+          </div>
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Kitchen printers</div>
+              <button class="btn-primary" style="font-size:12px; padding:6px 14px;">+ Add printer</button>
+            </div>
+            <div class="printer-card">
+              <div class="printer-top"><div class="printer-name">Hot kitchen</div><div class="status-badge connected">Connected</div><div class="printer-ip">192.168.1.40</div></div>
+              <div class="printer-detail"><strong>Prints:</strong> Starters, Mains, Desserts, Sides</div>
+              <div class="printer-detail"><strong>Served with:</strong> Starters, Desserts <span class="muted">(from Cold kitchen)</span></div>
+              <div class="printer-detail"><strong>From registers:</strong> Register 1, Register 2 <span class="muted">(not Bar register)</span></div>
+            </div>
+            <div class="printer-card">
+              <div class="printer-top"><div class="printer-name">Bar printer</div><div class="status-badge connected">Connected</div><div class="printer-ip">192.168.1.41</div></div>
+              <div class="printer-detail"><strong>Prints:</strong> Beer &amp; wine, Cocktails, Non-alcoholic</div>
+              <div class="printer-detail"><strong>Served with:</strong> <span class="muted">None configured</span></div>
+              <div class="printer-detail"><strong>From registers:</strong> All registers</div>
+            </div>
+            <div class="printer-card">
+              <div class="printer-top"><div class="printer-name">Cold kitchen</div><div class="status-badge offline">Offline</div><div class="printer-ip">192.168.1.42</div></div>
+              <div class="printer-detail"><strong>Prints:</strong> Starters, Desserts</div>
+              <div class="printer-detail"><strong>Served with:</strong> Mains, Sides <span class="muted">(from Hot kitchen)</span></div>
+              <div class="printer-detail"><strong>From registers:</strong> Register 1 <span class="muted">(not Bar register)</span></div>
+            </div>
+          </div>
+          <div class="section">
+            <div class="section-header"><div class="section-title">Coordination</div></div>
+            <div class="summary-row">
+              <div class="summary-left">
+                <div class="summary-label">Served with</div>
+                <div class="summary-value">On &middot; Shows reference item without including it</div>
+              </div>
+              <a class="section-link" href="#" onclick="switchTab('appearance'); return false;">Configure on Appearance tab &rsaquo;</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: CONTENT -->
+        <div class="tab-pane" id="pane-content">
+          <div class="section">
+            <div class="section-title" style="margin-bottom:16px">Table servings</div>
+            <div class="card-picker-label">What gets sent to the kitchen?</div>
+            <div class="card-picker">
+              <div class="picker-card selected" onclick="selectPicker(this)">
+                <div class="picker-card-preview">TABLE 12    18:42
+─────────────────
+SERVING 1
+  Bruschetta    x2
+  Caesar salad  x1</div>
+                <div class="picker-card-meta"><div class="radio-dot"><div class="radio-inner"></div></div><div class="picker-card-name">Current serving only</div></div>
+              </div>
+              <div class="picker-card" onclick="selectPicker(this)">
+                <div class="picker-card-preview">TABLE 12    18:42
+─────────────────
+SERVING 1
+  Bruschetta    x2
+  Caesar salad  x1
+┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+SERVING 2 (upcoming)
+  Ribeye steak  x2
+  Grilled salmon x1</div>
+                <div class="picker-card-meta"><div class="radio-dot"><div class="radio-inner"></div></div><div class="picker-card-name">Current + upcoming servings</div></div>
+              </div>
+            </div>
+            <div class="card-picker-label">How are follow-up tickets shown?</div>
+            <div class="card-picker">
+              <div class="picker-card selected" onclick="selectPicker(this)">
+                <div class="picker-card-preview">TABLE 12    18:55
+─────────────────
+SERVING 2 forward
+  Ribeye steak  x2
+  Grilled salmon x1
+  Fries         x2</div>
+                <div class="picker-card-meta"><div class="radio-dot"><div class="radio-inner"></div></div><div class="picker-card-name">Full ticket with items</div></div>
+              </div>
+              <div class="picker-card" onclick="selectPicker(this)">
+                <div class="picker-card-preview">TABLE 12    18:55
+─────────────────
+
+  ► Serving 2 forward
+
+</div>
+                <div class="picker-card-meta"><div class="radio-dot"><div class="radio-inner"></div></div><div class="picker-card-name">Reminder only</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="section">
+            <div class="section-header"><div class="section-title">Correction tickets</div></div>
+            <div class="card-picker-label">Content of correction ticket</div>
+            <div class="card-picker" id="correction-picker">
+              <div class="picker-card" onclick="selectPicker(this)">
+                <div class="picker-card-preview">##UPDATED 18:48##
+TABLE 12
+─────────────────
+Serving 1
+  Bruschetta    x2
+  Caesar salad  x1
+Serving 2
+  Ribeye steak  x2
+  ##DELETED##
+  Grilled salmon x1
+  ##ADDED##
+  Pasta bolo.    x1</div>
+                <div class="picker-card-meta"><div class="radio-dot"><div class="radio-inner"></div></div><div class="picker-card-name">Print whole order</div></div>
+              </div>
+              <div class="picker-card selected" onclick="selectPicker(this)">
+                <div class="picker-card-preview">##UPDATED 18:48##
+TABLE 12
+─────────────────
+Serving 2
+  ##DELETED##
+  Grilled salmon x1
+  ##ADDED##
+  Pasta bolo.    x1</div>
+                <div class="picker-card-meta"><div class="radio-dot"><div class="radio-inner"></div></div><div class="picker-card-name">Corrected articles only</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: APPEARANCE -->
+        <div class="tab-pane" id="pane-appearance">
+          <div class="appearance-layout">
+            <div class="controls-col">
+              <div class="section">
+                <div class="section-title" style="margin-bottom:14px">Text size <span class="todo-marker">TODO: qualitative vs numeric?</span></div>
+                <div class="form-row">
+                  <div class="form-group"><label class="form-label">Table number</label><select class="form-select" id="size-table" onchange="updatePreview()"><option value="small">Small</option><option value="medium" selected>Medium</option><option value="large">Large</option></select></div>
+                  <div class="form-group"><label class="form-label">Item name</label><select class="form-select" id="size-item" onchange="updatePreview()"><option value="small">Small</option><option value="medium" selected>Medium</option><option value="large">Large</option></select></div>
+                  <div class="form-group"><label class="form-label">Comments</label><select class="form-select" id="size-comment" onchange="updatePreview()"><option value="small" selected>Small</option><option value="medium">Medium</option><option value="large">Large</option></select></div>
+                </div>
+              </div>
+              <div class="section">
+                <div class="section-title" style="margin-bottom:14px">Show on ticket</div>
+                <div class="checkbox-group">
+                  <div class="checkbox-item checked" id="chk-comments" onclick="toggleCheck(this); updatePreview()"><div class="cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="cb-label">Item comments</span><span class="cb-default">(default on)</span></div>
+                  <div class="checkbox-item" id="chk-price" onclick="toggleCheck(this); updatePreview()"><div class="cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="cb-label">Price</span><span class="cb-default">(default off)</span></div>
+                  <div class="checkbox-item checked" id="chk-group" onclick="toggleCheck(this); updatePreview()"><div class="cbox"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="cb-label">Group by category</span><span class="cb-default">(default on)</span></div>
+                </div>
+              </div>
+              <div class="section">
+                <div class="section-title" style="margin-bottom:4px">Served with <span class="info-badge" style="margin-left:8px">Affects printing</span></div>
+                <div style="font-size:12px; color:#666; margin-bottom:14px;">Controls how related items appear when "Served with" is used on an order.</div>
+                <div class="radio-group" id="served-with-group">
+                  <div class="radio-item" onclick="selectRadio(this, 'served-with-group'); updatePreview()" data-value="off"><div class="r-dot"><div class="r-inner"></div></div><div><div class="r-label">Off</div><div class="r-desc">No "served with" information on tickets.</div></div></div>
+                  <div class="radio-item selected" onclick="selectRadio(this, 'served-with-group'); updatePreview()" data-value="ref-only"><div class="r-dot"><div class="r-inner"></div></div><div><div class="r-label">Show served with category</div><div class="r-desc">The ticket shows the category name (e.g. "Served with Pizza") so the station knows to coordinate timing.</div></div></div>
+                  <div class="radio-item" onclick="selectRadio(this, 'served-with-group'); updatePreview()" data-value="ref-include"><div class="r-dot"><div class="r-inner"></div></div><div><div class="r-label">Show category and items</div><div class="r-desc">The ticket shows the category name and lists the specific items from the other station (e.g. "1 x Pizza Salciccia").</div></div></div>
+                </div>
+              </div>
+              <div class="section">
+                <div class="section-title" style="margin-bottom:14px">Margins</div>
+                <div class="form-group"><label class="form-label">Top margin</label><div class="range-wrap"><input type="range" min="0" max="40" value="10" id="margin-top" oninput="updateMarginLabel(); updatePreview()"><span class="range-val" id="margin-top-val">10 mm</span></div></div>
+              </div>
+            </div>
+            <div class="preview-col">
+              <div style="font-size:12px; font-weight:500; color:#888; margin-bottom:8px;">Live preview</div>
+              <div class="ticket-preview"><div id="ticket-render" class="ticket"></div></div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /tabs-area -->
+
+    </div><!-- /main -->
+  </div><!-- /main-wrap -->
+</div><!-- /bo -->
+
+<script>
+// ================================================================
+//  WIZARD ENGINE
+// ================================================================
+
+// All possible steps in order. Steps marked conditional are skipped
+// when their condition is not met.
+const ALL_STEPS = [
+  { id: 'welcome',          phase: null,         label: 'Welcome' },
+  { id: 'stations',         phase: 'printing',   label: 'Kitchen stations' },
+  { id: 'coordination',     phase: 'printing',   label: 'Station awareness', condition: () => wizAnswers.stations === 'yes-printers' || wizAnswers.stations === 'yes-shared' },
+  { id: 'servings',         phase: 'content',    label: 'Courses' },
+  { id: 'servings-detail',  phase: 'content',    label: 'Upcoming servings', condition: () => wizAnswers.servings === 'courses' },
+  { id: 'followup',         phase: 'content',    label: 'Follow-up style',  condition: () => wizAnswers.servings === 'courses' },
+  { id: 'corrections',      phase: 'content',    label: 'Corrections' },
+  { id: 'look',             phase: 'appearance',  label: 'Ticket priority' },
+  { id: 'comments',         phase: 'appearance',  label: 'Comments' },
+  { id: 'done',             phase: null,         label: 'Done' },
+];
+
+const wizAnswers = {};
+let wizCurrent = 0;
+
+function getActiveSteps() {
+  return ALL_STEPS.filter(s => !s.condition || s.condition());
+}
+
+function startWizard() {
+  wizCurrent = 0;
+  document.getElementById('wizard').classList.add('active');
+  document.getElementById('tabs-area').classList.add('hidden');
+  document.getElementById('setup-banner').classList.add('hidden');
+  renderWizStep();
+}
+
+function exitWizard() {
+  document.getElementById('wizard').classList.remove('active');
+  document.getElementById('tabs-area').classList.remove('hidden');
+  // Don't show banner again after using wizard
+  document.getElementById('setup-banner').classList.add('hidden');
+  applyWizardAnswers();
+  updatePreview();
+}
+
+function wizNav(dir) {
+  const steps = getActiveSteps();
+  const cur = steps[wizCurrent];
+
+  // On "Get started" from welcome, just advance
+  if (dir === 1 && cur.id === 'done') { exitWizard(); return; }
+
+  let next = wizCurrent + dir;
+  if (next < 0) return;
+
+  // Recalculate active steps (conditional steps may have changed)
+  const newSteps = getActiveSteps();
+  // Find the step we'd land on using the current ID
+  if (dir === 1 && next < newSteps.length) {
+    // Make sure we land on the right step after recompute
+    const curId = cur.id;
+    const curIdxNew = newSteps.findIndex(s => s.id === curId);
+    next = curIdxNew + 1;
+  }
+
+  if (next >= newSteps.length) next = newSteps.length - 1;
+  wizCurrent = next;
+  renderWizStep();
+}
+
+function renderWizStep() {
+  const steps = getActiveSteps();
+  const step = steps[wizCurrent];
+  const totalQ = steps.length - 2; // exclude welcome + done
+  const qIndex = wizCurrent - 1; // 0-based question index (welcome = -1)
+
+  // Show/hide bodies
+  document.querySelectorAll('.wizard-body').forEach(el => {
+    el.classList.toggle('hidden', el.id !== 'wiz-step-' + step.id);
+  });
+
+  // Progress bar
+  const pct = step.id === 'welcome' ? 0 : step.id === 'done' ? 100 : Math.round((qIndex / totalQ) * 100);
+  document.getElementById('wiz-progress-bar').style.width = pct + '%';
+
+  // Phase indicators
+  const phases = ['printing', 'content', 'appearance'];
+  const curPhaseIdx = step.phase ? phases.indexOf(step.phase) : (step.id === 'done' ? 3 : -1);
+  document.querySelectorAll('.wizard-phase').forEach(el => {
+    const ph = el.dataset.phase;
+    const idx = phases.indexOf(ph);
+    el.classList.toggle('active', idx === curPhaseIdx);
+    el.classList.toggle('done', idx < curPhaseIdx);
+  });
+
+  // Step label
+  const label = document.getElementById('wiz-step-label');
+  if (step.id === 'welcome' || step.id === 'done') {
+    label.textContent = '';
+  } else {
+    label.textContent = 'Question ' + (qIndex + 1) + ' of ' + totalQ;
+  }
+
+  // Buttons
+  const backBtn = document.getElementById('wiz-back-btn');
+  const nextBtn = document.getElementById('wiz-next-btn');
+  const skipBtn = document.getElementById('wiz-skip-btn');
+
+  backBtn.classList.toggle('hidden', wizCurrent === 0);
+  skipBtn.classList.toggle('hidden', step.id === 'done');
+
+  if (step.id === 'welcome') {
+    nextBtn.textContent = 'Get started';
+  } else if (step.id === 'done') {
+    nextBtn.textContent = 'Go to settings';
+  } else {
+    nextBtn.textContent = 'Next';
+  }
+
+  // Build summary on done step
+  if (step.id === 'done') buildSummary();
+
+  // Scroll to top of wizard
+  document.querySelector('.main').scrollTop = 0;
+}
+
+// — Wizard interactions ——————————————————————————————————————————
+
+function wizSelect(el) {
+  const group = el.closest('.wiz-choices').dataset.wizGroup;
+  el.closest('.wiz-choices').querySelectorAll('.wiz-choice').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  wizAnswers[group] = el.dataset.value;
+}
+
+function wizSelectPreview(el) {
+  const group = el.closest('.wiz-preview-choices').dataset.wizGroup;
+  el.closest('.wiz-preview-choices').querySelectorAll('.wiz-preview-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  wizAnswers[group] = el.dataset.value;
+}
+
+function wizToggleCheck(el) {
+  el.classList.toggle('checked');
+}
+
+// — Build summary ————————————————————————————————————————————————
+
+function buildSummary() {
+  const rows = [];
+  const yn = v => v === 'yes' ? 'Yes' : v === 'no' ? 'No' : v || '—';
+
+  const stationLabels = { 'yes-printers': 'Yes, separate printers', 'yes-shared': 'Yes, shared printer', 'no': 'No' };
+  rows.push(['Multiple stations', stationLabels[wizAnswers.stations] || '—']);
+  if (wizAnswers.stations === 'yes-printers' || wizAnswers.stations === 'yes-shared') {
+    const coordLabels = { 'category': 'Category only', 'category-items': 'Category + items', 'off': 'Off' };
+    rows.push(['Served with', coordLabels[wizAnswers.coordination] || '—']);
+  }
+  if (wizAnswers.servings === 'courses') {
+    const detailLabels = { 'current': 'Current serving only', 'upcoming': 'Current + upcoming' };
+    rows.push(['Courses', detailLabels[wizAnswers['servings-detail']] || 'Yes']);
+    rows.push(['Follow-up style', wizAnswers.followup === 'reminder' ? 'Reminder only' : 'Full ticket']);
+  } else {
+    rows.push(['Courses', 'Everything at once']);
+  }
+
+  const corrLabels = { 'whole-order': 'Print whole order', 'corrected-only': 'Corrected articles only' };
+  rows.push(['Correction tickets', corrLabels[wizAnswers.corrections] || '—']);
+
+  rows.push(['Ticket priority', wizAnswers.look === 'readability' ? 'Readability' : wizAnswers.look === 'detail' ? 'Detail' : '—']);
+  rows.push(['Item comments', yn(wizAnswers.comments)]);
+
+  const el = document.getElementById('wiz-summary');
+  el.innerHTML = rows.map(([k, v]) =>
+    '<div class="wiz-summary-row"><span class="wiz-summary-key">' + k + '</span><span class="wiz-summary-val">' + v + '</span></div>'
+  ).join('');
+}
+
+// — Apply wizard answers to tab controls ——————————————————————————
+
+function applyWizardAnswers() {
+  // Appearance preset
+  if (wizAnswers.look === 'readability') {
+    document.getElementById('size-table').value = 'large';
+    document.getElementById('size-item').value = 'large';
+    document.getElementById('size-comment').value = 'medium';
+    document.getElementById('chk-comments').classList.add('checked');
+    document.getElementById('chk-price').classList.remove('checked');
+    document.getElementById('chk-group').classList.add('checked');
+  } else if (wizAnswers.look === 'detail') {
+    document.getElementById('size-table').value = 'medium';
+    document.getElementById('size-item').value = 'medium';
+    document.getElementById('size-comment').value = 'small';
+    document.getElementById('chk-comments').classList.add('checked');
+    document.getElementById('chk-price').classList.add('checked');
+    document.getElementById('chk-group').classList.add('checked');
+  }
+
+  // Comments
+  if (wizAnswers.comments === 'no') {
+    document.getElementById('chk-comments').classList.remove('checked');
+  } else if (wizAnswers.comments === 'yes') {
+    document.getElementById('chk-comments').classList.add('checked');
+  }
+
+  // Served with (based on coordination answer)
+  if (wizAnswers.coordination) {
+    const swMap = { 'off': 'off', 'category': 'ref-only', 'category-items': 'ref-include' };
+    const swVal = swMap[wizAnswers.coordination] || 'off';
+    document.querySelectorAll('#served-with-group .radio-item').forEach(r => r.classList.remove('selected'));
+    document.querySelector('#served-with-group .radio-item[data-value="' + swVal + '"]').classList.add('selected');
+  }
+
+  // Content tab: serving picker
+  if (wizAnswers['servings-detail'] === 'upcoming') {
+    const pickers = document.querySelectorAll('#pane-content .card-picker')[0];
+    if (pickers) {
+      pickers.querySelectorAll('.picker-card').forEach((c, i) => c.classList.toggle('selected', i === 1));
+    }
+  }
+  if (wizAnswers.followup === 'reminder') {
+    const pickers = document.querySelectorAll('#pane-content .card-picker')[1];
+    if (pickers) {
+      pickers.querySelectorAll('.picker-card').forEach((c, i) => c.classList.toggle('selected', i === 1));
+    }
+  }
+
+  // Correction ticket content
+  if (wizAnswers.corrections) {
+    const corrPicker = document.getElementById('correction-picker');
+    if (corrPicker) {
+      corrPicker.querySelectorAll('.picker-card').forEach((c, i) => {
+        c.classList.toggle('selected', wizAnswers.corrections === 'whole-order' ? i === 0 : i === 1);
+      });
+    }
+  }
+}
+
+
+// ================================================================
+//  TAB & CONTROL LOGIC (unchanged from v1)
+// ================================================================
+
+function switchTab(name) {
+  document.querySelectorAll('.hub-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === 'pane-' + name));
+  if (name === 'appearance') updatePreview();
+}
+
+function selectPicker(el) {
+  el.closest('.card-picker').querySelectorAll('.picker-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function toggleCheck(el) { el.classList.toggle('checked'); }
+
+function selectRadio(el, groupId) {
+  document.getElementById(groupId).querySelectorAll('.radio-item').forEach(r => r.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function updateMarginLabel() {
+  document.getElementById('margin-top-val').textContent = document.getElementById('margin-top').value + ' mm';
+}
+
+// ── Live ticket preview ───────────────────────────────────────────
+const sizeMap = { small: 10, medium: 13, large: 17 };
+
+function updatePreview() {
+  const tableSize = sizeMap[document.getElementById('size-table').value] || 13;
+  const itemSize = sizeMap[document.getElementById('size-item').value] || 13;
+  const commentSize = sizeMap[document.getElementById('size-comment').value] || 10;
+  const showComments = document.getElementById('chk-comments').classList.contains('checked');
+  const showPrice = document.getElementById('chk-price').classList.contains('checked');
+  const showGroup = document.getElementById('chk-group').classList.contains('checked');
+  const marginTop = parseInt(document.getElementById('margin-top').value) || 0;
+  const servedWith = document.querySelector('#served-with-group .radio-item.selected');
+  const swVal = servedWith ? servedWith.dataset.value : 'ref-only';
+
+  let h = '';
+  h += '<div style="height:' + marginTop + 'px"></div>';
+  h += '<div class="ticket-table" style="font-size:' + tableSize + 'px">Table 12</div>';
+  h += '<div class="ticket-meta">18:42 &middot; Server: Emma</div>';
+  h += '<hr class="ticket-divider">';
+  if (showGroup) h += '<div class="ticket-cat" style="font-size:' + (itemSize - 2) + 'px">STARTERS</div>';
+  h += '<div class="ticket-item" style="font-size:' + itemSize + 'px"><span>Bruschetta x2</span>' + (showPrice ? '<span>&euro;12</span>' : '') + '</div>';
+  if (showComments) h += '<div class="ticket-comment" style="font-size:' + commentSize + 'px">&ndash; extra lemon</div>';
+  h += '<div class="ticket-item" style="font-size:' + itemSize + 'px"><span>Caesar salad x1</span>' + (showPrice ? '<span>&euro;9</span>' : '') + '</div>';
+  if (showGroup) { h += '<hr class="ticket-divider">'; h += '<div class="ticket-cat" style="font-size:' + (itemSize - 2) + 'px">MAINS</div>'; }
+  h += '<div class="ticket-item" style="font-size:' + itemSize + 'px"><span>Ribeye steak x2</span>' + (showPrice ? '<span>&euro;28</span>' : '') + '</div>';
+  if (showComments) h += '<div class="ticket-comment" style="font-size:' + commentSize + 'px">&ndash; medium rare, no pepper sauce</div>';
+  if (swVal === 'ref-only') h += '<div class="ticket-served" style="font-size:' + commentSize + 'px">&crarr; served with: Caesar salad</div>';
+  else if (swVal === 'ref-include') { h += '<div class="ticket-served" style="font-size:' + commentSize + 'px">&crarr; served with: Caesar salad (included)</div>'; h += '<div class="ticket-item" style="font-size:' + itemSize + 'px; color:#888"><span>&nbsp; Caesar salad x1</span></div>'; }
+  h += '<div class="ticket-item" style="font-size:' + itemSize + 'px"><span>Grilled salmon x1</span>' + (showPrice ? '<span>&euro;22</span>' : '') + '</div>';
+  h += '<hr class="ticket-divider">';
+  h += '<div class="ticket-footer">Kitchen ticket &middot; Printer: Hot kitchen</div>';
+  document.getElementById('ticket-render').innerHTML = h;
+}
+
+// ── Init ──────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  updatePreview();
+});
+</script>
+</body>
+</html>
