@@ -447,12 +447,48 @@ html, body { height: 100%; }
             </div>
           </div>
 
-          <!-- STEP 2: Cross-station awareness -->
+          <!-- STEP 2a: Cross-station awareness — binary gate -->
           <div class="wizard-body hidden" id="wiz-step-coordination">
             <div class="wiz-category">Printing</div>
             <div class="wiz-q">Do dishes from different stations need to arrive at the table together?</div>
-            <div class="wiz-sub">When they do, each station's ticket can reference what the other is preparing — so they can time their work. Choose how much detail to show.</div>
-            <div class="wiz-preview-choices" data-wiz-group="coordination" style="gap:12px">
+            <div class="wiz-sub">For example, a steak from the hot kitchen and a salad from the cold kitchen going to the same table at the same time.</div>
+            <div class="wiz-preview-choices" data-wiz-group="coordination">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="yes">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>HOT KITCHEN</b>
+─────────────────
+  Ribeye steak  x2
+  <i>– medium rare</i>
+  Pasta bolo.   x1
+  <span style="color:#854F0B">Served w/ Pizza</span></div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">Yes, they need to coordinate</div>
+                </div>
+              </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="no">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>HOT KITCHEN</b>
+─────────────────
+  Ribeye steak  x2
+  <i>– medium rare</i>
+  Pasta bolo.   x1</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div class="wiz-preview-card-name">No, each station works independently</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2b: Served-with detail — conditional on coordination = yes -->
+          <div class="wizard-body hidden" id="wiz-step-served-with">
+            <div class="wiz-category">Printing</div>
+            <div class="wiz-q">How much detail should the other station's reference show?</div>
+            <div class="wiz-sub">Each station's ticket will mention what the other is preparing. You choose whether to show just the category or the specific items too.</div>
+            <div class="wiz-preview-choices" data-wiz-group="served-with">
               <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="category">
                 <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
                   <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>HOT KITCHEN</b>
@@ -480,19 +516,6 @@ html, body { height: 100%; }
                 <div class="wiz-preview-card-bottom">
                   <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
                   <div class="wiz-preview-card-name">Category + items</div>
-                </div>
-              </div>
-              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="off">
-                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
-                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>HOT KITCHEN</b>
-─────────────────
-  Ribeye steak  x2
-  <i>– medium rare</i>
-  Pasta bolo.   x1</div>
-                </div>
-                <div class="wiz-preview-card-bottom">
-                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
-                  <div class="wiz-preview-card-name">Off — own items only</div>
                 </div>
               </div>
             </div>
@@ -983,6 +1006,7 @@ const ALL_STEPS = [
   { id: 'welcome',          phase: null,         label: 'Welcome' },
   { id: 'stations',         phase: 'printing',   label: 'Kitchen stations' },
   { id: 'coordination',     phase: 'printing',   label: 'Station awareness', condition: () => wizAnswers.stations === 'yes-printers' || wizAnswers.stations === 'yes-shared' },
+  { id: 'served-with',      phase: 'printing',   label: 'Served with detail', condition: () => wizAnswers.coordination === 'yes' },
   { id: 'servings',         phase: 'content',    label: 'Courses' },
   { id: 'servings-detail',  phase: 'content',    label: 'Upcoming servings', condition: () => wizAnswers.servings === 'courses' },
   { id: 'followup',         phase: 'content',    label: 'Follow-up style',  condition: () => wizAnswers.servings === 'courses' },
@@ -1126,8 +1150,12 @@ function buildSummary() {
   const stationLabels = { 'yes-printers': 'Yes, separate printers', 'yes-shared': 'Yes, shared printer', 'no': 'No' };
   rows.push(['Multiple stations', stationLabels[wizAnswers.stations] || '—']);
   if (wizAnswers.stations === 'yes-printers' || wizAnswers.stations === 'yes-shared') {
-    const coordLabels = { 'category': 'Category only', 'category-items': 'Category + items', 'off': 'Off' };
-    rows.push(['Served with', coordLabels[wizAnswers.coordination] || '—']);
+    if (wizAnswers.coordination === 'yes') {
+      const swLabels = { 'category': 'Category only', 'category-items': 'Category + items' };
+      rows.push(['Served with', swLabels[wizAnswers['served-with']] || 'On']);
+    } else {
+      rows.push(['Served with', 'Off']);
+    }
   }
   if (wizAnswers.servings === 'courses') {
     const detailLabels = { 'current': 'Current serving only', 'upcoming': 'Current + upcoming' };
@@ -1176,10 +1204,13 @@ function applyWizardAnswers() {
     document.getElementById('chk-comments').classList.add('checked');
   }
 
-  // Served with (based on coordination answer)
-  if (wizAnswers.coordination) {
-    const swMap = { 'off': 'off', 'category': 'ref-only', 'category-items': 'ref-include' };
-    const swVal = swMap[wizAnswers.coordination] || 'off';
+  // Served with (based on coordination gate + detail)
+  if (wizAnswers.coordination === 'no') {
+    document.querySelectorAll('#served-with-group .radio-item').forEach(r => r.classList.remove('selected'));
+    document.querySelector('#served-with-group .radio-item[data-value="off"]').classList.add('selected');
+  } else if (wizAnswers['served-with']) {
+    const swMap = { 'category': 'ref-only', 'category-items': 'ref-include' };
+    const swVal = swMap[wizAnswers['served-with']] || 'ref-only';
     document.querySelectorAll('#served-with-group .radio-item').forEach(r => r.classList.remove('selected'));
     document.querySelector('#served-with-group .radio-item[data-value="' + swVal + '"]').classList.add('selected');
   }
