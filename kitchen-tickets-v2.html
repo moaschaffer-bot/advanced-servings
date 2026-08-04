@@ -288,6 +288,12 @@ html, body { height: 100%; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 .wizard-body { animation: fadeIn 0.15s ease; }
 
+/* — Post-wizard printer highlight ---------------------------------- */
+.printer-setup-tip { background: #f7f6ff; border: 1px solid #d0c8e8; border-radius: 8px; padding: 12px 16px; font-size: 12px; color: #3C3489; line-height: 1.55; margin-bottom: 14px; display: flex; align-items: flex-start; gap: 10px; animation: fadeIn 0.3s ease; }
+.printer-setup-tip strong { font-weight: 600; }
+.printer-setup-tip .dismiss { background: none; border: none; color: #aaa; cursor: pointer; font-size: 16px; line-height: 1; padding: 0; margin-left: auto; flex-shrink: 0; }
+.printer-setup-tip .dismiss:hover { color: #666; }
+
 /* — Hidden utility ------------------------------------------------- */
 .hidden { display: none !important; }
 </style>
@@ -399,9 +405,9 @@ html, body { height: 100%; }
           <div class="wizard-body hidden" id="wiz-step-stations">
             <div class="wiz-category">Printing</div>
             <div class="wiz-q">Do you have multiple kitchen areas or stations?</div>
-            <div class="wiz-sub">For example, a hot kitchen, a cold kitchen, and a bar. If so, you can separate the tickets by station.</div>
+            <div class="wiz-sub">For example, a hot kitchen, a cold kitchen, and a bar.</div>
             <div class="wiz-preview-choices" data-wiz-group="stations" style="gap:12px">
-              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="yes-printers">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="yes">
                 <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; gap:6px; padding:10px;">
                   <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>HOT KITCHEN</b>
 ─────────────────
@@ -415,26 +421,7 @@ html, body { height: 100%; }
                 <div class="wiz-preview-card-bottom">
                   <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
                   <div>
-                    <div class="wiz-preview-card-name">Yes — and a printer per station</div>
-                    <div class="wiz-preview-card-desc">Each station handles one or more categories, which we will help you set up later on.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="yes-shared">
-                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
-                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>Table 12</b>        18:42
-─────────────────
-  Ribeye steak  x2
-  Fries         x2
-<span style="color:#888">✂ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄</span>
-  Margarita     x2
-  Beer          x1</div>
-                </div>
-                <div class="wiz-preview-card-bottom">
-                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
-                  <div>
-                    <div class="wiz-preview-card-name">Yes, but a shared printer (cut per category)</div>
-                    <div class="wiz-preview-card-desc">Split your menu into categories reflecting your stations, and the printer will cut the ticket per category.</div>
+                    <div class="wiz-preview-card-name">Yes, multiple stations</div>
                   </div>
                 </div>
               </div>
@@ -450,8 +437,53 @@ html, body { height: 100%; }
                 <div class="wiz-preview-card-bottom">
                   <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
                   <div>
-                    <div class="wiz-preview-card-name">No — One ticket with everything</div>
-                    <div class="wiz-preview-card-desc">No need to set up categories.</div>
+                    <div class="wiz-preview-card-name">No, just one kitchen</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 1b: Printer setup — conditional on stations = yes -->
+          <div class="wizard-body hidden" id="wiz-step-stations-detail">
+            <div class="wiz-category">Printing</div>
+            <div class="wiz-q">Does each station have its own printer?</div>
+            <div class="wiz-sub">Each station can have a dedicated printer, or they can share one and the ticket gets cut between sections.</div>
+            <div class="wiz-preview-choices" data-wiz-group="stations-detail" style="gap:12px">
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="separate-printers">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; gap:6px; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>HOT KITCHEN</b>
+─────────────────
+  Ribeye steak  x2
+  Fries         x2</div>
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>BAR</b>
+─────────────────
+  Margarita     x2
+  Beer          x1</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div>
+                    <div class="wiz-preview-card-name">Yes — a printer per station</div>
+                    <div class="wiz-preview-card-desc">Each station has its own printer and only receives its relevant items.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="wiz-preview-card" onclick="wizSelectPreview(this)" data-value="shared-printer">
+                <div class="wiz-preview-card-top" style="white-space:normal; display:flex; flex-direction:column; padding:10px;">
+                  <div style="background:#fff; border:0.5px solid #ddd; border-radius:3px; padding:8px 10px; font-family:'Courier New',monospace; font-size:10px; line-height:1.6; white-space:pre; box-shadow:0 1px 3px rgba(0,0,0,0.05);"><b>Table 12</b>        18:42
+─────────────────
+  Ribeye steak  x2
+  Fries         x2
+<span style="color:#888">✂ ┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄</span>
+  Margarita     x2
+  Beer          x1</div>
+                </div>
+                <div class="wiz-preview-card-bottom">
+                  <div class="wiz-rdot"><div class="wiz-rinner"></div></div>
+                  <div>
+                    <div class="wiz-preview-card-name">No — one shared printer</div>
+                    <div class="wiz-preview-card-desc">All items print on one ticket, cut between stations so each part can be torn off.</div>
                   </div>
                 </div>
               </div>
@@ -491,6 +523,9 @@ html, body { height: 100%; }
                   <div class="wiz-preview-card-name">No, each station works independently</div>
                 </div>
               </div>
+            </div>
+            <div class="context-note" style="margin-top:16px">
+              <strong>Heads up:</strong> After this guide, you'll configure which categories each printer handles and which 'served with' categories to show in the <strong>Kitchen printers</strong> section.
             </div>
           </div>
 
@@ -841,7 +876,7 @@ Caesar salad     x1</div>
               <div class="chip">Starters</div><div class="chip">Mains</div><div class="chip">Desserts</div><div class="chip">Sides</div><div class="chip">Beer &amp; wine</div><div class="chip">Cocktails</div><div class="chip">Non-alcoholic</div>
             </div>
           </div>
-          <div class="section">
+          <div class="section" id="printers-section">
             <div class="section-header">
               <div class="section-title">Kitchen printers</div>
               <button class="btn-primary" style="font-size:12px; padding:6px 14px;">+ Add printer</button>
@@ -1016,7 +1051,8 @@ Serving 2
 const ALL_STEPS = [
   { id: 'welcome',          phase: null,         label: 'Welcome' },
   { id: 'stations',         phase: 'printing',   label: 'Kitchen stations' },
-  { id: 'coordination',     phase: 'printing',   label: 'Station awareness', condition: () => wizAnswers.stations === 'yes-printers' || wizAnswers.stations === 'yes-shared' },
+  { id: 'stations-detail',  phase: 'printing',   label: 'Printer setup', condition: () => wizAnswers.stations === 'yes' },
+  { id: 'coordination',     phase: 'printing',   label: 'Station awareness', condition: () => wizAnswers.stations === 'yes' },
   { id: 'served-with',      phase: 'printing',   label: 'Served with detail', condition: () => wizAnswers.coordination === 'yes' },
   { id: 'servings',         phase: 'content',    label: 'Courses' },
   { id: 'servings-detail',  phase: 'content',    label: 'Upcoming servings', condition: () => wizAnswers.servings === 'courses' },
@@ -1045,10 +1081,24 @@ function startWizard() {
 function exitWizard() {
   document.getElementById('wizard').classList.remove('active');
   document.getElementById('tabs-area').classList.remove('hidden');
-  // Don't show banner again after using wizard
   document.getElementById('setup-banner').classList.add('hidden');
   applyWizardAnswers();
   updatePreview();
+
+  if (wizAnswers.coordination === 'yes') {
+    switchTab('printing');
+    const section = document.getElementById('printers-section');
+    if (section) {
+      const old = document.getElementById('printer-setup-tip');
+      if (old) old.remove();
+      const tip = document.createElement('div');
+      tip.id = 'printer-setup-tip';
+      tip.className = 'printer-setup-tip';
+      tip.innerHTML = '<span>👉</span> <span><strong>Don\'t forget:</strong> Set up which categories each printer handles and which \'served with\' categories to show, so your stations can coordinate.</span><button class="dismiss" onclick="this.parentElement.remove()" aria-label="Dismiss">&times;</button>';
+      section.insertBefore(tip, section.querySelector('.section-header').nextSibling);
+      setTimeout(() => section.scrollIntoView({ behavior: 'smooth', block: 'center' }), 300);
+    }
+  }
 }
 
 function wizNav(dir) {
@@ -1158,9 +1208,13 @@ function buildSummary() {
   const rows = [];
   const yn = v => v === 'yes' ? 'Yes' : v === 'no' ? 'No' : v || '—';
 
-  const stationLabels = { 'yes-printers': 'Yes, separate printers', 'yes-shared': 'Yes, shared printer', 'no': 'No' };
-  rows.push(['Multiple stations', stationLabels[wizAnswers.stations] || '—']);
-  if (wizAnswers.stations === 'yes-printers' || wizAnswers.stations === 'yes-shared') {
+  if (wizAnswers.stations === 'yes') {
+    const detailLabels = { 'separate-printers': 'Yes, separate printers', 'shared-printer': 'Yes, shared printer' };
+    rows.push(['Multiple stations', detailLabels[wizAnswers['stations-detail']] || 'Yes']);
+  } else {
+    rows.push(['Multiple stations', 'No']);
+  }
+  if (wizAnswers.stations === 'yes') {
     if (wizAnswers.coordination === 'yes') {
       const swLabels = { 'category': 'Category only', 'category-items': 'Category + items' };
       rows.push(['Served with', swLabels[wizAnswers['served-with']] || 'On']);
